@@ -11,3 +11,5 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
   liquibase:
     change-log: classpath:liquibase-changelog.xml
+  jpa:
+    show-sql: true
