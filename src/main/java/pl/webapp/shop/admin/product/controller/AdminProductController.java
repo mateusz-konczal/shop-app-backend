@@ -14,7 +14,7 @@ import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 import pl.webapp.shop.admin.product.model.AdminProduct;
 import pl.webapp.shop.admin.product.service.AdminProductService;
 
-import java.util.Locale;
+import static pl.webapp.shop.admin.product.controller.mapper.AdminProductMapper.mapToAdminProduct;
 
 @RestController
 @RequestMapping("/api/v1/admin/products")
@@ -36,22 +36,12 @@ class AdminProductController {
 
     @PostMapping
     AdminProduct createProduct(@RequestBody AdminProductDto adminProductDto) {
-        return productService.createProduct(mapAdminProduct(adminProductDto, EMPTY_ID));
+        return productService.createProduct(mapToAdminProduct(adminProductDto, EMPTY_ID));
     }
 
     @PutMapping("/{id}")
     AdminProduct updateProduct(@RequestBody AdminProductDto adminProductDto, @PathVariable Long id) {
-        return productService.updateProduct(mapAdminProduct(adminProductDto, id));
+        return productService.updateProduct(mapToAdminProduct(adminProductDto, id));
     }
 
-    private AdminProduct mapAdminProduct(AdminProductDto adminProductDto, Long id) {
-        return AdminProduct.builder()
-                .id(id)
-                .name(adminProductDto.getName())
-                .category(adminProductDto.getCategory())
-                .description(adminProductDto.getDescription())
-                .price(adminProductDto.getPrice())
-                .currency(adminProductDto.getCurrency().toUpperCase(Locale.ROOT))
-                .build();
-    }
 }
