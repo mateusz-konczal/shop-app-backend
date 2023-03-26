@@ -1,5 +1,6 @@
 package pl.webapp.shop.admin.product.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,12 +36,12 @@ class AdminProductController {
     }
 
     @PostMapping
-    AdminProduct createProduct(@RequestBody AdminProductDto adminProductDto) {
+    AdminProduct createProduct(@RequestBody @Valid AdminProductDto adminProductDto) {
         return productService.createProduct(mapToAdminProduct(adminProductDto, EMPTY_ID));
     }
 
     @PutMapping("/{id}")
-    AdminProduct updateProduct(@RequestBody AdminProductDto adminProductDto, @PathVariable Long id) {
+    AdminProduct updateProduct(@RequestBody @Valid AdminProductDto adminProductDto, @PathVariable Long id) {
         return productService.updateProduct(mapToAdminProduct(adminProductDto, id));
     }
 

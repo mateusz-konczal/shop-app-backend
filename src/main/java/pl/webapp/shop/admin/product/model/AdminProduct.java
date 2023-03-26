@@ -1,6 +1,8 @@
 package pl.webapp.shop.admin.product.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,5 +29,6 @@ public class AdminProduct {
     private String category;
     private String description;
     private BigDecimal price;
-    private String currency;
+    @Enumerated(EnumType.STRING)
+    private AdminProductCurrency currency;
 }
