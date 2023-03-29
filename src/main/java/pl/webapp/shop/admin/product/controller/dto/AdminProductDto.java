@@ -28,5 +28,9 @@ public record AdminProductDto(
 
         AdminProductCurrency currency,
 
-        String image) {
+        String image,
+
+        @NotBlank
+        @Length(min = 4)
+        String slug) {
 }

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +26,6 @@ public class Product {
     private String description;
     private BigDecimal price;
     private String currency;
-
+    private String image;
+    private String slug;
 }
