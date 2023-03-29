@@ -22,6 +22,8 @@ public record AdminProductDto(
         @Length(min = 4)
         String description,
 
+        String fullDescription,
+
         @NotNull
         @Min(0)
         BigDecimal price,

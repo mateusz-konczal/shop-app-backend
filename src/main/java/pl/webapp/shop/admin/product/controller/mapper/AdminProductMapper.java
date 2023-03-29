@@ -15,6 +15,7 @@ public class AdminProductMapper {
                 .name(adminProductDto.name())
                 .category(adminProductDto.category())
                 .description(adminProductDto.description())
+                .fullDescription(adminProductDto.fullDescription())
                 .price(adminProductDto.price())
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
