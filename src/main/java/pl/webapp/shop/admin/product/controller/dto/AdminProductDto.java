@@ -14,9 +14,8 @@ public record AdminProductDto(
         @Length(min = 4)
         String name,
 
-        @NotBlank
-        @Length(min = 4)
-        String category,
+        @NotNull
+        Long categoryId,
 
         @NotBlank
         @Length(min = 4)

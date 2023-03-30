@@ -13,7 +13,7 @@ public class AdminProductMapper {
         return AdminProduct.builder()
                 .id(id)
                 .name(adminProductDto.name())
-                .category(adminProductDto.category())
+                .categoryId(adminProductDto.categoryId())
                 .description(adminProductDto.description())
                 .fullDescription(adminProductDto.fullDescription())
                 .price(adminProductDto.price())
