@@ -1,4 +1,4 @@
-package pl.webapp.shop.product.model;
+package pl.webapp.shop.category.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,24 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-//    private String category;
     private String description;
-    private String fullDescription;
-    private BigDecimal price;
-    private String currency;
-    private String image;
     private String slug;
 }
