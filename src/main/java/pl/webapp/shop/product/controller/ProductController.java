@@ -27,11 +27,9 @@ class ProductController {
     }
 
     @GetMapping("/{slug}")
-    Product getProduct(
-            @PathVariable
-            @Pattern(regexp = "[a-z0-9\\-]+")
-            @Length(max = 255)
-            String slug) {
+    Product getProduct(@PathVariable
+                       @Pattern(regexp = "[a-z0-9\\-]+")
+                       @Length(max = 255) String slug) {
         return productService.getProduct(slug);
     }
 }

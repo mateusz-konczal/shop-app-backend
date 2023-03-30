@@ -16,4 +16,8 @@ public class CategoryService {
     public List<Category> getCategories() {
         return categoryRepository.findAll();
     }
+
+    public Category getCategoryWithProducts(String slug) {
+        return categoryRepository.findBySlug(slug).orElseThrow();
+    }
 }
