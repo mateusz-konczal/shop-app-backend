@@ -1,8 +1,6 @@
-package pl.webapp.shop.admin.product.model;
+package pl.webapp.shop.admin.category.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,26 +10,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminProduct {
+public class AdminCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long categoryId;
     private String description;
-    private String fullDescription;
-    private BigDecimal price;
-    @Enumerated(EnumType.STRING)
-    private AdminProductCurrency currency;
-    private String image;
     private String slug;
 }
