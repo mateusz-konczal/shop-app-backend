@@ -1,9 +1,15 @@
 package pl.webapp.shop.category.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.category.model.Category;
+import pl.webapp.shop.category.model.dto.CategoryProductsDto;
 import pl.webapp.shop.category.repository.CategoryRepository;
+import pl.webapp.shop.product.model.Product;
+import pl.webapp.shop.product.repository.ProductRepository;
 
 import java.util.List;
 
@@ -12,12 +18,17 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     public List<Category> getCategories() {
         return categoryRepository.findAll();
     }
 
-    public Category getCategoryWithProducts(String slug) {
-        return categoryRepository.findBySlug(slug).orElseThrow();
+    @Transactional(readOnly = true)
+    public CategoryProductsDto getCategoryWithProducts(String slug, Pageable pageable) {
+        Category category = categoryRepository.findBySlug(slug).orElseThrow();
+        Page<Product> products = productRepository.findAllByCategoryId(category.getId(), pageable);
+
+        return new CategoryProductsDto(category, products);
     }
 }
