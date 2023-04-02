@@ -2,8 +2,8 @@ package pl.webapp.shop.review.controller.mapper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import pl.webapp.shop.common.model.Review;
 import pl.webapp.shop.review.controller.dto.ReviewDto;
-import pl.webapp.shop.review.model.Review;
 
 public class ReviewMapper {
 

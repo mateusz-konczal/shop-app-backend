@@ -1,19 +1,19 @@
-package pl.webapp.shop.product.controller.mapper;
+package pl.webapp.shop.common.mapper;
 
 import org.springframework.data.domain.Page;
-import pl.webapp.shop.product.controller.dto.ProductReadDto;
-import pl.webapp.shop.product.model.Product;
+import pl.webapp.shop.common.dto.ProductReadDto;
+import pl.webapp.shop.common.model.Product;
 
 import java.util.List;
 
-public class ProductMapper {
+public class ProductReadDtoMapper {
 
-    private ProductMapper() {
+    private ProductReadDtoMapper() {
     }
 
     public static List<ProductReadDto> mapToProductReadDtoList(Page<Product> products) {
         return products.getContent().stream()
-                .map(ProductMapper::mapToProductReadDto)
+                .map(ProductReadDtoMapper::mapToProductReadDto)
                 .toList();
     }
 

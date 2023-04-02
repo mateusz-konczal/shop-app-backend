@@ -1,8 +1,8 @@
-package pl.webapp.shop.category.model.dto;
+package pl.webapp.shop.category.dto;
 
 import org.springframework.data.domain.Page;
-import pl.webapp.shop.category.model.Category;
-import pl.webapp.shop.product.controller.dto.ProductReadDto;
+import pl.webapp.shop.common.dto.ProductReadDto;
+import pl.webapp.shop.common.model.Category;
 
 public record CategoryProductsDto(
         Category category,

@@ -2,7 +2,7 @@ package pl.webapp.shop.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.webapp.shop.review.model.Review;
+import pl.webapp.shop.common.model.Review;
 import pl.webapp.shop.review.repository.ReviewRepository;
 
 @Service

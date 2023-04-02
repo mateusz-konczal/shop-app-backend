@@ -6,16 +6,16 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.webapp.shop.category.model.Category;
-import pl.webapp.shop.category.model.dto.CategoryProductsDto;
+import pl.webapp.shop.category.dto.CategoryProductsDto;
 import pl.webapp.shop.category.repository.CategoryRepository;
-import pl.webapp.shop.product.controller.dto.ProductReadDto;
-import pl.webapp.shop.product.model.Product;
-import pl.webapp.shop.product.repository.ProductRepository;
+import pl.webapp.shop.common.dto.ProductReadDto;
+import pl.webapp.shop.common.model.Category;
+import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.common.repository.ProductRepository;
 
 import java.util.List;
 
-import static pl.webapp.shop.product.controller.mapper.ProductMapper.mapToProductReadDtoList;
+import static pl.webapp.shop.common.mapper.ProductReadDtoMapper.mapToProductReadDtoList;
 
 @Service
 @RequiredArgsConstructor

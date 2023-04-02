@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.webapp.shop.product.model.Product;
-import pl.webapp.shop.product.repository.ProductRepository;
+import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.common.repository.ProductRepository;
 
 @Service
 @RequiredArgsConstructor

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.webapp.shop.product.controller.dto.ProductReadDto;
-import pl.webapp.shop.product.model.Product;
+import pl.webapp.shop.common.dto.ProductReadDto;
+import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.product.service.ProductService;
 
 import java.util.List;
 
-import static pl.webapp.shop.product.controller.mapper.ProductMapper.mapToProductReadDtoList;
+import static pl.webapp.shop.common.mapper.ProductReadDtoMapper.mapToProductReadDtoList;
 
 @RestController
 @RequestMapping("/api/v1/products")

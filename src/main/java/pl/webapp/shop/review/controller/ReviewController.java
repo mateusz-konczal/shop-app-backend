@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.common.model.Review;
 import pl.webapp.shop.review.controller.dto.ReviewDto;
-import pl.webapp.shop.review.model.Review;
 import pl.webapp.shop.review.service.ReviewService;
 
 import static pl.webapp.shop.review.controller.mapper.ReviewMapper.mapToReview;
