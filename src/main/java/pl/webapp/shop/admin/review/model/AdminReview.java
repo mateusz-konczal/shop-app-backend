@@ -1,4 +1,4 @@
-package pl.webapp.shop.common.model;
+package pl.webapp.shop.admin.review.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,24 +9,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "products")
+@Table(name = "reviews")
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+@AllArgsConstructor
+public class AdminReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private Long categoryId;
-    private String description;
-    private String fullDescription;
-    private BigDecimal price;
-    private String currency;
-    private String image;
-    private String slug;
+    private Long productId;
+    private String authorName;
+    private String content;
+    private boolean moderated;
 }
