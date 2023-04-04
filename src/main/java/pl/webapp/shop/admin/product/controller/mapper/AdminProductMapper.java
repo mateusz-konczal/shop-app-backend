@@ -1,8 +1,9 @@
 package pl.webapp.shop.admin.product.controller.mapper;
 
-import com.github.slugify.Slugify;
 import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 import pl.webapp.shop.admin.product.model.AdminProduct;
+
+import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 
 public class AdminProductMapper {
 
@@ -21,13 +22,5 @@ public class AdminProductMapper {
                 .image(adminProductDto.image())
                 .slug(slugifySlug(adminProductDto.slug()))
                 .build();
-    }
-
-    private static String slugifySlug(String slug) {
-        Slugify slg = Slugify.builder()
-                .customReplacement("_", "-")
-                .build();
-
-        return slg.slugify(slug);
     }
 }

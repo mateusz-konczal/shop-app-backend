@@ -1,8 +1,9 @@
 package pl.webapp.shop.admin.category.controller.mapper;
 
-import com.github.slugify.Slugify;
 import pl.webapp.shop.admin.category.controller.dto.AdminCategoryDto;
 import pl.webapp.shop.admin.category.model.AdminCategory;
+
+import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 
 public class AdminCategoryMapper {
 
@@ -16,13 +17,5 @@ public class AdminCategoryMapper {
                 .description(adminCategoryDto.description())
                 .slug(slugifySlug(adminCategoryDto.slug()))
                 .build();
-    }
-
-    private static String slugifySlug(String slug) {
-        Slugify slg = Slugify.builder()
-                .customReplacement("_", "-")
-                .build();
-
-        return slg.slugify(slug);
     }
 }
