@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.webapp.shop.common.model.Product;
@@ -14,6 +15,7 @@ import pl.webapp.shop.common.model.Product;
 @Entity
 @Table(name = "cart_items")
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartItem {
@@ -24,4 +26,5 @@ public class CartItem {
     private int quantity;
     @OneToOne
     private Product product;
+    private Long cartId;
 }

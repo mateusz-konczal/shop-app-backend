@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "products")
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
