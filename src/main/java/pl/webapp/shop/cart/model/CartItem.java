@@ -10,11 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.webapp.shop.common.model.Product;
 
 @Entity
 @Table(name = "cart_items")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

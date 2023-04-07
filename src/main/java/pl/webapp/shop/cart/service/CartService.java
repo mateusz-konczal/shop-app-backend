@@ -3,7 +3,7 @@ package pl.webapp.shop.cart.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.webapp.shop.cart.dto.CartProductDto;
+import pl.webapp.shop.cart.dto.CartItemDto;
 import pl.webapp.shop.cart.model.Cart;
 import pl.webapp.shop.cart.model.CartItem;
 import pl.webapp.shop.cart.repository.CartRepository;
@@ -24,11 +24,11 @@ public class CartService {
     }
 
     @Transactional
-    public Cart addProductToCart(Long id, CartProductDto cartProductDto) {
+    public Cart addProductToCart(Long id, CartItemDto cartItemDto) {
         Cart cart = getInitializedCart(id);
         cart.addProduct(CartItem.builder()
-                .quantity(cartProductDto.quantity())
-                .product(getProduct(cartProductDto.productId()))
+                .quantity(cartItemDto.quantity())
+                .product(getProduct(cartItemDto.productId()))
                 .cartId(cart.getId())
                 .build());
 
@@ -40,7 +40,7 @@ public class CartService {
             return cartRepository.save(Cart.builder().created(now()).build());
         }
 
-        return null;
+        return cartRepository.findById(id).orElseThrow();
     }
 
     private Product getProduct(Long productId) {

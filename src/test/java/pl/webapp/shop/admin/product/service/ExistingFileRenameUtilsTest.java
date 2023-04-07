@@ -41,5 +41,4 @@ class ExistingFileRenameUtilsTest {
         // THEN
         assertThat(newName).isEqualTo("test-4.png");
     }
-
 }

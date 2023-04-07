@@ -1,6 +1,6 @@
 package pl.webapp.shop.cart.dto;
 
-public record CartProductDto(
+public record CartItemDto(
 
         Long productId,
         int quantity) {
