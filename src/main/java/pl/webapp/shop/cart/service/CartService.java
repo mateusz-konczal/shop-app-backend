@@ -10,6 +10,8 @@ import pl.webapp.shop.cart.repository.CartRepository;
 import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.common.repository.ProductRepository;
 
+import java.util.List;
+
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -31,6 +33,17 @@ public class CartService {
                 .product(getProduct(cartItemDto.productId()))
                 .cartId(cart.getId())
                 .build());
+
+        return cart;
+    }
+
+    @Transactional
+    public Cart updateCart(Long id, List<CartItemDto> cartItemDtoList) {
+        Cart cart = cartRepository.findById(id).orElseThrow();
+        cart.getItems().forEach(cartItem -> cartItemDtoList.stream()
+                .filter(cartItemDto -> cartItem.getProduct().getId().equals(cartItemDto.productId()))
+                .findFirst()
+                .ifPresent(cartItemDto -> cartItem.setQuantity(cartItemDto.quantity())));
 
         return cart;
     }

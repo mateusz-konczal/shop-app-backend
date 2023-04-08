@@ -11,6 +11,8 @@ import pl.webapp.shop.cart.controller.dto.CartSummaryDto;
 import pl.webapp.shop.cart.dto.CartItemDto;
 import pl.webapp.shop.cart.service.CartService;
 
+import java.util.List;
+
 import static pl.webapp.shop.cart.controller.mapper.CartMapper.mapToCartSummaryDto;
 
 @RestController
@@ -28,5 +30,10 @@ class CartController {
     @PutMapping("/{id}")
     CartSummaryDto addProductToCart(@PathVariable Long id, @RequestBody CartItemDto cartItemDto) {
         return mapToCartSummaryDto(cartService.addProductToCart(id, cartItemDto));
+    }
+
+    @PutMapping("/{id}/update")
+    CartSummaryDto updateCart(@PathVariable Long id, @RequestBody List<CartItemDto> cartItemDtoList) {
+        return mapToCartSummaryDto(cartService.updateCart(id, cartItemDtoList));
     }
 }
