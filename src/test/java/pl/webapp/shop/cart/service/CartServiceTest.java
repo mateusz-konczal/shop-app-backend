@@ -7,10 +7,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.webapp.shop.cart.dto.CartItemDto;
 import pl.webapp.shop.cart.model.Cart;
+import pl.webapp.shop.cart.model.CartItem;
 import pl.webapp.shop.cart.repository.CartRepository;
 import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.common.repository.ProductRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +41,7 @@ class CartServiceTest {
         given(productRepository.findById(anyLong())).willReturn(Optional.of(Product.builder().id(productId).build()));
         // WHEN
         Cart result = cartService.addProductToCart(cartId, cartItemDto);
-        // GIVEN
+        // THEN
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(1L);
     }
@@ -53,8 +56,37 @@ class CartServiceTest {
         given(productRepository.findById(anyLong())).willReturn(Optional.of(Product.builder().id(productId).build()));
         // WHEN
         Cart result = cartService.addProductToCart(cartId, cartItemDto);
-        // GIVEN
+        // THEN
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(cartId);
+    }
+
+    @Test
+    void shouldUpdateCartWhenProductQuantityIsChanged() {
+        // GIVEN
+        Long cartId = 1L;
+        List<CartItemDto> itemDtoList = new ArrayList<>();
+        itemDtoList.add(new CartItemDto(1L, 3));
+        given(cartRepository.findById(anyLong())).willReturn(Optional.of(getCart()));
+        // WHEN
+        Cart result = cartService.updateCart(cartId, itemDtoList);
+        // THEN
+        assertThat(result.getItems()).hasSize(1);
+        assertThat(result.getItems().get(0).getQuantity()).isEqualTo(3);
+    }
+
+    private Cart getCart() {
+        Long cartId = 1L;
+        List<CartItem> items = new ArrayList<>();
+        items.add(CartItem.builder()
+                .quantity(2)
+                .product(Product.builder().id(1L).build())
+                .cartId(cartId)
+                .build());
+
+        return Cart.builder()
+                .id(cartId)
+                .items(items)
+                .build();
     }
 }
