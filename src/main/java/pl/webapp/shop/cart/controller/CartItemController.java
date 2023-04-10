@@ -2,6 +2,7 @@ package pl.webapp.shop.cart.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,5 +18,10 @@ class CartItemController {
     @DeleteMapping("/{id}")
     void deleteCartItem(@PathVariable Long id) {
         cartItemService.deleteCartItem(id);
+    }
+
+    @GetMapping("/count/{cartId}")
+    Long countItemsInCart(@PathVariable Long cartId) {
+        return cartItemService.countItemsInCart(cartId);
     }
 }

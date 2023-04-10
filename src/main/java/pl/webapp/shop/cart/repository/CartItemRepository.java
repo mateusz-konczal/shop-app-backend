@@ -6,4 +6,6 @@ import pl.webapp.shop.cart.model.CartItem;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+
+    Long countByCartId(Long cartId);
 }
