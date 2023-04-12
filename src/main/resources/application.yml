@@ -26,4 +26,4 @@ app:
   uploadDir: ./data/productImages/
   cart:
     cleanup:
-      expression: "*/10 * * * * *"
+      expression: "0 0 3 * * *"

@@ -29,6 +29,7 @@ public class CartService {
     public Cart addProductToCart(Long id, CartItemDto cartItemDto) {
         Cart cart = getInitializedCart(id);
         cart.addProduct(CartItem.builder()
+                .created(now())
                 .quantity(cartItemDto.quantity())
                 .product(getProduct(cartItemDto.productId()))
                 .cartId(cart.getId())

@@ -1,6 +1,7 @@
 package pl.webapp.shop.cart.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.webapp.shop.common.model.Product;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cart_items")
@@ -25,8 +28,9 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDateTime created;
     private int quantity;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Product product;
     private Long cartId;
 }

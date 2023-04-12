@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Table(name = "carts")
 @Getter
@@ -42,7 +44,10 @@ public class Cart {
                 .filter(item -> Objects.equals(cartItem.getProduct().getId(), item.getProduct().getId()))
                 .findFirst()
                 .ifPresentOrElse(
-                        item -> item.setQuantity(item.getQuantity() + 1),
+                        item -> {
+                            item.setCreated(now());
+                            item.setQuantity(item.getQuantity() + 1);
+                        },
                         () -> items.add(cartItem)
                 );
     }
