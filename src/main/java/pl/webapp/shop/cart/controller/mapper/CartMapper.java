@@ -9,6 +9,7 @@ import pl.webapp.shop.cart.model.CartItem;
 import pl.webapp.shop.common.model.Product;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class CartMapper {
@@ -51,12 +52,13 @@ public class CartMapper {
     }
 
     private static BigDecimal calculateLineValue(CartItem cartItem) {
-        return cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+        return cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     private static SummaryDto mapToSummaryDto(List<CartItem> items) {
         return SummaryDto.builder()
-                .totalValue(sumValues(items))
+                .totalValue(sumValues(items).setScale(2, RoundingMode.HALF_UP))
                 .build();
     }
 
