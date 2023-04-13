@@ -24,3 +24,6 @@ spring:
         max-page-size: 100
 app:
   uploadDir: ./data/productImages/
+  cart:
+    cleanup:
+      expression: "0 0 3 * * *"
