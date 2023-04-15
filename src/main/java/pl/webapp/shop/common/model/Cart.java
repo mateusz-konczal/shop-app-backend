@@ -1,4 +1,4 @@
-package pl.webapp.shop.cart.model;
+package pl.webapp.shop.common.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package pl.webapp.shop.cart.model;
+package pl.webapp.shop.common.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.webapp.shop.common.model.Product;
 
 import java.time.LocalDateTime;
 
