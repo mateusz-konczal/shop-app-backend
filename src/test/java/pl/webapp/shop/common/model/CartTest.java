@@ -1,9 +1,6 @@
-package pl.webapp.shop.cart.model;
+package pl.webapp.shop.common.model;
 
 import org.junit.jupiter.api.Test;
-import pl.webapp.shop.common.model.Cart;
-import pl.webapp.shop.common.model.CartItem;
-import pl.webapp.shop.common.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;

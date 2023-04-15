@@ -9,7 +9,7 @@ CREATE TABLE orders
     first_name   VARCHAR(64)   NOT NULL,
     last_name    VARCHAR(64)   NOT NULL,
     street       VARCHAR(80)   NOT NULL,
-    zip_code      VARCHAR(6)    NOT NULL,
+    zip_code     VARCHAR(6)    NOT NULL,
     city         VARCHAR(64)   NOT NULL,
     email        VARCHAR(64)   NOT NULL,
     phone        VARCHAR(16)   NOT NULL
