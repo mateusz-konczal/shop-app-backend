@@ -12,5 +12,6 @@ public record OrderSummaryDto(
         Long id,
         LocalDateTime placeDate,
         OrderStatus status,
-        BigDecimal totalValue) {
+        BigDecimal totalValue,
+        String shipmentName) {
 }

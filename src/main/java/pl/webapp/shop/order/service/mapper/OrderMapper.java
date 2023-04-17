@@ -17,20 +17,21 @@ public class OrderMapper {
     private OrderMapper() {
     }
 
-    public static OrderSummaryDto mapToOrderSummaryDto(Order order) {
+    public static OrderSummaryDto mapToOrderSummaryDto(Order order, String shipmentName) {
         return OrderSummaryDto.builder()
                 .id(order.getId())
                 .placeDate(order.getPlaceDate())
                 .status(order.getOrderStatus())
                 .totalValue(order.getTotalValue())
+                .shipmentName(shipmentName)
                 .build();
     }
 
-    public static Order mapToOrder(OrderDto orderDto, List<CartItem> items) {
+    public static Order mapToOrder(OrderDto orderDto, List<CartItem> items, BigDecimal shipmentPrice) {
         return Order.builder()
                 .placeDate(now())
                 .orderStatus(OrderStatus.NEW)
-                .totalValue(calculateTotalValue(items))
+                .totalValue(calculateTotalValue(items, shipmentPrice))
                 .firstName(orderDto.firstName())
                 .lastName(orderDto.lastName())
                 .street(orderDto.street())
@@ -41,11 +42,12 @@ public class OrderMapper {
                 .build();
     }
 
-    private static BigDecimal calculateTotalValue(List<CartItem> items) {
+    private static BigDecimal calculateTotalValue(List<CartItem> items, BigDecimal shipmentPrice) {
         return items.stream()
                 .map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO)
+                .add(shipmentPrice)
                 .setScale(2, RoundingMode.HALF_UP);
     }
 }
