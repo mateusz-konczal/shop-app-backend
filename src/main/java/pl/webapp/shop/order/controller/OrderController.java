@@ -11,6 +11,7 @@ import pl.webapp.shop.order.controller.dto.InitOrderDto;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.service.OrderService;
+import pl.webapp.shop.order.service.PaymentService;
 import pl.webapp.shop.order.service.ShipmentService;
 
 @RestController
@@ -20,6 +21,7 @@ class OrderController {
 
     private final OrderService orderService;
     private final ShipmentService shipmentService;
+    private final PaymentService paymentService;
 
     @PostMapping
     OrderSummaryDto placeOrder(@RequestBody @Valid OrderDto orderDto) {
@@ -30,6 +32,7 @@ class OrderController {
     public InitOrderDto initOrder() {
         return InitOrderDto.builder()
                 .shipments(shipmentService.getShipments())
+                .payments(paymentService.getPayments())
                 .build();
     }
 }
