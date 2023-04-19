@@ -1,8 +1,10 @@
 package pl.webapp.shop.order.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.repository.CartItemRepository;
@@ -21,6 +23,7 @@ import pl.webapp.shop.order.repository.ShipmentRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
@@ -28,6 +31,7 @@ import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderSummaryD
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -36,6 +40,7 @@ public class OrderService {
     private final CartItemRepository cartItemRepository;
     private final ShipmentRepository shipmentRepository;
     private final PaymentRepository paymentRepository;
+    private final MailClientService mailClientService;
 
     @Transactional
     public OrderSummaryDto placeOrder(OrderDto orderDto) {
@@ -59,11 +64,13 @@ public class OrderService {
         saveOrderRows(savedOrder.getId(), cart, shipment);
         cartItemRepository.deleteAllByCartId(orderDto.cartId());
         cartRepository.deleteCartById(orderDto.cartId());
+        log.info("Order has been placed");
+        mailClientService.getInstance().send(order.getEmail(), "Przyjęliśmy Twoje zamówienie", createMailContent(order));
 
         return mapToOrderSummaryDto(savedOrder, shipment, payment);
     }
 
-    private static BigDecimal calculateTotalValue(List<CartItem> items, BigDecimal shipmentPrice) {
+    private BigDecimal calculateTotalValue(List<CartItem> items, BigDecimal shipmentPrice) {
         return items.stream()
                 .map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal::add)
@@ -96,5 +103,16 @@ public class OrderService {
                 .quantity(1)
                 .price(shipment.getPrice())
                 .build());
+    }
+
+    private String createMailContent(Order order) {
+        return "Szanowny Kliencie," +
+                "\nw naszym sklepie internetowym zarejestrowaliśmy Twoje zamówienie." +
+                "\n\nNumer zamówienia: " + order.getId() +
+                "\nData złożenia: " + order.getPlaceDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
+                "\nKwota całkowita: " + order.getTotalValue() + " PLN" +
+                "\n\nForma płatności: " + order.getPayment().getName() +
+                (order.getPayment().getNote() != null ? "\n" + order.getPayment().getNote() : "") +
+                "\n\nDziękujemy za zakupy.";
     }
 }
