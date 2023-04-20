@@ -6,14 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.common.model.Cart;
-import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.repository.CartItemRepository;
 import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.OrderRow;
-import pl.webapp.shop.order.model.OrderStatus;
 import pl.webapp.shop.order.model.Payment;
 import pl.webapp.shop.order.model.Shipment;
 import pl.webapp.shop.order.repository.OrderRepository;
@@ -21,13 +19,13 @@ import pl.webapp.shop.order.repository.OrderRowRepository;
 import pl.webapp.shop.order.repository.PaymentRepository;
 import pl.webapp.shop.order.repository.ShipmentRepository;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static java.time.LocalDateTime.now;
-import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderSummaryDto;
+import static pl.webapp.shop.order.service.mapper.OrderMailContentMapper.createMailContent;
+import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrder;
+import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrderSummaryDto;
+import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithProduct;
+import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithShipment;
 
 @Service
 @RequiredArgsConstructor
@@ -47,36 +45,13 @@ public class OrderService {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
-        Order order = Order.builder()
-                .placeDate(now())
-                .orderStatus(OrderStatus.NEW)
-                .totalValue(calculateTotalValue(cart.getItems(), shipment.getPrice()))
-                .firstName(orderDto.firstName())
-                .lastName(orderDto.lastName())
-                .street(orderDto.street())
-                .zipCode(orderDto.zipCode())
-                .city(orderDto.city())
-                .email(orderDto.email())
-                .phone(orderDto.phone())
-                .payment(payment)
-                .build();
-        Order savedOrder = orderRepository.save(order);
-        saveOrderRows(savedOrder.getId(), cart, shipment);
-        cartItemRepository.deleteAllByCartId(orderDto.cartId());
-        cartRepository.deleteCartById(orderDto.cartId());
+        Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment));
+        saveOrderRows(order.getId(), cart, shipment);
+        deleteOrderCart(orderDto.cartId());
         log.info("Order has been placed");
-        mailClientService.getInstance().send(order.getEmail(), "Przyjęliśmy Twoje zamówienie", createMailContent(order));
+        sendConfirmationMail(order);
 
-        return mapToOrderSummaryDto(savedOrder, shipment, payment);
-    }
-
-    private BigDecimal calculateTotalValue(List<CartItem> items, BigDecimal shipmentPrice) {
-        return items.stream()
-                .map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO)
-                .add(shipmentPrice)
-                .setScale(2, RoundingMode.HALF_UP);
+        return createOrderSummaryDto(order, shipment, payment);
     }
 
     private void saveOrderRows(Long orderId, Cart cart, Shipment shipment) {
@@ -86,33 +61,22 @@ public class OrderService {
 
     private void saveProductRows(Long orderId, Cart cart) {
         List<OrderRow> orderRows = cart.getItems().stream()
-                .map(cartItem -> OrderRow.builder()
-                        .orderId(orderId)
-                        .productId(cartItem.getProduct().getId())
-                        .quantity(cartItem.getQuantity())
-                        .price(cartItem.getProduct().getPrice())
-                        .build())
+                .map(cartItem -> mapToOrderRowWithProduct(orderId, cartItem))
                 .toList();
         orderRowRepository.saveAll(orderRows);
     }
 
     private void saveShipmentRow(Long orderId, Shipment shipment) {
-        orderRowRepository.save(OrderRow.builder()
-                .orderId(orderId)
-                .shipmentId(shipment.getId())
-                .quantity(1)
-                .price(shipment.getPrice())
-                .build());
+        orderRowRepository.save(mapToOrderRowWithShipment(orderId, shipment));
     }
 
-    private String createMailContent(Order order) {
-        return "Szanowny Kliencie," +
-                "\nw naszym sklepie internetowym zarejestrowaliśmy Twoje zamówienie." +
-                "\n\nNumer zamówienia: " + order.getId() +
-                "\nData złożenia: " + order.getPlaceDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
-                "\nKwota całkowita: " + order.getTotalValue() + " PLN" +
-                "\n\nForma płatności: " + order.getPayment().getName() +
-                (order.getPayment().getNote() != null ? "\n" + order.getPayment().getNote() : "") +
-                "\n\nDziękujemy za zakupy.";
+    private void deleteOrderCart(Long cartId) {
+        cartItemRepository.deleteAllByCartId(cartId);
+        cartRepository.deleteCartById(cartId);
+    }
+
+    private void sendConfirmationMail(Order order) {
+        mailClientService.getInstance()
+                .send(order.getEmail(), "Przyjęliśmy Twoje zamówienie", createMailContent(order));
     }
 }
