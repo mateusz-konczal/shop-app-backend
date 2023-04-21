@@ -10,9 +10,8 @@ import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.common.repository.ProductRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static java.time.LocalDateTime.now;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class CartService {
     public Cart addProductToCart(Long id, CartItemDto cartItemDto) {
         Cart cart = getInitializedCart(id);
         cart.addProduct(CartItem.builder()
-                .created(now())
+                .created(LocalDateTime.now())
                 .quantity(cartItemDto.quantity())
                 .product(getProduct(cartItemDto.productId()))
                 .cartId(cart.getId())
@@ -51,7 +50,7 @@ public class CartService {
 
     private Cart getInitializedCart(Long id) {
         if (id == null || id <= 0) {
-            return cartRepository.save(Cart.builder().created(now()).build());
+            return cartRepository.save(Cart.builder().created(LocalDateTime.now()).build());
         }
 
         return cartRepository.findById(id).orElseThrow();

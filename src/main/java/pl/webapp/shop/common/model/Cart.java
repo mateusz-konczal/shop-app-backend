@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static java.time.LocalDateTime.now;
-
 @Entity
 @Table(name = "carts")
 @Getter
@@ -45,7 +43,7 @@ public class Cart {
                 .findFirst()
                 .ifPresentOrElse(
                         item -> {
-                            item.setCreated(now());
+                            item.setCreated(LocalDateTime.now());
                             item.setQuantity(item.getQuantity() + 1);
                         },
                         () -> items.add(cartItem)

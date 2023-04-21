@@ -12,9 +12,8 @@ import pl.webapp.shop.order.model.Shipment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static java.time.LocalDateTime.now;
 
 public class OrderMapper {
 
@@ -52,7 +51,7 @@ public class OrderMapper {
 
     public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment) {
         return Order.builder()
-                .placeDate(now())
+                .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
                 .totalValue(calculateTotalValue(cart.getItems(), shipment.getPrice()))
                 .firstName(orderDto.firstName())
