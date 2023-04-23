@@ -4,15 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.cart.dto.CartItemDto;
-import pl.webapp.shop.cart.model.Cart;
-import pl.webapp.shop.cart.model.CartItem;
-import pl.webapp.shop.cart.repository.CartRepository;
+import pl.webapp.shop.common.model.Cart;
+import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.common.repository.ProductRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static java.time.LocalDateTime.now;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class CartService {
     public Cart addProductToCart(Long id, CartItemDto cartItemDto) {
         Cart cart = getInitializedCart(id);
         cart.addProduct(CartItem.builder()
-                .created(now())
+                .created(LocalDateTime.now())
                 .quantity(cartItemDto.quantity())
                 .product(getProduct(cartItemDto.productId()))
                 .cartId(cart.getId())
@@ -51,10 +50,14 @@ public class CartService {
 
     private Cart getInitializedCart(Long id) {
         if (id == null || id <= 0) {
-            return cartRepository.save(Cart.builder().created(now()).build());
+            return saveNewCart();
         }
 
-        return cartRepository.findById(id).orElseThrow();
+        return cartRepository.findById(id).orElseGet(this::saveNewCart);
+    }
+
+    private Cart saveNewCart() {
+        return cartRepository.save(Cart.builder().created(LocalDateTime.now()).build());
     }
 
     private Product getProduct(Long productId) {

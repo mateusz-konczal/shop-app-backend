@@ -35,7 +35,7 @@ import static pl.webapp.shop.admin.product.controller.mapper.AdminProductMapper.
 @RequiredArgsConstructor
 class AdminProductController {
 
-    public static final Long EMPTY_ID = null;
+    private static final Long EMPTY_ID = null;
     private final AdminProductService productService;
     private final AdminProductImageService productImageService;
 

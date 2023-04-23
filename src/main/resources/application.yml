@@ -22,8 +22,25 @@ spring:
       pageable:
         default-page-size: 25
         max-page-size: 100
+  mail:
+    host: example.com
+    username: username
+    password: password
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          port: 25
+          auth: true
+          starttls:
+            enable: true
+            required: true
 app:
   uploadDir: ./data/productImages/
   cart:
     cleanup:
       expression: "0 0 3 * * *"
+  mail:
+    sender:
+      isFakeMailService: true

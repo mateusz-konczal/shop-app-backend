@@ -6,10 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.webapp.shop.cart.dto.CartItemDto;
-import pl.webapp.shop.cart.model.Cart;
-import pl.webapp.shop.cart.model.CartItem;
-import pl.webapp.shop.cart.repository.CartRepository;
+import pl.webapp.shop.common.model.Cart;
+import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.common.repository.ProductRepository;
 
 import java.util.ArrayList;

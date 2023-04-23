@@ -1,4 +1,4 @@
-package pl.webapp.shop.cart.model;
+package pl.webapp.shop.common.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static java.time.LocalDateTime.now;
 
 @Entity
 @Table(name = "carts")
@@ -45,7 +43,7 @@ public class Cart {
                 .findFirst()
                 .ifPresentOrElse(
                         item -> {
-                            item.setCreated(now());
+                            item.setCreated(LocalDateTime.now());
                             item.setQuantity(item.getQuantity() + 1);
                         },
                         () -> items.add(cartItem)

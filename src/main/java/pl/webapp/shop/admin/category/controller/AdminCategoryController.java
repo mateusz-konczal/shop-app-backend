@@ -23,7 +23,7 @@ import static pl.webapp.shop.admin.category.controller.mapper.AdminCategoryMappe
 @RequiredArgsConstructor
 class AdminCategoryController {
 
-    public static final Long EMPTY_ID = null;
+    private static final Long EMPTY_ID = null;
     private final AdminCategoryService categoryService;
 
     @GetMapping
