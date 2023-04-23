@@ -57,6 +57,8 @@ public class OrderMapper {
                 .firstName(orderDto.firstName())
                 .lastName(orderDto.lastName())
                 .street(orderDto.street())
+                .houseNumber(orderDto.houseNumber())
+                .apartmentNumber(orderDto.apartmentNumber())
                 .zipCode(orderDto.zipCode())
                 .city(orderDto.city())
                 .email(orderDto.email())

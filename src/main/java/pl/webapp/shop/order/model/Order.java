@@ -37,6 +37,8 @@ public class Order {
     private String firstName;
     private String lastName;
     private String street;
+    private String houseNumber;
+    private String apartmentNumber;
     private String zipCode;
     private String city;
     private String email;

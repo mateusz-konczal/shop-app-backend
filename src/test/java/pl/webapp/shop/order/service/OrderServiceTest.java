@@ -101,6 +101,8 @@ class OrderServiceTest {
                 .firstName("firstName")
                 .lastName("lastName")
                 .street("street")
+                .houseNumber("houseNumber")
+                .apartmentNumber("apartmentNumber")
                 .zipCode("zipCode")
                 .city("city")
                 .email("email@email.pl")

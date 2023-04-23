@@ -48,6 +48,8 @@ class OrderMapperTest {
                 .firstName("Philip")
                 .lastName("Trevino")
                 .street("Bridle St.")
+                .houseNumber("128c")
+                .apartmentNumber("27")
                 .zipCode("61-604")
                 .city("Peoria")
                 .email("philip.trevino@email.pl")
