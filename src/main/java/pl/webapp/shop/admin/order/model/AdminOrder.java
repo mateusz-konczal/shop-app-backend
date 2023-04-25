@@ -49,4 +49,7 @@ public class AdminOrder {
     private List<AdminOrderRow> orderRows;
     @OneToOne
     private AdminPayment payment;
+    @OneToMany
+    @JoinColumn(name = "orderId")
+    private List<AdminOrderLog> orderLogs;
 }

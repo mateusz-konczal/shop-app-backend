@@ -8,9 +8,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.order.model.AdminOrder;
+import pl.webapp.shop.admin.order.model.AdminOrderLog;
 import pl.webapp.shop.admin.order.model.AdminOrderStatus;
+import pl.webapp.shop.admin.order.repository.AdminOrderLogRepository;
 import pl.webapp.shop.admin.order.repository.AdminOrderRepository;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -18,6 +21,7 @@ import java.util.Map;
 public class AdminOrderService {
 
     private final AdminOrderRepository orderRepository;
+    private final AdminOrderLogRepository orderLogRepository;
 
     public Page<AdminOrder> getOrders(Pageable pageable) {
         return orderRepository.findAll(PageRequest.of(
@@ -38,7 +42,18 @@ public class AdminOrderService {
 
     private void patchValues(AdminOrder order, Map<String, String> values) {
         if (values.get("orderStatus") != null) {
-            order.setOrderStatus(AdminOrderStatus.valueOf(values.get("orderStatus")));
+            AdminOrderStatus oldStatus = order.getOrderStatus();
+            AdminOrderStatus newStatus = AdminOrderStatus.valueOf(values.get("orderStatus"));
+            order.setOrderStatus(newStatus);
+            logStatusChange(order.getId(), oldStatus, newStatus);
         }
+    }
+
+    private void logStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
+        orderLogRepository.save(AdminOrderLog.builder()
+                .orderId(orderId)
+                .created(LocalDateTime.now())
+                .note("Zmiana statusu zamówienia z " + oldStatus.getValue() + " na " + newStatus.getValue())
+                .build());
     }
 }
