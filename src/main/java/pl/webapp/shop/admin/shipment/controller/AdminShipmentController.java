@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 import pl.webapp.shop.admin.shipment.model.AdminShipment;
+import pl.webapp.shop.admin.shipment.model.AdminShipmentType;
 import pl.webapp.shop.admin.shipment.service.AdminShipmentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static pl.webapp.shop.admin.shipment.controller.mapper.AdminShipmentMapper.mapToAdminShipment;
@@ -49,5 +51,19 @@ class AdminShipmentController {
     @DeleteMapping("/{id}")
     void deleteShipment(@PathVariable Long id) {
         shipmentService.deleteShipment(id);
+    }
+
+    @GetMapping("/initTypes")
+    List<String> getShipmentTypes() {
+        return createShipmentTypesList();
+    }
+
+    private List<String> createShipmentTypesList() {
+        List<String> shipmentTypes = new ArrayList<>();
+        for (AdminShipmentType type : AdminShipmentType.values()) {
+            shipmentTypes.add(type.name());
+        }
+
+        return shipmentTypes;
     }
 }

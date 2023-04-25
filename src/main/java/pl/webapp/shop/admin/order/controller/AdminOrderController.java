@@ -49,8 +49,8 @@ class AdminOrderController {
 
     private Map<String, String> createOrderStatusesMap() {
         HashMap<String, String> orderStatuses = new HashMap<>();
-        for (AdminOrderStatus value : AdminOrderStatus.values()) {
-            orderStatuses.put(value.name(), value.getValue());
+        for (AdminOrderStatus status : AdminOrderStatus.values()) {
+            orderStatuses.put(status.name(), status.getValue());
         }
 
         return orderStatuses;
