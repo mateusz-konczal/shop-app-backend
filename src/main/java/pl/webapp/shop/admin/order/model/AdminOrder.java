@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.webapp.shop.admin.payment.model.AdminPayment;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminOrder {
