@@ -22,6 +22,7 @@ public class AdminOrderService {
 
     private final AdminOrderRepository orderRepository;
     private final AdminOrderLogRepository orderLogRepository;
+    private final MailNotificationForStatusChange mailNotificationForStatusChange;
 
     public Page<AdminOrder> getOrders(Pageable pageable) {
         return orderRepository.findAll(PageRequest.of(
@@ -42,14 +43,19 @@ public class AdminOrderService {
 
     private void patchValues(AdminOrder order, Map<String, String> values) {
         if (values.get("orderStatus") != null) {
-            AdminOrderStatus oldStatus = order.getOrderStatus();
-            AdminOrderStatus newStatus = AdminOrderStatus.valueOf(values.get("orderStatus"));
-            order.setOrderStatus(newStatus);
-            logStatusChange(order.getId(), oldStatus, newStatus);
+            processOrderStatusChange(order, values);
         }
     }
 
-    private void logStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
+    private void processOrderStatusChange(AdminOrder order, Map<String, String> values) {
+        AdminOrderStatus oldStatus = order.getOrderStatus();
+        AdminOrderStatus newStatus = AdminOrderStatus.valueOf(values.get("orderStatus"));
+        order.setOrderStatus(newStatus);
+        logOrderStatusChange(order.getId(), oldStatus, newStatus);
+        mailNotificationForStatusChange.sendMailNotification(order, newStatus);
+    }
+
+    private void logOrderStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
         orderLogRepository.save(AdminOrderLog.builder()
                 .orderId(orderId)
                 .created(LocalDateTime.now())

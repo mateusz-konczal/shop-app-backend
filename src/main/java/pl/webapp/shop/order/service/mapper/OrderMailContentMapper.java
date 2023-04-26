@@ -17,6 +17,7 @@ public class OrderMailContentMapper {
                 "\nKwota całkowita: " + order.getTotalValue() + " PLN" +
                 "\n\nForma płatności: " + order.getPayment().getName() +
                 (order.getPayment().getNote() != null ? "\n" + order.getPayment().getNote() : "") +
-                "\n\nDziękujemy za zakupy.";
+                "\n\nDziękujemy za zakupy" +
+                "\nSklep Shop";
     }
 }
