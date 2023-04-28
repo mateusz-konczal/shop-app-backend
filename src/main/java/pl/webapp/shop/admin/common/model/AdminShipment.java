@@ -1,4 +1,4 @@
-package pl.webapp.shop.admin.shipment.model;
+package pl.webapp.shop.admin.common.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

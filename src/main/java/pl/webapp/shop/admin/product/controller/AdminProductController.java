@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 import pl.webapp.shop.admin.product.controller.dto.UploadResponse;
-import pl.webapp.shop.admin.product.model.AdminProduct;
+import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.product.service.AdminProductImageService;
 import pl.webapp.shop.admin.product.service.AdminProductService;
 

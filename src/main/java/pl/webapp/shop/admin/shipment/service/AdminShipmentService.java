@@ -2,7 +2,7 @@ package pl.webapp.shop.admin.shipment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.webapp.shop.admin.shipment.model.AdminShipment;
+import pl.webapp.shop.admin.common.model.AdminShipment;
 import pl.webapp.shop.admin.shipment.repository.AdminShipmentRepository;
 
 import java.util.List;

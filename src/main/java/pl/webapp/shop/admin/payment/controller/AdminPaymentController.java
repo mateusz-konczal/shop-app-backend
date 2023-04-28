@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
-import pl.webapp.shop.admin.payment.model.AdminPayment;
-import pl.webapp.shop.admin.payment.model.AdminPaymentType;
+import pl.webapp.shop.admin.common.model.AdminPayment;
+import pl.webapp.shop.admin.common.model.AdminPaymentType;
 import pl.webapp.shop.admin.payment.service.AdminPaymentService;
 
 import java.util.ArrayList;

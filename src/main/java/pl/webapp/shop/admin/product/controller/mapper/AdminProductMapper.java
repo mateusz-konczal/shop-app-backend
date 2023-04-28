@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.product.controller.mapper;
 
 import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
-import pl.webapp.shop.admin.product.model.AdminProduct;
+import pl.webapp.shop.admin.common.model.AdminProduct;
 
 import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 

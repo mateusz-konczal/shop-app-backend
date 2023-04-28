@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.webapp.shop.admin.payment.model.AdminPayment;
+import pl.webapp.shop.admin.common.model.AdminPayment;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

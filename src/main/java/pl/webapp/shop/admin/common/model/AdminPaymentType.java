@@ -1,4 +1,4 @@
-package pl.webapp.shop.admin.payment.model;
+package pl.webapp.shop.admin.common.model;
 
 public enum AdminPaymentType {
     BANK_TRANSFER

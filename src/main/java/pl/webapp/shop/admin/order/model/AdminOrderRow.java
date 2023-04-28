@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.webapp.shop.admin.product.model.AdminProduct;
-import pl.webapp.shop.admin.shipment.model.AdminShipment;
+import pl.webapp.shop.admin.common.model.AdminProduct;
+import pl.webapp.shop.admin.common.model.AdminShipment;
 
 import java.math.BigDecimal;
 
