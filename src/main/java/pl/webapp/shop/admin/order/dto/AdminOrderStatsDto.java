@@ -9,7 +9,9 @@ import java.util.Set;
 @Builder
 public record AdminOrderStatsDto(
 
-        Set<Integer> labels,
-        List<Long> orders,
-        List<BigDecimal> sales) {
+        Set<Integer> labelsSet,
+        List<Long> ordersList,
+        List<BigDecimal> salesList,
+        Long totalNumberOfOrders,
+        BigDecimal totalSales) {
 }

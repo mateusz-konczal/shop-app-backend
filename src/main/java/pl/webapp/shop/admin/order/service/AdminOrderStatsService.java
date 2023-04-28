@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static pl.webapp.shop.admin.order.service.mapper.AdminOrderStatsMapper.createAdminOrderStatsDto;
+
 @Service
 @RequiredArgsConstructor
 public class AdminOrderStatsService {
@@ -31,11 +33,7 @@ public class AdminOrderStatsService {
             monthlyStats.put(dayOfMonth, aggregateValues(dayOfMonth, completedOrders));
         }
 
-        return AdminOrderStatsDto.builder()
-                .labels(monthlyStats.keySet())
-                .orders(monthlyStats.values().stream().map(AdminOrderStatsValue::numberOfOrders).toList())
-                .sales(monthlyStats.values().stream().map(AdminOrderStatsValue::totalSales).toList())
-                .build();
+        return createAdminOrderStatsDto(monthlyStats);
     }
 
     private AdminOrderStatsValue aggregateValues(int dayOfMonth, List<AdminOrder> completedOrders) {

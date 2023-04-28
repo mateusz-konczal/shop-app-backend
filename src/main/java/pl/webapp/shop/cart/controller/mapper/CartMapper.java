@@ -58,7 +58,7 @@ public class CartMapper {
 
     private static SummaryDto mapToSummaryDto(List<CartItem> items) {
         return SummaryDto.builder()
-                .totalValue(sumValues(items).setScale(2, RoundingMode.HALF_UP))
+                .totalValue(sumValues(items))
                 .build();
     }
 

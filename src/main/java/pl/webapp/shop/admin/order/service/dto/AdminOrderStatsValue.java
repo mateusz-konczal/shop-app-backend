@@ -5,5 +5,5 @@ import java.math.BigDecimal;
 public record AdminOrderStatsValue(
 
         Long numberOfOrders,
-        BigDecimal totalSales) {
+        BigDecimal sales) {
 }
