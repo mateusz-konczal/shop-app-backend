@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public record AdminOrderStatsValue(
 
+        Integer day,
         Long numberOfOrders,
         BigDecimal sales) {
 }
