@@ -2,7 +2,7 @@ package pl.webapp.shop.admin.payment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.webapp.shop.admin.payment.model.AdminPayment;
+import pl.webapp.shop.admin.common.model.AdminPayment;
 import pl.webapp.shop.admin.payment.repository.AdminPaymentRepository;
 
 import java.util.List;

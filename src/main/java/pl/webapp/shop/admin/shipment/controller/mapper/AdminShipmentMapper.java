@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.shipment.controller.mapper;
 
 import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
-import pl.webapp.shop.admin.shipment.model.AdminShipment;
+import pl.webapp.shop.admin.common.model.AdminShipment;
 
 public class AdminShipmentMapper {
 

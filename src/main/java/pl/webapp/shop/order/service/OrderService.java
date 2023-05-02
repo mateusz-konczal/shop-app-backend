@@ -77,6 +77,6 @@ public class OrderService {
 
     private void sendConfirmationMail(Order order) {
         mailClientService.getInstance()
-                .send(order.getEmail(), "Przyjęliśmy Twoje zamówienie", createMailContent(order));
+                .send(order.getEmail(), "Otrzymaliśmy Twoje zamówienie", createMailContent(order));
     }
 }

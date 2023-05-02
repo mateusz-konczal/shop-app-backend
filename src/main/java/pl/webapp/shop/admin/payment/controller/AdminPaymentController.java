@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
-import pl.webapp.shop.admin.payment.model.AdminPayment;
+import pl.webapp.shop.admin.common.model.AdminPayment;
+import pl.webapp.shop.admin.common.model.AdminPaymentType;
 import pl.webapp.shop.admin.payment.service.AdminPaymentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static pl.webapp.shop.admin.payment.controller.mapper.AdminPaymentMapper.mapToAdminPayment;
@@ -49,5 +51,19 @@ class AdminPaymentController {
     @DeleteMapping("/{id}")
     void deletePayment(@PathVariable Long id) {
         paymentService.deletePayment(id);
+    }
+
+    @GetMapping("/initTypes")
+    List<String> getPaymentTypes() {
+        return createPaymentTypesList();
+    }
+
+    private List<String> createPaymentTypesList() {
+        List<String> paymentTypes = new ArrayList<>();
+        for (AdminPaymentType type : AdminPaymentType.values()) {
+            paymentTypes.add(type.name());
+        }
+
+        return paymentTypes;
     }
 }

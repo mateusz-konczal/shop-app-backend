@@ -1,8 +1,9 @@
 # Shop App (backend)
-The backend part of the web application of the online shop in a layered architecture. 
+The backend part of the online shop's web application in a layered architecture. 
 The application provides a REST API for the frontend part built in Angular. You can 
-now manage products, categories, reviews and shopping cart. Work in progress on the 
-sales process (order and payment processing).
+now manage products, categories, reviews, shopping cart and orders. As orders are 
+processed, events are logged and emails are sent to customers. Work in progress on user 
+registration and login (using Spring Security) and integration with a payment gateway.
 - --
 ## Technologies
 * Java 17
