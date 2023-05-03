@@ -1,8 +1,6 @@
 package pl.webapp.shop.admin.product.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResourceLoader;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import pl.webapp.shop.admin.common.utils.SlugifyUtils;
 
@@ -31,9 +29,5 @@ public class AdminProductImageService {
         }
 
         return newFilename;
-    }
-
-    public Resource serveFile(String filename) {
-        return new FileSystemResourceLoader().getResource(uploadDir + filename);
     }
 }
