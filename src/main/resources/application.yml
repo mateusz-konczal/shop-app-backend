@@ -7,6 +7,7 @@ logging:
     org:
       springframework:
         web: INFO
+        security: DEBUG
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/webapp?useUnicode=true&serverTimeZone=UTC
@@ -44,3 +45,6 @@ app:
   mail:
     sender:
       isFakeMailService: true
+jwt:
+  expirationTime: 2592000000
+  secret: secret
