@@ -30,10 +30,10 @@ class LoginController {
         this.secret = secret;
     }
 
-    @PostMapping()
-    String login(@RequestBody LoginCredentials loginCredentials) {
+    @PostMapping
+    Token login(@RequestBody LoginCredentials loginCredentials) {
         Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginCredentials.username, loginCredentials.password));
+                new UsernamePasswordAuthenticationToken(loginCredentials.username(), loginCredentials.password()));
 
         UserDetails principal = (UserDetails) authenticate.getPrincipal();
 
@@ -42,12 +42,12 @@ class LoginController {
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                 .sign(Algorithm.HMAC256(secret));
 
-        return token;
+        return new Token(token);
     }
 
-    private record LoginCredentials(
+    private record LoginCredentials(String username, String password) {
+    }
 
-            String username,
-            String password) {
+    private record Token(String token) {
     }
 }
