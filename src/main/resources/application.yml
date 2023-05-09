@@ -37,6 +37,9 @@ spring:
           starttls:
             enable: true
             required: true
+springdoc:
+  api-docs:
+    enabled: false
 app:
   uploadDir: ./data/productImages/
   cart:
