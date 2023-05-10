@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.webapp.shop.security.model.UserRole;
 
 import javax.sql.DataSource;
 
@@ -29,7 +30,7 @@ class SecurityConfig {
                                     AuthenticationManager authenticationManager,
                                     UserDetailsService userDetailsService) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/v1/admin/**").authenticated()
+                .requestMatchers("/api/v1/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
                 .anyRequest().permitAll()
         );
         http.csrf().disable();

@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.security.model.UserRole;
 import pl.webapp.shop.security.service.UserService;
 
 import java.util.Date;
@@ -59,11 +61,17 @@ class LoginController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-
-        return new Token(JWT.create()
+        String token = JWT.create()
                 .withSubject(principal.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-                .sign(Algorithm.HMAC256(secret)));
+                .sign(Algorithm.HMAC256(secret));
+
+        return new Token(token, principal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(role -> UserRole.ROLE_ADMIN.name().equals(role))
+                .map(role -> true)
+                .findFirst()
+                .orElse(false));
     }
 
     private record LoginCredentials(String username, String password) {
@@ -78,6 +86,6 @@ class LoginController {
             String repeatedPassword) {
     }
 
-    private record Token(String token) {
+    private record Token(String token, boolean adminAccess) {
     }
 }
