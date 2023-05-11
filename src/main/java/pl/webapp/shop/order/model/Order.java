@@ -48,4 +48,5 @@ public class Order {
     private List<OrderRow> orderRows;
     @OneToOne
     private Payment payment;
+    private String userUuid;
 }

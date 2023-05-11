@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import pl.webapp.shop.security.model.ShopUserDetails;
 import pl.webapp.shop.security.service.ShopUserDetailsService;
 
 import java.io.IOException;
@@ -50,8 +50,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
             if (uuid != null) {
-                UserDetails userDetails = shopUserDetailsService.loadUserByUuid(uuid);
-                return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
+                ShopUserDetails userDetails = (ShopUserDetails) shopUserDetailsService.loadUserByUuid(uuid);
+                return new UsernamePasswordAuthenticationToken(userDetails.getUuid(), null, userDetails.getAuthorities());
             }
         }
 

@@ -41,11 +41,11 @@ public class OrderService {
     private final MailClientService mailClientService;
 
     @Transactional
-    public OrderSummaryDto placeOrder(OrderDto orderDto) {
+    public OrderSummaryDto placeOrder(OrderDto orderDto, String userUuid) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
-        Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment));
+        Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment, userUuid));
         saveOrderRows(order.getId(), cart, shipment);
         deleteOrderCart(orderDto.cartId());
         log.info("Order has been placed");

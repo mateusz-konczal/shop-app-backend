@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -71,13 +72,14 @@ class OrderServiceTest {
     void shouldPlaceOrder() {
         // GIVEN
         OrderDto orderDto = getOrderDto();
+        String userUuid = UUID.randomUUID().toString();
         given(cartRepository.findById(anyLong())).willReturn(Optional.of(getCart()));
         given(shipmentRepository.findById(anyLong())).willReturn(Optional.of(getShipment()));
         given(paymentRepository.findById(anyLong())).willReturn(Optional.of(getPayment()));
         given(orderRepository.save(any(Order.class))).willAnswer(invocation -> invocation.getArguments()[0]);
         given(mailClientService.getInstance()).willReturn(new FakeMailService());
         // WHEN
-        OrderSummaryDto result = orderService.placeOrder(orderDto);
+        OrderSummaryDto result = orderService.placeOrder(orderDto, userUuid);
         // THEN
         assertThat(result).isNotNull();
         assertThat(result.status()).isEqualTo(OrderStatus.NEW);

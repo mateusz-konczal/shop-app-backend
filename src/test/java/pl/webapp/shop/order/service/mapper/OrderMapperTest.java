@@ -15,6 +15,7 @@ import pl.webapp.shop.order.model.ShipmentType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,8 +32,9 @@ class OrderMapperTest {
         Cart cart = getCart();
         Shipment shipment = getShipment();
         Payment payment = getPayment();
+        String userUuid = UUID.randomUUID().toString();
         // WHEN
-        Order result = OrderMapper.createOrder(orderDto, cart, shipment, payment);
+        Order result = OrderMapper.createOrder(orderDto, cart, shipment, payment, userUuid);
         // THEN
         assertThat(result).isNotNull();
         assertThat(result.getOrderStatus()).isEqualTo(OrderStatus.NEW);

@@ -49,7 +49,7 @@ public class OrderMapper {
                 .build();
     }
 
-    public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment) {
+    public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment, String userUuid) {
         return Order.builder()
                 .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
@@ -64,6 +64,7 @@ public class OrderMapper {
                 .email(orderDto.email())
                 .phone(orderDto.phone())
                 .payment(payment)
+                .userUuid(userUuid)
                 .build();
     }
 
