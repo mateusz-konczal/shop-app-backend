@@ -1,4 +1,4 @@
-package pl.webapp.shop.security;
+package pl.webapp.shop.security.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,11 +10,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.security.model.ShopUserDetails;
 import pl.webapp.shop.security.model.UserRole;
 import pl.webapp.shop.security.service.UserService;
 
@@ -60,9 +60,9 @@ class LoginController {
     private Token authenticate(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        ShopUserDetails principal = (ShopUserDetails) authentication.getPrincipal();
         String token = JWT.create()
-                .withSubject(principal.getUsername())
+                .withSubject(principal.getUuid())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                 .sign(Algorithm.HMAC256(secret));
 

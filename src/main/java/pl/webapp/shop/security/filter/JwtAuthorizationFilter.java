@@ -1,4 +1,4 @@
-package pl.webapp.shop.security;
+package pl.webapp.shop.security.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,23 +10,23 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import pl.webapp.shop.security.service.ShopUserDetailsService;
 
 import java.io.IOException;
 
-class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private static final String TOKEN_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
-    private final UserDetailsService userDetailsService;
+    private final ShopUserDetailsService shopUserDetailsService;
     private final String secret;
 
-    JwtAuthorizationFilter(AuthenticationManager authenticationManager,
-                           UserDetailsService userDetailsService,
-                           String secret) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager,
+                                  ShopUserDetailsService shopUserDetailsService,
+                                  String secret) {
         super(authenticationManager);
-        this.userDetailsService = userDetailsService;
+        this.shopUserDetailsService = shopUserDetailsService;
         this.secret = secret;
     }
 
@@ -45,12 +45,12 @@ class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
         if (token != null && token.startsWith(TOKEN_PREFIX)) {
-            String username = JWT.require(Algorithm.HMAC256(secret))
+            String uuid = JWT.require(Algorithm.HMAC256(secret))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
-            if (username != null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (uuid != null) {
+                UserDetails userDetails = shopUserDetailsService.loadUserByUuid(uuid);
                 return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
             }
         }
