@@ -1,6 +1,6 @@
-package pl.webapp.shop.admin.order.model;
+package pl.webapp.shop.common.model;
 
-public enum AdminOrderStatus {
+public enum OrderStatus {
 
     NEW("Nowe"),
     PAID("Opłacone"),
@@ -12,7 +12,7 @@ public enum AdminOrderStatus {
 
     private final String value;
 
-    AdminOrderStatus(String value) {
+    OrderStatus(String value) {
         this.value = value;
     }
 

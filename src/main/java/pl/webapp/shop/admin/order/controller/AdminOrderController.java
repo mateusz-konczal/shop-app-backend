@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.order.controller.dto.AdminOrderReadDto;
 import pl.webapp.shop.admin.order.controller.dto.AdminOrderStatusesDto;
 import pl.webapp.shop.admin.order.model.AdminOrder;
-import pl.webapp.shop.admin.order.model.AdminOrderStatus;
 import pl.webapp.shop.admin.order.service.AdminOrderService;
+import pl.webapp.shop.common.model.OrderStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,7 @@ class AdminOrderController {
 
     private Map<String, String> createOrderStatusesMap() {
         HashMap<String, String> orderStatuses = new HashMap<>();
-        for (AdminOrderStatus status : AdminOrderStatus.values()) {
+        for (OrderStatus status : OrderStatus.values()) {
             orderStatuses.put(status.name(), status.getValue());
         }
 

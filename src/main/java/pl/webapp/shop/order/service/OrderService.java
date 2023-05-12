@@ -9,6 +9,7 @@ import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.repository.CartItemRepository;
 import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.order.dto.OrderDto;
+import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.OrderRow;
@@ -26,6 +27,7 @@ import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrder;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrderSummaryDto;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithProduct;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithShipment;
+import static pl.webapp.shop.order.service.mapper.OrderReadDtoMapper.mapToOrderReadDtoList;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,10 @@ public class OrderService {
         sendConfirmationMail(order);
 
         return createOrderSummaryDto(order, shipment, payment);
+    }
+
+    public List<OrderReadDto> getOrdersForCustomer(String userUuid) {
+        return mapToOrderReadDtoList(orderRepository.findByUserUuidOrderByIdDesc(userUuid));
     }
 
     private void saveOrderRows(Long orderId, Cart cart, Shipment shipment) {

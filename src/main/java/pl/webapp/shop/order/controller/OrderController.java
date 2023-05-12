@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.order.controller.dto.InitOrderDto;
 import pl.webapp.shop.order.dto.OrderDto;
+import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.service.OrderService;
 import pl.webapp.shop.order.service.PaymentService;
 import pl.webapp.shop.order.service.ShipmentService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -30,10 +33,15 @@ class OrderController {
     }
 
     @GetMapping("/initOrder")
-    public InitOrderDto initOrder() {
+    InitOrderDto initOrder() {
         return InitOrderDto.builder()
                 .shipments(shipmentService.getShipments())
                 .payments(paymentService.getPayments())
                 .build();
+    }
+
+    @GetMapping
+    List<OrderReadDto> getOrders(@AuthenticationPrincipal String userUuid) {
+        return orderService.getOrdersForCustomer(userUuid);
     }
 }
