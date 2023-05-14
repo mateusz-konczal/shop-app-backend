@@ -2,6 +2,7 @@ package pl.webapp.shop.review.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    Review createReview(@RequestBody @Valid ReviewDto reviewDto) {
-        return reviewService.createReview(mapToReview(reviewDto));
+    Review createReview(@RequestBody @Valid ReviewDto reviewDto, @AuthenticationPrincipal String userUuid) {
+        return reviewService.createReview(mapToReview(reviewDto, userUuid));
     }
 }

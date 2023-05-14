@@ -31,6 +31,7 @@ class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/v1/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.GET, "/api/v1/orders").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/v1/reviews").authenticated()
                 .anyRequest().permitAll()
         );
         http.csrf().disable();
