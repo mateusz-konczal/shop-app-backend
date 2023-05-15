@@ -15,13 +15,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +37,8 @@ public class User implements Serializable {
     private String username;
     private String password;
     private boolean enabled;
+    private String hash;
+    private LocalDateTime hashDateTime;
     @ElementCollection
     @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
     @Column(name = "authority")

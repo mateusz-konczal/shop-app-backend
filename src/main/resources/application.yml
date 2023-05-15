@@ -48,6 +48,7 @@ app:
   mail:
     sender:
       isFakeMailService: true
+  serviceAddress: http://localhost:4200
 jwt:
   expirationTime: 2592000000
   secret: secret
