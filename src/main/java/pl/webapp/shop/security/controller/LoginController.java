@@ -19,6 +19,7 @@ import pl.webapp.shop.security.model.UserRole;
 import pl.webapp.shop.security.service.UserService;
 
 import java.util.Date;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -46,7 +47,7 @@ class LoginController {
 
     @PostMapping("/register")
     Token register(@RequestBody @Valid RegisterCredentials registerCredentials) {
-        if (!registerCredentials.password().equals(registerCredentials.repeatedPassword())) {
+        if (!Objects.equals(registerCredentials.password(), registerCredentials.repeatedPassword())) {
             throw new IllegalArgumentException("Hasła nie są identyczne");
         }
         if (userService.isUserExist(registerCredentials.username())) {
