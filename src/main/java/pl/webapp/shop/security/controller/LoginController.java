@@ -7,8 +7,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,9 +61,18 @@ class LoginController {
     }
 
     private Token authenticate(String username, String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
-        ShopUserDetails principal = (ShopUserDetails) authentication.getPrincipal();
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
+            return createJwtToken((ShopUserDetails) authentication.getPrincipal());
+        } catch (DisabledException e) {
+            throw new IllegalArgumentException("Twoje konto zostało wyłączone, skontaktuj się z administratorem sklepu");
+        } catch (AuthenticationException e) {
+            throw new IllegalArgumentException("Podaj poprawne dane logowania");
+        }
+    }
+
+    private Token createJwtToken(ShopUserDetails principal) {
         String token = JWT.create()
                 .withSubject(principal.getUuid())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))

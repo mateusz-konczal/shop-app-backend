@@ -2,6 +2,7 @@ package pl.webapp.shop.admin.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,9 @@ class AdminUserController {
     void createUser(@RequestBody @Valid AdminUserDto adminUserDto) {
         if (!Objects.equals(adminUserDto.password(), adminUserDto.repeatedPassword())) {
             throw new IllegalArgumentException("Hasła nie są identyczne");
+        }
+        if (!EmailValidator.getInstance().isValid(adminUserDto.username()) && adminUserDto.userRole() == UserRole.ROLE_CUSTOMER) {
+            throw new IllegalArgumentException("Nazwą użytkownika konta klienta musi być poprawny adres e-mail");
         }
         if (userService.isUserExist(adminUserDto.username())) {
             throw new IllegalArgumentException("Podana nazwa użytkownika już istnieje");

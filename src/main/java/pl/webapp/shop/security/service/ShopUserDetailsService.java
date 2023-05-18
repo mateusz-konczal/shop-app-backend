@@ -35,6 +35,7 @@ public class ShopUserDetailsService implements UserDetailsService {
                         .map(userRole -> (GrantedAuthority) userRole::name)
                         .toList());
         shopUserDetails.setUuid(user.getUuid());
+        shopUserDetails.setEnabled(user.isEnabled());
 
         return shopUserDetails;
     }

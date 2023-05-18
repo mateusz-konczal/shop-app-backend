@@ -13,6 +13,7 @@ import java.util.Objects;
 public class ShopUserDetails extends User {
 
     private String uuid;
+    private boolean enabled;
 
     public ShopUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
