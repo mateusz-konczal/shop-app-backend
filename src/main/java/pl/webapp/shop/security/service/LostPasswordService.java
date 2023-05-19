@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.security.dto.EmailDto;
-import pl.webapp.shop.security.dto.NewPasswordDto;
+import pl.webapp.shop.security.dto.ResetPasswordDto;
 import pl.webapp.shop.security.model.User;
 import pl.webapp.shop.security.repository.UserRepository;
 
@@ -39,14 +39,14 @@ public class LostPasswordService {
     }
 
     @Transactional
-    public void changePassword(NewPasswordDto newPasswordDto) {
-        if (!Objects.equals(newPasswordDto.password(), newPasswordDto.repeatedPassword())) {
+    public void changePassword(ResetPasswordDto resetPasswordDto) {
+        if (!Objects.equals(resetPasswordDto.password(), resetPasswordDto.repeatedPassword())) {
             throw new IllegalArgumentException("Hasła nie są identyczne");
         }
-        User user = userRepository.findByHash(newPasswordDto.hash())
+        User user = userRepository.findByHash(resetPasswordDto.hash())
                 .orElseThrow(() -> new IllegalArgumentException("Link do zmiany hasła jest nieprawidłowy"));
         if (user.getHashDateTime().plusMinutes(10).isAfter(LocalDateTime.now())) {
-            user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(newPasswordDto.password()));
+            user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(resetPasswordDto.password()));
             user.setHash(null);
             user.setHashDateTime(null);
         } else {

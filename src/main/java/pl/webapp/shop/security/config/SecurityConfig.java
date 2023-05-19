@@ -32,6 +32,8 @@ class SecurityConfig {
                 .requestMatchers("/api/v1/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.GET, "/api/v1/orders").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/v1/reviews").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/v1/newPassword").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/deleteAccount").authenticated()
                 .anyRequest().permitAll()
         );
         http.csrf().disable();

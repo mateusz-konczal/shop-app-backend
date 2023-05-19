@@ -6,10 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.webapp.shop.admin.user.model.AdminUser;
 
+import java.util.Optional;
+
 @Repository
 public interface AdminUserRepository extends JpaRepository<AdminUser, Long> {
 
     boolean existsByUsername(String username);
+
+    Optional<AdminUser> findByUuid(String uuid);
+
+    void deleteByUuid(String uuid);
 
     @Query("UPDATE AdminUser u SET u.enabled=TRUE WHERE u.id=:id")
     @Modifying

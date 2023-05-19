@@ -1,8 +1,8 @@
-package pl.webapp.shop.security.dto;
+package pl.webapp.shop.admin.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record NewPasswordDto(
+public record AdminNewPasswordDto(
 
         @NotBlank
         String password,

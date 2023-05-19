@@ -2,7 +2,10 @@ package pl.webapp.shop.security.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record NewPasswordDto(
+public record ResetPasswordDto(
+
+        @NotBlank
+        String hash,
 
         @NotBlank
         String password,

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.security.dto.EmailDto;
-import pl.webapp.shop.security.dto.NewPasswordDto;
+import pl.webapp.shop.security.dto.ResetPasswordDto;
 import pl.webapp.shop.security.service.LostPasswordService;
 
 @RestController
@@ -22,8 +22,8 @@ class LostPasswordController {
         lostPasswordService.sendLostPasswordLink(emailDto);
     }
 
-    @PostMapping("/newPassword")
-    void changePassword(@RequestBody @Valid NewPasswordDto newPasswordDto) {
-        lostPasswordService.changePassword(newPasswordDto);
+    @PostMapping("/resetPassword")
+    void changePassword(@RequestBody @Valid ResetPasswordDto resetPasswordDto) {
+        lostPasswordService.changePassword(resetPasswordDto);
     }
 }
