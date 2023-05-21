@@ -3,6 +3,7 @@ package pl.webapp.shop.order.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
@@ -28,8 +29,7 @@ public record OrderDto(
         @Length(max = 6)
         String apartmentNumber,
 
-        @NotBlank
-        @Length(max = 6)
+        @Pattern(regexp = "^[0-9]{2}-[0-9]{3}$")
         String zipCode,
 
         @NotBlank
