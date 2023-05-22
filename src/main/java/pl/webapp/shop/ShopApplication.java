@@ -10,6 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 public class ShopApplication {
 
+    public static final String PASSWORD_REGEX = "^(?=.*[a-ząćęłńóśźż])(?=.*[A-ZĄĆĘŁŃÓŚŹŻ])(?=.*\\d)" +
+            "[a-ząćęłńóśźżA-ZĄĆĘŁŃÓŚŹŻ\\d\\S]{8,}$";
+
     public static void main(String[] args) {
         SpringApplication.run(ShopApplication.class, args);
     }

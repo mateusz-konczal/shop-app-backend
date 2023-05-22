@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
@@ -22,6 +23,8 @@ import pl.webapp.shop.security.service.UserService;
 
 import java.util.Date;
 import java.util.Objects;
+
+import static pl.webapp.shop.ShopApplication.PASSWORD_REGEX;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -92,7 +95,7 @@ class LoginController {
     private record RegisterCredentials(
             @Email
             String username,
-            @NotBlank
+            @Pattern(regexp = PASSWORD_REGEX)
             String password,
             @NotBlank
             String repeatedPassword) {
