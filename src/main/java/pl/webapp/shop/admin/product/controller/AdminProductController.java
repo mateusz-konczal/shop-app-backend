@@ -26,7 +26,7 @@ import java.io.InputStream;
 import static pl.webapp.shop.admin.product.controller.mapper.AdminProductMapper.mapToAdminProduct;
 
 @RestController
-@RequestMapping("/api/v1/admin/products")
+@RequestMapping("/admin/products")
 @RequiredArgsConstructor
 class AdminProductController {
 

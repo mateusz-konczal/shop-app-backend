@@ -2,6 +2,9 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  servlet:
+    context-path: /api/v1
+  forward-headers-strategy: framework
 logging:
   level:
     org:
@@ -40,6 +43,7 @@ spring:
 springdoc:
   api-docs:
     enabled: false
+    path: /api-docs
 app:
   uploadDir: ./data/productImages/
   cart:

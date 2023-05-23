@@ -8,7 +8,7 @@ import pl.webapp.shop.admin.order.dto.AdminOrderStatsDto;
 import pl.webapp.shop.admin.order.service.AdminOrderStatsService;
 
 @RestController
-@RequestMapping("/api/v1/admin/orders/stats")
+@RequestMapping("/admin/orders/stats")
 @RequiredArgsConstructor
 class AdminOrderStatsController {
 

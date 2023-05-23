@@ -14,7 +14,7 @@ import pl.webapp.shop.review.service.ReviewService;
 import static pl.webapp.shop.review.controller.mapper.ReviewMapper.mapToReview;
 
 @RestController
-@RequestMapping("/api/v1/reviews")
+@RequestMapping("/reviews")
 @RequiredArgsConstructor
 class ReviewController {
 

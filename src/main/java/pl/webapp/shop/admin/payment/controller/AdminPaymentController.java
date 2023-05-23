@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 import pl.webapp.shop.admin.common.model.AdminPayment;
 import pl.webapp.shop.admin.common.model.AdminPaymentType;
+import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 import pl.webapp.shop.admin.payment.service.AdminPaymentService;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 import static pl.webapp.shop.admin.payment.controller.mapper.AdminPaymentMapper.mapToAdminPayment;
 
 @RestController
-@RequestMapping("/api/v1/admin/payments")
+@RequestMapping("/admin/payments")
 @RequiredArgsConstructor
 class AdminPaymentController {
 

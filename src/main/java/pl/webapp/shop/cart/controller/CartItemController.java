@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.cart.service.CartItemService;
 
 @RestController
-@RequestMapping("/api/v1/cartItems")
+@RequestMapping("/cartItems")
 @RequiredArgsConstructor
 class CartItemController {
 

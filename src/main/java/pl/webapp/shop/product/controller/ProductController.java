@@ -21,7 +21,7 @@ import java.util.List;
 import static pl.webapp.shop.common.mapper.ProductReadDtoMapper.mapToProductReadDtoList;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 @Validated
 class ProductController {
@@ -38,8 +38,8 @@ class ProductController {
 
     @GetMapping("/{slug}")
     ProductReviewsDto getProduct(@PathVariable
-                       @Pattern(regexp = "[a-z0-9\\-]+")
-                       @Length(max = 255) String slug) {
+                                 @Pattern(regexp = "[a-z0-9\\-]+")
+                                 @Length(max = 255) String slug) {
         return productService.getProduct(slug);
     }
 }

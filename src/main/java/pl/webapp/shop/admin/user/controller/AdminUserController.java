@@ -26,7 +26,7 @@ import static pl.webapp.shop.admin.user.controller.mapper.AdminUserMapper.mapToA
 import static pl.webapp.shop.admin.user.controller.mapper.AdminUserMapper.mapToAdminUserReadDtoPage;
 
 @RestController
-@RequestMapping("/api/v1/admin/users")
+@RequestMapping("/admin/users")
 @RequiredArgsConstructor
 class AdminUserController {
 

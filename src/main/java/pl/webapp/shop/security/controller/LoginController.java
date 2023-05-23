@@ -15,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.security.model.ShopUserDetails;
 import pl.webapp.shop.security.model.UserRole;
@@ -27,7 +26,6 @@ import java.util.Objects;
 import static pl.webapp.shop.ShopApplication.PASSWORD_REGEX;
 
 @RestController
-@RequestMapping("/api/v1")
 class LoginController {
 
     private final AuthenticationManager authenticationManager;

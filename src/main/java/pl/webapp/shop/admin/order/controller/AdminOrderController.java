@@ -21,7 +21,7 @@ import java.util.Map;
 import static pl.webapp.shop.admin.order.controller.mapper.AdminOrderMapper.mapToAdminOrderReadDtoPage;
 
 @RestController
-@RequestMapping("/api/v1/admin/orders")
+@RequestMapping("/admin/orders")
 @RequiredArgsConstructor
 class AdminOrderController {
 

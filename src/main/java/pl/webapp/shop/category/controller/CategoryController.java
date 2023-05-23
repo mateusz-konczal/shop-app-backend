@@ -16,7 +16,7 @@ import pl.webapp.shop.common.model.Category;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 @Validated
 class CategoryController {

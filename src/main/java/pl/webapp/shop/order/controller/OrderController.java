@@ -19,7 +19,7 @@ import pl.webapp.shop.order.service.ShipmentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 class OrderController {
 

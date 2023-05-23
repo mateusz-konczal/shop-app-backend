@@ -19,7 +19,7 @@ import java.util.List;
 import static pl.webapp.shop.admin.category.controller.mapper.AdminCategoryMapper.mapToAdminCategory;
 
 @RestController
-@RequestMapping("/api/v1/admin/categories")
+@RequestMapping("/admin/categories")
 @RequiredArgsConstructor
 class AdminCategoryController {
 

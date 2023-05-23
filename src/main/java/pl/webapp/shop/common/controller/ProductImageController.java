@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @RestController
-@RequestMapping("/api/v1/products/productImage")
+@RequestMapping("/products/productImage")
 @RequiredArgsConstructor
 class ProductImageController {
 

@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/admin/orders/export")
+@RequestMapping("/admin/orders/export")
 @RequiredArgsConstructor
 class AdminOrderExportController {
 

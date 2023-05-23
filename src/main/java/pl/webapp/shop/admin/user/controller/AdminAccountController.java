@@ -12,7 +12,7 @@ import pl.webapp.shop.admin.user.dto.AdminNewPasswordDto;
 import pl.webapp.shop.admin.user.service.AdminAccountService;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 class AdminAccountController {
 
