@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.webapp.shop.admin.order.dto.AdminOrderStatsDto;
 import pl.webapp.shop.admin.order.model.AdminOrder;
-import pl.webapp.shop.admin.order.model.AdminOrderStatus;
 import pl.webapp.shop.admin.order.repository.AdminOrderRepository;
 import pl.webapp.shop.admin.order.service.dto.AdminOrderStatsValue;
+import pl.webapp.shop.common.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class AdminOrderStatsService {
         LocalDateTime from = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime to = LocalDateTime.now();
         List<AdminOrder> orders = orderRepository.findAllByPlaceDateIsBetweenAndOrderStatus(
-                from, to, AdminOrderStatus.COMPLETED);
+                from, to, OrderStatus.COMPLETED);
 
         List<AdminOrderStatsValue> stats = IntStream.rangeClosed(from.getDayOfMonth(), to.getDayOfMonth())
                 .boxed()

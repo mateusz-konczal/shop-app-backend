@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 import pl.webapp.shop.admin.common.model.AdminShipment;
 import pl.webapp.shop.admin.common.model.AdminShipmentType;
+import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 import pl.webapp.shop.admin.shipment.service.AdminShipmentService;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 import static pl.webapp.shop.admin.shipment.controller.mapper.AdminShipmentMapper.mapToAdminShipment;
 
 @RestController
-@RequestMapping("/api/v1/admin/shipments")
+@RequestMapping("/admin/shipments")
 @RequiredArgsConstructor
 class AdminShipmentController {
 

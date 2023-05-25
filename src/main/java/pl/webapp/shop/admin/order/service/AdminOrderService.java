@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.order.model.AdminOrder;
 import pl.webapp.shop.admin.order.model.AdminOrderLog;
-import pl.webapp.shop.admin.order.model.AdminOrderStatus;
 import pl.webapp.shop.admin.order.repository.AdminOrderLogRepository;
 import pl.webapp.shop.admin.order.repository.AdminOrderRepository;
+import pl.webapp.shop.common.model.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -48,8 +48,8 @@ public class AdminOrderService {
     }
 
     private void processOrderStatusChange(AdminOrder order, Map<String, String> values) {
-        AdminOrderStatus oldStatus = order.getOrderStatus();
-        AdminOrderStatus newStatus = AdminOrderStatus.valueOf(values.get("orderStatus"));
+        OrderStatus oldStatus = order.getOrderStatus();
+        OrderStatus newStatus = OrderStatus.valueOf(values.get("orderStatus"));
         if (newStatus != oldStatus) {
             order.setOrderStatus(newStatus);
             logOrderStatusChange(order.getId(), oldStatus, newStatus);
@@ -57,7 +57,7 @@ public class AdminOrderService {
         }
     }
 
-    private void logOrderStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
+    private void logOrderStatusChange(Long orderId, OrderStatus oldStatus, OrderStatus newStatus) {
         orderLogRepository.save(AdminOrderLog.builder()
                 .orderId(orderId)
                 .created(LocalDateTime.now())

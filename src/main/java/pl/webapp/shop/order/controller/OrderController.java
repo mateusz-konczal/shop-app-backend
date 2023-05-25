@@ -2,6 +2,7 @@ package pl.webapp.shop.order.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.order.controller.dto.InitOrderDto;
 import pl.webapp.shop.order.dto.OrderDto;
+import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.service.OrderService;
 import pl.webapp.shop.order.service.PaymentService;
 import pl.webapp.shop.order.service.ShipmentService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 class OrderController {
 
@@ -24,15 +28,20 @@ class OrderController {
     private final PaymentService paymentService;
 
     @PostMapping
-    OrderSummaryDto placeOrder(@RequestBody @Valid OrderDto orderDto) {
-        return orderService.placeOrder(orderDto);
+    OrderSummaryDto placeOrder(@RequestBody @Valid OrderDto orderDto, @AuthenticationPrincipal String userUuid) {
+        return orderService.placeOrder(orderDto, userUuid);
     }
 
     @GetMapping("/initOrder")
-    public InitOrderDto initOrder() {
+    InitOrderDto initOrder() {
         return InitOrderDto.builder()
                 .shipments(shipmentService.getShipments())
                 .payments(paymentService.getPayments())
                 .build();
+    }
+
+    @GetMapping
+    List<OrderReadDto> getOrders(@AuthenticationPrincipal String userUuid) {
+        return orderService.getOrdersForCustomer(userUuid);
     }
 }

@@ -10,11 +10,12 @@ public class ReviewMapper {
     private ReviewMapper() {
     }
 
-    public static Review mapToReview(ReviewDto reviewDto) {
+    public static Review mapToReview(ReviewDto reviewDto, String userUuid) {
         return Review.builder()
                 .productId(reviewDto.productId())
                 .authorName(clearText(reviewDto.authorName()))
                 .content(clearText(reviewDto.content()))
+                .userUuid(userUuid)
                 .build();
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
 import static pl.webapp.shop.cart.controller.mapper.CartMapper.mapToCartSummaryDto;
 
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping("/carts")
 @RequiredArgsConstructor
 class CartController {
 

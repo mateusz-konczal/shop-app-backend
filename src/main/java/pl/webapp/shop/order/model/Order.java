@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pl.webapp.shop.common.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -48,4 +49,5 @@ public class Order {
     private List<OrderRow> orderRows;
     @OneToOne
     private Payment payment;
+    private String userUuid;
 }

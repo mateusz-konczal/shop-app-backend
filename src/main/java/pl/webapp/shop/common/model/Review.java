@@ -25,4 +25,5 @@ public class Review {
     private String authorName;
     private String content;
     private boolean moderated;
+    private String userUuid;
 }

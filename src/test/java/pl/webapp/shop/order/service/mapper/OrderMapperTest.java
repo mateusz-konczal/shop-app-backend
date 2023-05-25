@@ -3,10 +3,10 @@ package pl.webapp.shop.order.service.mapper;
 import org.junit.jupiter.api.Test;
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
+import pl.webapp.shop.common.model.OrderStatus;
 import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.model.Order;
-import pl.webapp.shop.order.model.OrderStatus;
 import pl.webapp.shop.order.model.Payment;
 import pl.webapp.shop.order.model.PaymentType;
 import pl.webapp.shop.order.model.Shipment;
@@ -15,6 +15,7 @@ import pl.webapp.shop.order.model.ShipmentType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,8 +32,9 @@ class OrderMapperTest {
         Cart cart = getCart();
         Shipment shipment = getShipment();
         Payment payment = getPayment();
+        String userUuid = UUID.randomUUID().toString();
         // WHEN
-        Order result = OrderMapper.createOrder(orderDto, cart, shipment, payment);
+        Order result = OrderMapper.createOrder(orderDto, cart, shipment, payment, userUuid);
         // THEN
         assertThat(result).isNotNull();
         assertThat(result.getOrderStatus()).isEqualTo(OrderStatus.NEW);

@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.order.controller.dto;
 
 import lombok.Builder;
-import pl.webapp.shop.admin.order.model.AdminOrderStatus;
+import pl.webapp.shop.common.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,6 +11,6 @@ public record AdminOrderReadDto(
 
         Long id,
         LocalDateTime placeDate,
-        AdminOrderStatus orderStatus,
+        OrderStatus orderStatus,
         BigDecimal totalValue) {
 }

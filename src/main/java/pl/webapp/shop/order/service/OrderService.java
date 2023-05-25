@@ -9,6 +9,7 @@ import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.repository.CartItemRepository;
 import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.order.dto.OrderDto;
+import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.OrderRow;
@@ -26,6 +27,7 @@ import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrder;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrderSummaryDto;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithProduct;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.mapToOrderRowWithShipment;
+import static pl.webapp.shop.order.service.mapper.OrderReadDtoMapper.mapToOrderReadDtoList;
 
 @Service
 @RequiredArgsConstructor
@@ -41,17 +43,21 @@ public class OrderService {
     private final MailClientService mailClientService;
 
     @Transactional
-    public OrderSummaryDto placeOrder(OrderDto orderDto) {
+    public OrderSummaryDto placeOrder(OrderDto orderDto, String userUuid) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
-        Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment));
+        Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment, userUuid));
         saveOrderRows(order.getId(), cart, shipment);
         deleteOrderCart(orderDto.cartId());
         log.info("Order has been placed");
         sendConfirmationMail(order);
 
         return createOrderSummaryDto(order, shipment, payment);
+    }
+
+    public List<OrderReadDto> getOrdersForCustomer(String userUuid) {
+        return mapToOrderReadDtoList(orderRepository.findByUserUuidOrderByIdDesc(userUuid));
     }
 
     private void saveOrderRows(Long orderId, Cart cart, Shipment shipment) {

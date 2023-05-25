@@ -2,11 +2,11 @@ package pl.webapp.shop.order.service.mapper;
 
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
+import pl.webapp.shop.common.model.OrderStatus;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.OrderRow;
-import pl.webapp.shop.order.model.OrderStatus;
 import pl.webapp.shop.order.model.Payment;
 import pl.webapp.shop.order.model.Shipment;
 
@@ -49,7 +49,7 @@ public class OrderMapper {
                 .build();
     }
 
-    public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment) {
+    public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment, String userUuid) {
         return Order.builder()
                 .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
@@ -64,6 +64,7 @@ public class OrderMapper {
                 .email(orderDto.email())
                 .phone(orderDto.phone())
                 .payment(payment)
+                .userUuid(userUuid)
                 .build();
     }
 

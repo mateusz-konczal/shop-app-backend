@@ -2,8 +2,9 @@
 The backend part of the online shop's web application in a layered architecture. 
 The application provides a REST API for the frontend part built in Angular. You can 
 now manage products, categories, reviews, shopping cart and orders. As orders are 
-processed, events are logged and emails are sent to customers. Work in progress on user 
-registration and login (using Spring Security) and integration with a payment gateway.
+processed, events are logged and emails are sent to customers. Handling for administrator 
+accounts and shop customer accounts was provided using Spring Security and JSON Web Token.
+Work in progress on integration with a payment gateway.
 - --
 ## Technologies
 * Java 17
@@ -26,8 +27,8 @@ cd shop-app-backend
 mvn spring-boot:run
 ```
 The REST API documentation is available at:
-* [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) (JSON)
-* [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) (User Interface)
+* [localhost:8080/api/v1/api-docs](http://localhost:8080/api/v1/api-docs) (JSON)
+* [localhost:8080/api/v1/swagger-ui/index.html](http://localhost:8080/api/v1/swagger-ui/index.html) (User Interface)
 
 ## Simplified EER Diagram
 ![EER Diagram](https://github.com/mateusz-konczal/shop-app-backend/blob/master/readme/EER_Diagram.png?raw=true)

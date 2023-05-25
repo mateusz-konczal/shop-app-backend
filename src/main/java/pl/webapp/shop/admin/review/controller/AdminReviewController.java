@@ -15,7 +15,7 @@ import pl.webapp.shop.admin.review.model.AdminReview;
 import pl.webapp.shop.admin.review.service.AdminReviewService;
 
 @RestController
-@RequestMapping("/api/v1/admin/reviews")
+@RequestMapping("/admin/reviews")
 @RequiredArgsConstructor
 class AdminReviewController {
 
