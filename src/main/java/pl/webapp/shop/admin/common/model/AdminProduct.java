@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pl.webapp.shop.common.model.ProductCurrency;
 
 import java.math.BigDecimal;
 
@@ -31,7 +32,7 @@ public class AdminProduct {
     private String fullDescription;
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
-    private AdminProductCurrency currency;
+    private ProductCurrency currency;
     private String image;
     private String slug;
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.common.model.Cart;
+import pl.webapp.shop.common.model.PaymentType;
 import pl.webapp.shop.common.repository.CartItemRepository;
 import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.order.dto.OrderDto;
@@ -19,6 +20,7 @@ import pl.webapp.shop.order.repository.OrderRepository;
 import pl.webapp.shop.order.repository.OrderRowRepository;
 import pl.webapp.shop.order.repository.PaymentRepository;
 import pl.webapp.shop.order.repository.ShipmentRepository;
+import pl.webapp.shop.order.service.payment.p24.PaymentMethodP24;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class OrderService {
     private final ShipmentRepository shipmentRepository;
     private final PaymentRepository paymentRepository;
     private final MailClientService mailClientService;
+    private final PaymentMethodP24 paymentMethodP24;
 
     @Transactional
     public OrderSummaryDto placeOrder(OrderDto orderDto, String userUuid) {
@@ -52,8 +55,9 @@ public class OrderService {
         deleteOrderCart(orderDto.cartId());
         log.info("Order has been placed");
         sendConfirmationMail(order);
+        String redirectUrl = initPaymentIfNeeded(order);
 
-        return createOrderSummaryDto(order, shipment, payment);
+        return createOrderSummaryDto(order, shipment, payment, redirectUrl);
     }
 
     public List<OrderReadDto> getOrdersForCustomer(String userUuid) {
@@ -84,5 +88,13 @@ public class OrderService {
     private void sendConfirmationMail(Order order) {
         mailClientService.getInstance()
                 .send(order.getEmail(), "Otrzymaliśmy Twoje zamówienie", createMailContent(order));
+    }
+
+    private String initPaymentIfNeeded(Order order) {
+        if (order.getPayment().getType() == PaymentType.P24_ONLINE) {
+            return paymentMethodP24.initPayment(order);
+        }
+
+        return null;
     }
 }

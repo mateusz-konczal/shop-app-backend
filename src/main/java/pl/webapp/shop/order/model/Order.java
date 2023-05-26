@@ -31,6 +31,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String uuid;
     private LocalDateTime placeDate;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
