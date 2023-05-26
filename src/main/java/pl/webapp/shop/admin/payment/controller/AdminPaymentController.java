@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.common.model.AdminPayment;
-import pl.webapp.shop.admin.common.model.AdminPaymentType;
 import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 import pl.webapp.shop.admin.payment.service.AdminPaymentService;
+import pl.webapp.shop.common.model.PaymentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ class AdminPaymentController {
 
     private List<String> createPaymentTypesList() {
         List<String> paymentTypes = new ArrayList<>();
-        for (AdminPaymentType type : AdminPaymentType.values()) {
+        for (PaymentType type : PaymentType.values()) {
             paymentTypes.add(type.name());
         }
 

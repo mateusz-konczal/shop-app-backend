@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.common.model.AdminShipment;
-import pl.webapp.shop.admin.common.model.AdminShipmentType;
 import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 import pl.webapp.shop.admin.shipment.service.AdminShipmentService;
+import pl.webapp.shop.common.model.ShipmentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ class AdminShipmentController {
 
     private List<String> createShipmentTypesList() {
         List<String> shipmentTypes = new ArrayList<>();
-        for (AdminShipmentType type : AdminShipmentType.values()) {
+        for (ShipmentType type : ShipmentType.values()) {
             shipmentTypes.add(type.name());
         }
 

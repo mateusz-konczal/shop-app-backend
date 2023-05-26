@@ -1,4 +1,4 @@
-package pl.webapp.shop.order.model;
+package pl.webapp.shop.common.model;
 
 public enum ShipmentType {
     DELIVERYMAN, SELF_PICKUP

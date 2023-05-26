@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pl.webapp.shop.common.model.ShipmentType;
 
 import java.math.BigDecimal;
 
@@ -28,6 +29,6 @@ public class AdminShipment {
     private String name;
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
-    private AdminShipmentType type;
+    private ShipmentType type;
     private boolean defaultShipment;
 }
