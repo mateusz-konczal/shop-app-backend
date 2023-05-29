@@ -16,6 +16,7 @@ record TransactionRegisterRequest(
         String country,
         String language,
         String urlReturn,
+        String urlStatus,
         String sign,
         String encoding) {
 }

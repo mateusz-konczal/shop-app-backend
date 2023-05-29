@@ -1,5 +1,6 @@
 package pl.webapp.shop.order.service.mapper;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.model.OrderStatus;
@@ -68,6 +69,7 @@ public class OrderMapper {
                 .phone(orderDto.phone())
                 .payment(payment)
                 .userUuid(userUuid)
+                .orderHash(RandomStringUtils.randomAlphanumeric(12))
                 .build();
     }
 

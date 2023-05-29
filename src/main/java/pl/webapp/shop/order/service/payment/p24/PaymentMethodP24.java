@@ -33,12 +33,12 @@ public class PaymentMethodP24 {
                 .block();
 
         if (response != null && response.getBody() != null && response.getBody().data() != null) {
-            return createLink(response.getBody().data().token());
+            return createRedirectUrl(response.getBody().data().token());
         }
         return null;
     }
 
-    private String createLink(String token) {
+    private String createRedirectUrl(String token) {
         return (p24Config.isTestMode() ? p24Config.getTestUrl() : p24Config.getUrl()) + "/trnRequest/" + token;
     }
 }

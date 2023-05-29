@@ -12,6 +12,7 @@ import pl.webapp.shop.common.repository.CartRepository;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
+import pl.webapp.shop.order.dto.TransactionNotificationDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.OrderRow;
 import pl.webapp.shop.order.model.Payment;
@@ -62,6 +63,20 @@ public class OrderService {
 
     public List<OrderReadDto> getOrdersForCustomer(String userUuid) {
         return mapToOrderReadDtoList(orderRepository.findByUserUuidOrderByIdDesc(userUuid));
+    }
+
+    public Order getOrderByOrderHash(String orderHash) {
+        return orderRepository.findByOrderHash(orderHash).orElseThrow();
+    }
+
+    @Transactional
+    public void receiveNotification(String orderHash, TransactionNotificationDto notificationDto) {
+        Order order = getOrderByOrderHash(orderHash);
+        log.info(notificationDto.toString());
+        // TODO
+        // notificationDto validation
+        // transaction verification query
+        // order status update (PAID)
     }
 
     private void saveOrderRows(Long orderId, Cart cart, Shipment shipment) {
