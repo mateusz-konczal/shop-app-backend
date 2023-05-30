@@ -56,7 +56,6 @@ class OrderController {
     @GetMapping("/notification/{orderHash}")
     PaymentNotificationDto showNotification(@PathVariable @Length(max = 12) String orderHash) {
         Order order = orderService.getOrderByOrderHash(orderHash);
-
         return new PaymentNotificationDto(order.getOrderStatus() == OrderStatus.PAID);
     }
 

@@ -2,6 +2,7 @@ package pl.webapp.shop.order.service.payment.p24;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,9 @@ class PaymentMethodP24Config {
     private String testCrc;
     private String secretId;
     private String testSecretId;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     @Bean
     WebClient p24Client() {

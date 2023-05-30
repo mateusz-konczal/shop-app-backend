@@ -6,10 +6,13 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import pl.webapp.shop.order.dto.TransactionNotificationDto;
 import pl.webapp.shop.order.model.Order;
 import reactor.core.publisher.Mono;
 
 import static pl.webapp.shop.order.service.payment.p24.RequestUtil.createRegisterRequest;
+import static pl.webapp.shop.order.service.payment.p24.RequestUtil.createVerifyRequest;
+import static pl.webapp.shop.order.service.payment.p24.RequestUtil.validateTransactionResult;
 
 @Service
 @Slf4j
@@ -38,7 +41,29 @@ public class PaymentMethodP24 {
         return null;
     }
 
+    public String receiveNotification(Order order, TransactionNotificationDto notificationDto) {
+        log.info(notificationDto.toString());
+        validateTransactionResult(p24Config, order, notificationDto);
+
+        return verifyPayment(order, notificationDto);
+    }
+
     private String createRedirectUrl(String token) {
         return (p24Config.isTestMode() ? p24Config.getTestUrl() : p24Config.getUrl()) + "/trnRequest/" + token;
+    }
+
+    private String verifyPayment(Order order, TransactionNotificationDto notificationDto) {
+        log.info("Payment verification");
+        ResponseEntity<TransactionVerifyResponse> response = p24Client.put().uri("/transaction/verify")
+                .bodyValue(createVerifyRequest(p24Config, order, notificationDto))
+                .retrieve()
+                .toEntity(TransactionVerifyResponse.class)
+                .block();
+
+        if (response != null && response.getBody() != null && response.getBody().data() != null) {
+            log.info("Transaction verification status: " + response.getBody().data().status());
+            return response.getBody().data().status();
+        }
+        return null;
     }
 }

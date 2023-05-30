@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.common.model.Cart;
+import pl.webapp.shop.common.model.OrderStatus;
 import pl.webapp.shop.common.model.PaymentType;
 import pl.webapp.shop.common.repository.CartItemRepository;
 import pl.webapp.shop.common.repository.CartRepository;
@@ -14,16 +15,20 @@ import pl.webapp.shop.order.dto.OrderReadDto;
 import pl.webapp.shop.order.dto.OrderSummaryDto;
 import pl.webapp.shop.order.dto.TransactionNotificationDto;
 import pl.webapp.shop.order.model.Order;
+import pl.webapp.shop.order.model.OrderLog;
 import pl.webapp.shop.order.model.OrderRow;
 import pl.webapp.shop.order.model.Payment;
 import pl.webapp.shop.order.model.Shipment;
+import pl.webapp.shop.order.repository.OrderLogRepository;
 import pl.webapp.shop.order.repository.OrderRepository;
 import pl.webapp.shop.order.repository.OrderRowRepository;
 import pl.webapp.shop.order.repository.PaymentRepository;
 import pl.webapp.shop.order.repository.ShipmentRepository;
 import pl.webapp.shop.order.service.payment.p24.PaymentMethodP24;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static pl.webapp.shop.order.service.mapper.OrderMailContentMapper.createMailContent;
 import static pl.webapp.shop.order.service.mapper.OrderMapper.createOrder;
@@ -39,6 +44,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderRowRepository orderRowRepository;
+    private final OrderLogRepository orderLogRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final ShipmentRepository shipmentRepository;
@@ -72,11 +78,12 @@ public class OrderService {
     @Transactional
     public void receiveNotification(String orderHash, TransactionNotificationDto notificationDto) {
         Order order = getOrderByOrderHash(orderHash);
-        log.info(notificationDto.toString());
-        // TODO
-        // notificationDto validation
-        // transaction verification query
-        // order status update (PAID)
+        String status = paymentMethodP24.receiveNotification(order, notificationDto);
+        if (Objects.equals(status, "success")) {
+            OrderStatus oldStatus = order.getOrderStatus();
+            order.setOrderStatus(OrderStatus.PAID);
+            logOrderStatusChange(oldStatus, order, notificationDto);
+        }
     }
 
     private void saveOrderRows(Long orderId, Cart cart, Shipment shipment) {
@@ -109,7 +116,15 @@ public class OrderService {
         if (order.getPayment().getType() == PaymentType.P24_ONLINE) {
             return paymentMethodP24.initPayment(order);
         }
-
         return null;
+    }
+
+    private void logOrderStatusChange(OrderStatus oldStatus, Order order, TransactionNotificationDto notificationDto) {
+        orderLogRepository.save(OrderLog.builder()
+                .orderId(order.getId())
+                .created(LocalDateTime.now())
+                .note("Opłacono zamówienie przez Przelewy24 (tytuł płatności: " + notificationDto.statement() +
+                        "), zmieniono status z " + oldStatus.getValue() + " na " + order.getOrderStatus().getValue())
+                .build());
     }
 }

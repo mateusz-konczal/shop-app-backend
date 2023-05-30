@@ -61,10 +61,10 @@ app:
       testUrl: https://sandbox.przelewy24.pl
       apiUrl: https://secure.przelewy24.pl/api/v1
       testApiUrl: https://sandbox.przelewy24.pl/api/v1
-      urlReturn: https://3caa-188-146-253-12.ngrok-free.app
-      testUrlReturn: https://3caa-188-146-253-12.ngrok-free.app
-      urlStatus: https://3caa-188-146-253-11.ngrok-free.app
-      testUrlStatus: https://3caa-188-146-253-11.ngrok-free.app
+      urlReturn: https://1c6b-188-146-254-105.ngrok-free.app
+      testUrlReturn: https://1c6b-188-146-254-105.ngrok-free.app
+      urlStatus: https://fe56-188-146-254-105.ngrok-free.app
+      testUrlStatus: https://fe56-188-146-254-105.ngrok-free.app
       crc: crc
       testCrc: testCrc
       secretId: secretId
