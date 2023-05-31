@@ -31,6 +31,12 @@ class RequestUtil {
                 .build();
     }
 
+    static void filterIpAddress(PaymentMethodP24Config p24Config, String remoteAddr) {
+        if (!p24Config.getServers().contains(remoteAddr)) {
+            throw new IllegalArgumentException("Invalid IP address for transaction notification: " + remoteAddr);
+        }
+    }
+
     static void validateTransactionResult(PaymentMethodP24Config p24Config, Order order,
                                           TransactionNotificationDto notificationDto) {
         validateField(p24Config.getMerchantId().equals(notificationDto.merchantId()));

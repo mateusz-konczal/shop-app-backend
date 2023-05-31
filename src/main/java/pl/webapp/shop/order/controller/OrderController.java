@@ -1,5 +1,6 @@
 package pl.webapp.shop.order.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -61,7 +62,8 @@ class OrderController {
 
     @PostMapping("/notification/{orderHash}")
     void receiveNotification(@PathVariable @Length(max = 12) String orderHash,
-                             @RequestBody TransactionNotificationDto notificationDto) {
-        orderService.receiveNotification(orderHash, notificationDto);
+                             @RequestBody TransactionNotificationDto notificationDto,
+                             HttpServletRequest request) {
+        orderService.receiveNotification(orderHash, notificationDto, request.getRemoteAddr());
     }
 }

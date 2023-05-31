@@ -69,6 +69,13 @@ app:
       testCrc: testCrc
       secretId: secretId
       testSecretId: testSecretId
+      servers[0]: 91.216.191.181
+      servers[1]: 91.216.191.182
+      servers[2]: 91.216.191.183
+      servers[3]: 91.216.191.184
+      servers[4]: 91.216.191.185
+      servers[5]: 5.252.202.255
+      servers[6]: 5.252.202.254
   serviceAddress: http://localhost:4200
 jwt:
   expirationTime: 2592000000

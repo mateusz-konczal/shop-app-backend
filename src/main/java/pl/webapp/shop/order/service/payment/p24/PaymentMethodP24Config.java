@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Configuration
 @Getter
 @Setter
@@ -30,6 +32,7 @@ class PaymentMethodP24Config {
     private String testCrc;
     private String secretId;
     private String testSecretId;
+    private List<String> servers;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;

@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 import static pl.webapp.shop.order.service.payment.p24.RequestUtil.createRegisterRequest;
 import static pl.webapp.shop.order.service.payment.p24.RequestUtil.createVerifyRequest;
+import static pl.webapp.shop.order.service.payment.p24.RequestUtil.filterIpAddress;
 import static pl.webapp.shop.order.service.payment.p24.RequestUtil.validateTransactionResult;
 
 @Service
@@ -41,8 +42,9 @@ public class PaymentMethodP24 {
         return null;
     }
 
-    public String receiveNotification(Order order, TransactionNotificationDto notificationDto) {
+    public String receiveNotification(Order order, TransactionNotificationDto notificationDto, String remoteAddr) {
         log.info(notificationDto.toString());
+        filterIpAddress(p24Config, remoteAddr);
         validateTransactionResult(p24Config, order, notificationDto);
 
         return verifyPayment(order, notificationDto);
