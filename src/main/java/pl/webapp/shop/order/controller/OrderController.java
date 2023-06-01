@@ -26,6 +26,8 @@ import pl.webapp.shop.order.service.ShipmentService;
 
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
@@ -64,6 +66,8 @@ class OrderController {
     void receiveNotification(@PathVariable @Length(max = 12) String orderHash,
                              @RequestBody TransactionNotificationDto notificationDto,
                              HttpServletRequest request) {
-        orderService.receiveNotification(orderHash, notificationDto, request.getRemoteAddr());
+        String forwardedAddr = request.getHeader("x-forwarded-for");
+        orderService.receiveNotification(orderHash, notificationDto,
+                isNotEmpty(forwardedAddr) ? forwardedAddr : request.getRemoteAddr());
     }
 }

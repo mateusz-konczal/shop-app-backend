@@ -31,9 +31,22 @@ class RequestUtil {
                 .build();
     }
 
-    static void filterIpAddress(PaymentMethodP24Config p24Config, String remoteAddr) {
-        if (!p24Config.getServers().contains(remoteAddr)) {
-            throw new IllegalArgumentException("Invalid IP address for transaction notification: " + remoteAddr);
+    static TransactionVerifyRequest createVerifyRequest(PaymentMethodP24Config p24Config, Order order,
+                                                        TransactionNotificationDto notificationDto) {
+        return TransactionVerifyRequest.builder()
+                .merchantId(p24Config.getMerchantId())
+                .posId(p24Config.getPosId())
+                .sessionId(createSessionId(order))
+                .amount(createAmount(order))
+                .currency(ProductCurrency.PLN.name())
+                .orderId(notificationDto.orderId())
+                .sign(createVerifySign(p24Config, order, notificationDto))
+                .build();
+    }
+
+    static void filterIpAddress(PaymentMethodP24Config p24Config, String serverAddr) {
+        if (!p24Config.getServers().contains(serverAddr)) {
+            throw new IllegalArgumentException("Invalid IP address for transaction notification: " + serverAddr);
         }
     }
 
@@ -48,19 +61,6 @@ class RequestUtil {
         validateField(createReceivedSign(p24Config, order, notificationDto).equals(notificationDto.sign()));
     }
 
-    static TransactionVerifyRequest createVerifyRequest(PaymentMethodP24Config p24Config, Order order,
-                                                        TransactionNotificationDto notificationDto) {
-        return TransactionVerifyRequest.builder()
-                .merchantId(p24Config.getMerchantId())
-                .posId(p24Config.getPosId())
-                .sessionId(createSessionId(order))
-                .amount(createAmount(order))
-                .currency(ProductCurrency.PLN.name())
-                .orderId(notificationDto.orderId())
-                .sign(createVerifySign(p24Config, order, notificationDto))
-                .build();
-    }
-
     private static String createSessionId(Order order) {
         return "order_uuid_" + order.getUuid();
     }
@@ -69,14 +69,22 @@ class RequestUtil {
         return order.getTotalValue().movePointRight(2).intValue();
     }
 
+    private static BigDecimal createTotalValue(Integer amount) {
+        return BigDecimal.valueOf(amount).movePointLeft(2);
+    }
+
     private static String createReturnUrl(PaymentMethodP24Config p24Config, Order order) {
-        return (p24Config.isTestMode() ? p24Config.getTestUrlReturn() : p24Config.getUrlReturn()) +
-                "/order/notification/" + order.getOrderHash();
+        return p24Config.getUrlReturn() + "/order/notification/" + order.getOrderHash();
     }
 
     private static String createStatusUrl(PaymentMethodP24Config p24Config, Order order) {
-        return (p24Config.isTestMode() ? p24Config.getTestUrlStatus() : p24Config.getUrlStatus()) +
-                p24Config.getContextPath() + "/orders/notification/" + order.getOrderHash();
+        return p24Config.getUrlStatus() + p24Config.getContextPath() + "/orders/notification/" + order.getOrderHash();
+    }
+
+    private static void validateField(boolean condition) {
+        if (!condition) {
+            throw new RuntimeException("Invalid validation");
+        }
     }
 
     private static String createRegisterSign(PaymentMethodP24Config p24Config, Order order) {
@@ -87,16 +95,6 @@ class RequestUtil {
                 "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
 
         return DigestUtils.sha384Hex(json);
-    }
-
-    private static void validateField(boolean condition) {
-        if (!condition) {
-            throw new RuntimeException("Invalid validation");
-        }
-    }
-
-    private static BigDecimal createTotalValue(Integer amount) {
-        return BigDecimal.valueOf(amount).movePointLeft(2);
     }
 
     private static String createReceivedSign(PaymentMethodP24Config p24Config, Order order,

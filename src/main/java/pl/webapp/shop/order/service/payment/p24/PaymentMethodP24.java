@@ -42,9 +42,9 @@ public class PaymentMethodP24 {
         return null;
     }
 
-    public String receiveNotification(Order order, TransactionNotificationDto notificationDto, String remoteAddr) {
+    public String receiveNotification(Order order, TransactionNotificationDto notificationDto, String serverAddr) {
         log.info(notificationDto.toString());
-        filterIpAddress(p24Config, remoteAddr);
+        filterIpAddress(p24Config, serverAddr);
         validateTransactionResult(p24Config, order, notificationDto);
 
         return verifyPayment(order, notificationDto);

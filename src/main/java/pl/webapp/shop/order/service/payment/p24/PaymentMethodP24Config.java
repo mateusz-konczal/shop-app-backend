@@ -25,9 +25,7 @@ class PaymentMethodP24Config {
     private String apiUrl;
     private String testApiUrl;
     private String urlReturn;
-    private String testUrlReturn;
     private String urlStatus;
-    private String testUrlStatus;
     private String crc;
     private String testCrc;
     private String secretId;
