@@ -23,8 +23,8 @@ public class PaymentMethodP24 {
     private final PaymentMethodP24Config p24Config;
     private final WebClient p24Client;
 
-    public String initPayment(Order order) {
-        log.info("Payment initialization");
+    public String registerPayment(Order order) {
+        log.info("Payment registration");
         ResponseEntity<TransactionRegisterResponse> response = p24Client.post().uri("/transaction/register")
                 .bodyValue(createRegisterRequest(p24Config, order))
                 .retrieve()

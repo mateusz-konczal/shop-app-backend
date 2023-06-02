@@ -114,7 +114,7 @@ public class OrderService {
 
     private String initPaymentIfNeeded(Order order) {
         if (order.getPayment().getType() == PaymentType.P24_ONLINE) {
-            return paymentMethodP24.initPayment(order);
+            return paymentMethodP24.registerPayment(order);
         }
         return null;
     }
