@@ -1,6 +1,7 @@
 package pl.webapp.shop.admin.order.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.webapp.shop.admin.order.model.AdminOrder;
 import pl.webapp.shop.common.mail.MailClientService;
@@ -16,19 +17,22 @@ class MailNotificationForStatusChange {
 
     private final MailClientService mailClientService;
 
+    @Value("${app.mail.sender.address}")
+    private String senderAddress;
+
     void sendMailNotification(AdminOrder order, OrderStatus newStatus) {
         if (newStatus == OrderStatus.PROCESSING) {
             sendMail(order.getEmail(),
                     "Twoje zamówienie nr " + order.getId() + " zmieniło status na: " + newStatus.getValue(),
-                    createProcessingMailContent(order.getId(), newStatus));
+                    createProcessingMailContent(order.getId(), newStatus, senderAddress));
         } else if (newStatus == OrderStatus.COMPLETED) {
             sendMail(order.getEmail(),
                     "Twoje zamówienie nr " + order.getId() + " zostało zrealizowane",
-                    createCompletedMailContent(order.getId(), newStatus));
+                    createCompletedMailContent(order.getId(), newStatus, senderAddress));
         } else if (newStatus == OrderStatus.REFUND) {
             sendMail(order.getEmail(),
                     "Twoje zamówienie nr " + order.getId() + " zostało zwrócone",
-                    createRefundMailContent(order.getId(), newStatus));
+                    createRefundMailContent(order.getId(), newStatus, senderAddress));
         }
     }
 

@@ -11,7 +11,7 @@ public class OrderMailContentMapper {
     private OrderMailContentMapper() {
     }
 
-    public static String createMailContent(Order order) {
+    public static String createMailContent(Order order, String senderAddress) {
         return "Szanowny Kliencie," +
                 "\nw naszym sklepie internetowym zarejestrowaliśmy Twoje zamówienie." +
                 "\n\nNumer zamówienia: " + order.getId() +
@@ -20,6 +20,8 @@ public class OrderMailContentMapper {
                 "\n\nForma płatności: " + order.getPayment().getName() +
                 (isNotEmpty(order.getPayment().getNote()) ? "\n" + order.getPayment().getNote() : "") +
                 "\n\nDziękujemy za zakupy" +
-                "\nSklep Shop";
+                "\nSklep Shop" +
+                "\n\n\nPS Jeśli chcesz się skontaktować w sprawie zamówienia, to odpisz na tę wiadomość." +
+                "\nProfesjonalna obsługa sklepu czeka pod adresem " + senderAddress + " ;)";
     }
 }

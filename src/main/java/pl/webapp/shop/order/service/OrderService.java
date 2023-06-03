@@ -2,6 +2,7 @@ package pl.webapp.shop.order.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.common.mail.MailClientService;
@@ -52,6 +53,9 @@ public class OrderService {
     private final MailClientService mailClientService;
     private final PaymentMethodP24 paymentMethodP24;
 
+    @Value("${app.mail.sender.address}")
+    private String senderAddress;
+
     @Transactional
     public OrderSummaryDto placeOrder(OrderDto orderDto, String userUuid) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
@@ -61,7 +65,7 @@ public class OrderService {
         saveOrderRows(order.getId(), cart, shipment);
         deleteOrderCart(orderDto.cartId());
         log.info("Order has been placed");
-        sendConfirmationMail(order);
+        sendConfirmationMail(order, senderAddress);
         String redirectUrl = initPaymentIfNeeded(order);
 
         return createOrderSummaryDto(order, shipment, payment, redirectUrl);
@@ -107,9 +111,9 @@ public class OrderService {
         cartRepository.deleteCartById(cartId);
     }
 
-    private void sendConfirmationMail(Order order) {
+    private void sendConfirmationMail(Order order, String senderAddress) {
         mailClientService.getInstance()
-                .send(order.getEmail(), "Otrzymaliśmy Twoje zamówienie", createMailContent(order));
+                .send(order.getEmail(), "Otrzymaliśmy Twoje zamówienie", createMailContent(order, senderAddress));
     }
 
     private String initPaymentIfNeeded(Order order) {

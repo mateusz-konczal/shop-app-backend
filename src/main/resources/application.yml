@@ -51,6 +51,7 @@ app:
       expression: "0 0 3 * * *"
   mail:
     sender:
+      address: shop
       isFakeMailService: true
   payment:
     p24:
