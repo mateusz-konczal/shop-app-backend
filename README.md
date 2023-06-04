@@ -4,7 +4,8 @@ The application provides a REST API for the frontend part built in Angular. You 
 now manage products, categories, reviews, shopping cart and orders. As orders are 
 processed, events are logged and emails are sent to customers. Handling for administrator 
 accounts and shop customer accounts was provided using Spring Security and JSON Web Token.
-Work in progress on integration with a payment gateway.
+The online shop was integrated with the Przelewy24 online payment system. Currently, 
+the project is being refined and then it will be deployed on a cloud platform.
 - --
 ## Technologies
 * Java 17
@@ -19,6 +20,7 @@ Work in progress on integration with a payment gateway.
 * Mockito
 * AssertJ
 * Git
+* ngrok 3.3.0
 
 ## Usage
 ```
@@ -32,3 +34,7 @@ The REST API documentation is available at:
 
 ## Simplified EER Diagram
 ![EER Diagram](https://github.com/mateusz-konczal/shop-app-backend/blob/master/readme/EER_Diagram.png?raw=true)
+
+## Payment transaction process with Przelewy24
+![Transaction process](https://github.com/mateusz-konczal/shop-app-backend/blob/master/readme/Transaction_process.png?raw=true)
+* Przelewy24 REST API Documentation: [developers.przelewy24.pl](https://developers.przelewy24.pl)
