@@ -10,9 +10,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MailClientService {
 
+    private final Map<String, MailSender> mailSenderMap;
+
     @Value("${app.mail.sender.isFakeMailService}")
     private boolean isFakeMailService;
-    private final Map<String, MailSender> mailSenderMap;
 
     public MailSender getInstance() {
         if (isFakeMailService) {

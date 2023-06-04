@@ -2,7 +2,7 @@ package pl.webapp.shop.admin.payment.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
-import pl.webapp.shop.admin.common.model.AdminPaymentType;
+import pl.webapp.shop.common.model.PaymentType;
 
 public record AdminPaymentDto(
 
@@ -10,7 +10,7 @@ public record AdminPaymentDto(
         @Length(min = 4)
         String name,
 
-        AdminPaymentType type,
+        PaymentType type,
 
         boolean defaultPayment,
 

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.webapp.shop.common.model.OrderStatus;
 
 import java.math.BigDecimal;
@@ -23,6 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +33,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String uuid;
     private LocalDateTime placeDate;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -50,4 +53,5 @@ public class Order {
     @OneToOne
     private Payment payment;
     private String userUuid;
+    private String orderHash;
 }

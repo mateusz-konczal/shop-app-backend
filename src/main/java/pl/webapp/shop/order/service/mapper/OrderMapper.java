@@ -1,5 +1,6 @@
 package pl.webapp.shop.order.service.mapper;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.model.OrderStatus;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OrderMapper {
 
@@ -38,7 +40,7 @@ public class OrderMapper {
                 .build();
     }
 
-    public static OrderSummaryDto createOrderSummaryDto(Order order, Shipment shipment, Payment payment) {
+    public static OrderSummaryDto createOrderSummaryDto(Order order, Shipment shipment, Payment payment, String redirectUrl) {
         return OrderSummaryDto.builder()
                 .id(order.getId())
                 .placeDate(order.getPlaceDate())
@@ -46,11 +48,13 @@ public class OrderMapper {
                 .totalValue(order.getTotalValue())
                 .shipment(shipment)
                 .payment(payment)
+                .redirectUrl(redirectUrl)
                 .build();
     }
 
     public static Order createOrder(OrderDto orderDto, Cart cart, Shipment shipment, Payment payment, String userUuid) {
         return Order.builder()
+                .uuid(UUID.randomUUID().toString())
                 .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
                 .totalValue(calculateTotalValue(cart.getItems(), shipment.getPrice()))
@@ -65,6 +69,7 @@ public class OrderMapper {
                 .phone(orderDto.phone())
                 .payment(payment)
                 .userUuid(userUuid)
+                .orderHash(RandomStringUtils.randomAlphanumeric(12))
                 .build();
     }
 

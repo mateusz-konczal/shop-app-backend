@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import pl.webapp.shop.security.filter.JwtAuthorizationFilter;
@@ -15,7 +14,6 @@ import pl.webapp.shop.security.model.UserRole;
 import pl.webapp.shop.security.service.ShopUserDetailsService;
 
 @Configuration
-@EnableWebSecurity(debug = true)
 class SecurityConfig {
 
     private final String secret;

@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 import pl.webapp.shop.common.model.Cart;
 import pl.webapp.shop.common.model.CartItem;
 import pl.webapp.shop.common.model.OrderStatus;
+import pl.webapp.shop.common.model.PaymentType;
 import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.common.model.ShipmentType;
 import pl.webapp.shop.order.dto.OrderDto;
 import pl.webapp.shop.order.model.Order;
 import pl.webapp.shop.order.model.Payment;
-import pl.webapp.shop.order.model.PaymentType;
 import pl.webapp.shop.order.model.Shipment;
-import pl.webapp.shop.order.model.ShipmentType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

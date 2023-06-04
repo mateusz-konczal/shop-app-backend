@@ -10,7 +10,7 @@ logging:
     org:
       springframework:
         web: INFO
-        security: DEBUG
+        security: INFO
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/webapp?useUnicode=true&serverTimeZone=UTC
@@ -51,7 +51,30 @@ app:
       expression: "0 0 3 * * *"
   mail:
     sender:
+      address: shop
       isFakeMailService: true
+  payment:
+    p24:
+      testMode: true
+      merchantId: 0
+      posId: 0
+      url: https://secure.przelewy24.pl
+      testUrl: https://sandbox.przelewy24.pl
+      apiUrl: https://secure.przelewy24.pl/api/v1
+      testApiUrl: https://sandbox.przelewy24.pl/api/v1
+      urlReturn: https://17fd-46-238-248-11.ngrok-free.app
+      urlStatus: https://7df2-46-238-248-11.ngrok-free.app
+      crc: crc
+      testCrc: testCrc
+      secretId: secretId
+      testSecretId: testSecretId
+      servers[0]: 91.216.191.181
+      servers[1]: 91.216.191.182
+      servers[2]: 91.216.191.183
+      servers[3]: 91.216.191.184
+      servers[4]: 91.216.191.185
+      servers[5]: 5.252.202.255
+      servers[6]: 5.252.202.254
   serviceAddress: http://localhost:4200
 jwt:
   expirationTime: 2592000000

@@ -16,5 +16,6 @@ public record OrderSummaryDto(
         OrderStatus status,
         BigDecimal totalValue,
         Shipment shipment,
-        Payment payment) {
+        Payment payment,
+        String redirectUrl) {
 }
