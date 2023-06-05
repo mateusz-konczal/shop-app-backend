@@ -19,6 +19,7 @@ public class ProductReviewsMapper {
                 .description(product.getDescription())
                 .fullDescription(product.getFullDescription())
                 .price(product.getPrice())
+                .salePrice(product.getSalePrice())
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())

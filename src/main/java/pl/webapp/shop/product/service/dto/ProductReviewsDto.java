@@ -13,6 +13,7 @@ public record ProductReviewsDto(
         String description,
         String fullDescription,
         BigDecimal price,
+        BigDecimal salePrice,
         String currency,
         String image,
         String slug,

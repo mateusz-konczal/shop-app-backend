@@ -27,6 +27,9 @@ public record AdminProductDto(
         @Min(0)
         BigDecimal price,
 
+        @Min(0)
+        BigDecimal salePrice,
+
         ProductCurrency currency,
 
         String image,
