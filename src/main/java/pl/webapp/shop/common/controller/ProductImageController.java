@@ -22,11 +22,13 @@ class ProductImageController {
     private final ProductImageService productImageService;
 
     @GetMapping("/{filename}")
-    ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
-        Resource file = productImageService.serveFile(filename);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Path.of(filename)))
-                .body(file);
+    ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        try {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Path.of(filename)))
+                    .body(productImageService.serveFile(filename));
+        } catch (IOException e) {
+            throw new FileContentProbingException(e.getMessage());
+        }
     }
 }

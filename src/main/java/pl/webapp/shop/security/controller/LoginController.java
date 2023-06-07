@@ -16,6 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
+import pl.webapp.shop.common.exception.UsernameAlreadyExistsException;
+import pl.webapp.shop.security.exception.LoginException;
 import pl.webapp.shop.security.model.ShopUserDetails;
 import pl.webapp.shop.security.model.UserRole;
 import pl.webapp.shop.security.service.UserService;
@@ -51,10 +54,10 @@ class LoginController {
     @PostMapping("/register")
     Token register(@RequestBody @Valid RegisterCredentials registerCredentials) {
         if (!Objects.equals(registerCredentials.password(), registerCredentials.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
         if (userService.isUserExist(registerCredentials.username())) {
-            throw new IllegalArgumentException("Podana nazwa użytkownika już istnieje");
+            throw new UsernameAlreadyExistsException();
         }
         userService.createUser(registerCredentials.username(), registerCredentials.password());
 
@@ -67,9 +70,9 @@ class LoginController {
                     new UsernamePasswordAuthenticationToken(username, password));
             return createJwtToken((ShopUserDetails) authentication.getPrincipal());
         } catch (DisabledException e) {
-            throw new IllegalArgumentException("Twoje konto zostało wyłączone, skontaktuj się z administratorem sklepu");
+            throw new LoginException("Twoje konto zostało wyłączone, skontaktuj się z administratorem sklepu");
         } catch (AuthenticationException e) {
-            throw new IllegalArgumentException("Podaj poprawne dane logowania");
+            throw new LoginException("Podaj poprawne dane logowania");
         }
     }
 

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserDto;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserReadDto;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserRolesDto;
+import pl.webapp.shop.admin.user.exception.CustomerUsernameException;
 import pl.webapp.shop.admin.user.service.AdminUserService;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
+import pl.webapp.shop.common.exception.UsernameAlreadyExistsException;
 import pl.webapp.shop.security.model.UserRole;
 
 import java.util.HashMap;
@@ -40,13 +43,13 @@ class AdminUserController {
     @PostMapping
     void createUser(@RequestBody @Valid AdminUserDto adminUserDto) {
         if (!Objects.equals(adminUserDto.password(), adminUserDto.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
         if (!EmailValidator.getInstance().isValid(adminUserDto.username()) && adminUserDto.userRole() == UserRole.ROLE_CUSTOMER) {
-            throw new IllegalArgumentException("Nazwą użytkownika konta klienta musi być poprawny adres e-mail");
+            throw new CustomerUsernameException();
         }
         if (userService.isUserExist(adminUserDto.username())) {
-            throw new IllegalArgumentException("Podana nazwa użytkownika już istnieje");
+            throw new UsernameAlreadyExistsException();
         }
 
         userService.createUser(mapToAdminUser(adminUserDto));

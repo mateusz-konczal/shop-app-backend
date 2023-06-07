@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.user.dto.AdminNewPasswordDto;
 import pl.webapp.shop.admin.user.model.AdminUser;
 import pl.webapp.shop.admin.user.repository.AdminUserRepository;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
 
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class AdminAccountService {
     @Transactional
     public void changePassword(AdminNewPasswordDto adminNewPasswordDto, String uuid) {
         if (!Objects.equals(adminNewPasswordDto.password(), adminNewPasswordDto.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
         AdminUser user = userRepository.findByUuid(uuid).orElseThrow();
         user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(adminNewPasswordDto.password()));

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 import pl.webapp.shop.admin.product.controller.dto.UploadResponse;
+import pl.webapp.shop.admin.product.exception.FileNotUploadedException;
 import pl.webapp.shop.admin.product.service.AdminProductImageService;
 import pl.webapp.shop.admin.product.service.AdminProductService;
 
@@ -65,7 +66,7 @@ class AdminProductController {
             String savedFilename = productImageService.uploadImage(multipartFile.getOriginalFilename(), inputStream);
             return new UploadResponse(savedFilename);
         } catch (IOException e) {
-            throw new RuntimeException("Something went wrong while uploading the file: ", e);
+            throw new FileNotUploadedException(e.getMessage());
         }
     }
 }
