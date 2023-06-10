@@ -3,6 +3,7 @@ package pl.webapp.shop.category.controller;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,8 @@ class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    List<Category> getCategories() {
+    @Cacheable("categories")
+    public List<Category> getCategories() {
         return categoryService.getCategories();
     }
 
