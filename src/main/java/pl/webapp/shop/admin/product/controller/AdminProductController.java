@@ -2,6 +2,7 @@ package pl.webapp.shop.admin.product.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +52,8 @@ class AdminProductController {
     }
 
     @PutMapping("/{id}")
-    AdminProduct updateProduct(@RequestBody @Valid AdminProductDto adminProductDto, @PathVariable Long id) {
+    @CacheEvict(cacheNames = "productDetails", key = "#adminProductDto.slug")
+    public AdminProduct updateProduct(@RequestBody @Valid AdminProductDto adminProductDto, @PathVariable Long id) {
         return productService.updateProduct(mapToAdminProduct(adminProductDto, id));
     }
 

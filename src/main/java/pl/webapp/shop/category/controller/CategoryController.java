@@ -31,7 +31,8 @@ class CategoryController {
     }
 
     @GetMapping("/{slug}/products")
-    CategoryProductsDto getCategoryWithProducts(@PathVariable
+    @Cacheable("categoryWithProducts")
+    public CategoryProductsDto getCategoryWithProducts(@PathVariable
                                                 @Pattern(regexp = "[a-z0-9\\-]+")
                                                 @Length(max = 255) String slug, Pageable pageable) {
         return categoryService.getCategoryWithProducts(slug, pageable);
