@@ -30,7 +30,8 @@ class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    Page<ProductReadDto> getProducts(Pageable pageable) {
+    @Cacheable("products")
+    public Page<ProductReadDto> getProducts(Pageable pageable) {
         Page<Product> products = productService.getProducts(pageable);
         List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
 
@@ -40,8 +41,8 @@ class ProductController {
     @GetMapping("/{slug}")
     @Cacheable("productDetails")
     public ProductReviewsDto getProduct(@PathVariable
-                                 @Pattern(regexp = "[a-z0-9\\-]+")
-                                 @Length(max = 255) String slug) {
+                                        @Pattern(regexp = "[a-z0-9\\-]+")
+                                        @Length(max = 255) String slug) {
         return productService.getProduct(slug);
     }
 }

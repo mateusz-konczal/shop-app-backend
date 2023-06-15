@@ -16,8 +16,4 @@ public class AdminDashboardService {
     public Page<AdminProduct> getSaleProducts(Pageable pageable) {
         return productRepository.findAllBySalePriceIsNotNull(pageable);
     }
-
-    public void deleteSaleProduct(Long id) {
-        productRepository.deleteById(id);
-    }
 }

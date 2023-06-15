@@ -2,6 +2,7 @@ package pl.webapp.shop.admin.category.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,17 +38,20 @@ class AdminCategoryController {
     }
 
     @PostMapping
-    AdminCategory createCategory(@RequestBody @Valid AdminCategoryDto adminCategoryDto) {
+    @CacheEvict(value = "categories", allEntries = true)
+    public AdminCategory createCategory(@RequestBody @Valid AdminCategoryDto adminCategoryDto) {
         return categoryService.createCategory(mapToAdminCategory(adminCategoryDto, EMPTY_ID));
     }
 
     @PutMapping("/{id}")
-    AdminCategory updateCategory(@RequestBody @Valid AdminCategoryDto adminCategoryDto, @PathVariable Long id) {
+    @CacheEvict(value = "categories", allEntries = true)
+    public AdminCategory updateCategory(@RequestBody @Valid AdminCategoryDto adminCategoryDto, @PathVariable Long id) {
         return categoryService.updateCategory(mapToAdminCategory(adminCategoryDto, id));
     }
 
     @DeleteMapping("/{id}")
-    void deleteCategory(@PathVariable Long id) {
+    @CacheEvict(value = "categories", allEntries = true)
+    public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
 }

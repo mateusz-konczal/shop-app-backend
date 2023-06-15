@@ -9,6 +9,7 @@
 
     <cache alias="categories" uses-template="default"/>
     <cache alias="categoryWithProducts" uses-template="default"/>
+    <cache alias="products" uses-template="default"/>
     <cache alias="productDetails" uses-template="default"/>
     <cache alias="homepage" uses-template="default"/>
 
