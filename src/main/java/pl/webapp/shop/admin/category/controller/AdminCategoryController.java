@@ -3,6 +3,7 @@ package pl.webapp.shop.admin.category.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.category.controller.dto.AdminCategoryDto;
 import pl.webapp.shop.admin.category.model.AdminCategory;
@@ -38,6 +40,7 @@ class AdminCategoryController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(value = "categories", allEntries = true)
     public AdminCategory createCategory(@RequestBody @Valid AdminCategoryDto adminCategoryDto) {
         return categoryService.createCategory(mapToAdminCategory(adminCategoryDto, EMPTY_ID));
@@ -50,6 +53,7 @@ class AdminCategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "categories", allEntries = true)
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);

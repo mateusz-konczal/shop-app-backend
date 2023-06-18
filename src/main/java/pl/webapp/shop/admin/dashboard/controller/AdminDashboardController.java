@@ -3,8 +3,10 @@ package pl.webapp.shop.admin.dashboard.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.dashboard.service.AdminCachingService;
@@ -24,6 +26,7 @@ class AdminDashboardController {
     }
 
     @GetMapping("/caches/clearAll")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void clearAllCaches() {
         cachingService.clearAllCaches();
     }

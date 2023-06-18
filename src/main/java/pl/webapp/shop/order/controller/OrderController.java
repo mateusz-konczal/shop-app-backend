@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.common.model.OrderStatus;
 import pl.webapp.shop.order.controller.dto.InitOrderDto;
@@ -39,6 +41,7 @@ class OrderController {
     private final PaymentService paymentService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     OrderSummaryDto placeOrder(@RequestBody @Valid OrderDto orderDto, @AuthenticationPrincipal String userUuid) {
         return orderService.placeOrder(orderDto, userUuid);
     }
@@ -63,6 +66,7 @@ class OrderController {
     }
 
     @PostMapping("/notification/{orderHash}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void receiveNotification(@PathVariable @Length(max = 12) String orderHash,
                              @RequestBody TransactionNotificationDto notificationDto,
                              HttpServletRequest request) {

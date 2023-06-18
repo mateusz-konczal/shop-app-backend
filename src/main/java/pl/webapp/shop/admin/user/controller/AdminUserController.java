@@ -5,12 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserDto;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserReadDto;
@@ -41,6 +43,7 @@ class AdminUserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void createUser(@RequestBody @Valid AdminUserDto adminUserDto) {
         if (!Objects.equals(adminUserDto.password(), adminUserDto.repeatedPassword())) {
             throw new NotIdenticalPasswordsException();
@@ -56,11 +59,13 @@ class AdminUserController {
     }
 
     @PutMapping("/{id}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void enableUser(@PathVariable Long id) {
         userService.enableUser(id);
     }
 
     @PutMapping("/{id}/disable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void disableUser(@PathVariable Long id) {
         userService.disableUser(id);
     }
