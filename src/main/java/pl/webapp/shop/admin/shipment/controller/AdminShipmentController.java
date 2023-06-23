@@ -51,6 +51,18 @@ class AdminShipmentController {
         return shipmentService.updateShipment(mapToAdminShipment(adminShipmentDto, id));
     }
 
+    @PutMapping("/{id}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void enableShipment(@PathVariable Long id) {
+        shipmentService.enableShipment(id);
+    }
+
+    @PutMapping("/{id}/disable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void disableShipment(@PathVariable Long id) {
+        shipmentService.disableShipment(id);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteShipment(@PathVariable Long id) {

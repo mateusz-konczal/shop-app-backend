@@ -14,6 +14,6 @@ public class ShipmentService {
     private final ShipmentRepository shipmentRepository;
 
     public List<Shipment> getShipments() {
-        return shipmentRepository.findAll();
+        return shipmentRepository.findAllByEnabledIsTrue();
     }
 }

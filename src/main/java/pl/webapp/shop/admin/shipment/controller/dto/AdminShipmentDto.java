@@ -20,5 +20,7 @@ public record AdminShipmentDto(
 
         ShipmentType type,
 
-        boolean defaultShipment) {
+        boolean defaultShipment,
+
+        boolean enabled) {
 }

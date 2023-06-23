@@ -31,4 +31,5 @@ public class Shipment {
     @Enumerated(EnumType.STRING)
     private ShipmentType type;
     private boolean defaultShipment;
+    private boolean enabled;
 }
