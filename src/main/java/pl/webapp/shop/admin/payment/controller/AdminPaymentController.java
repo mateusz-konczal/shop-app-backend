@@ -51,6 +51,18 @@ class AdminPaymentController {
         return paymentService.updatePayment(mapToAdminPayment(adminPaymentDto, id));
     }
 
+    @PutMapping("/{id}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void enablePayment(@PathVariable Long id) {
+        paymentService.enablePayment(id);
+    }
+
+    @PutMapping("/{id}/disable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void disablePayment(@PathVariable Long id) {
+        paymentService.disablePayment(id);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deletePayment(@PathVariable Long id) {

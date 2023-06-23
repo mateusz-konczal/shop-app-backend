@@ -14,6 +14,6 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
 
     public List<Payment> getPayments() {
-        return paymentRepository.findAll();
+        return paymentRepository.findAllByEnabledIsTrue();
     }
 }

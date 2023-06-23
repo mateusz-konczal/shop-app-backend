@@ -28,5 +28,6 @@ public class AdminPayment {
     @Enumerated(EnumType.STRING)
     private PaymentType type;
     private boolean defaultPayment;
+    private boolean enabled;
     private String note;
 }

@@ -19,7 +19,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
             HAVING MAX(ci.created) < :minusDays
             OR (ci.cartId IS NULL AND c.created < :minusDays)
             """)
-    List<Cart> findByCreatedCartItemLessThan(LocalDateTime minusDays);
+    List<Cart> findAllByCreatedCartItemLessThan(LocalDateTime minusDays);
 
     @Query("DELETE FROM Cart c WHERE c.id IN (:ids)")
     @Modifying
