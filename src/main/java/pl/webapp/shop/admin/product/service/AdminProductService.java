@@ -30,7 +30,7 @@ public class AdminProductService {
     }
 
     public AdminProduct updateProduct(AdminProduct product) {
-        clearProductCache(product);
+        clearProductCache(productRepository.findById(product.getId()).orElseThrow());
         return productRepository.save(product);
     }
 
