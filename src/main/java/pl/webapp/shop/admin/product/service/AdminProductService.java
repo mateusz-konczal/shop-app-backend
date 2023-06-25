@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.common.repository.AdminProductRepository;
+import pl.webapp.shop.admin.common.service.AdminProductCachingService;
 
 @Service
 @RequiredArgsConstructor
 public class AdminProductService {
 
     private final AdminProductRepository productRepository;
-    private final ProductCachingService productCachingService;
+    private final AdminProductCachingService productCachingService;
 
     public Page<AdminProduct> getProducts(Pageable pageable) {
         return productRepository.findAll(pageable);

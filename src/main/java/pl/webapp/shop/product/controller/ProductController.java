@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.common.dto.ProductReadDto;
 import pl.webapp.shop.common.model.Product;
+import pl.webapp.shop.product.dto.ProductReviewsDto;
 import pl.webapp.shop.product.service.ProductService;
-import pl.webapp.shop.product.service.dto.ProductReviewsDto;
 
 import java.util.List;
 

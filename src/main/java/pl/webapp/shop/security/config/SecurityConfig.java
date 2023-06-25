@@ -27,11 +27,11 @@ class SecurityConfig {
                                     AuthenticationManager authenticationManager,
                                     ShopUserDetailsService shopUserDetailsService) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/v1/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
-                .requestMatchers(HttpMethod.GET, "/api/v1/orders").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/v1/reviews").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/v1/newPassword").authenticated()
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/deleteAccount").authenticated()
+                .requestMatchers("/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
+                .requestMatchers(HttpMethod.GET, "/orders").authenticated()
+                .requestMatchers(HttpMethod.POST, "/reviews").authenticated()
+                .requestMatchers(HttpMethod.POST, "/newPassword").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/deleteAccount").authenticated()
                 .anyRequest().permitAll()
         );
         http.csrf().disable();

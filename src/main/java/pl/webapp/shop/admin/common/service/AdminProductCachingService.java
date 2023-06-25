@@ -1,11 +1,11 @@
-package pl.webapp.shop.admin.product.service;
+package pl.webapp.shop.admin.common.service;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 
 @Service
-class ProductCachingService {
+public class AdminProductCachingService {
 
     @CacheEvict(value = "categoryWithProducts", allEntries = true)
     public void clearCacheOfCategoryWithProducts() {
