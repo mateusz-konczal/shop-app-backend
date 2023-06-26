@@ -2,6 +2,7 @@ package pl.webapp.shop.admin.payment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.common.model.AdminPayment;
 import pl.webapp.shop.admin.payment.repository.AdminPaymentRepository;
 
@@ -27,6 +28,16 @@ public class AdminPaymentService {
 
     public AdminPayment updatePayment(AdminPayment payment) {
         return paymentRepository.save(payment);
+    }
+
+    @Transactional
+    public void enablePayment(Long id) {
+        paymentRepository.enablePaymentById(id);
+    }
+
+    @Transactional
+    public void disablePayment(Long id) {
+        paymentRepository.disablePaymentById(id);
     }
 
     public void deletePayment(Long id) {

@@ -23,7 +23,7 @@ class CartCleanupService {
     @Transactional
     @Scheduled(cron = "${app.cart.cleanup.expression}")
     public void cleanupOldCarts() {
-        List<Cart> carts = cartRepository.findByCreatedCartItemLessThan(LocalDateTime.now().minusDays(4));
+        List<Cart> carts = cartRepository.findAllByCreatedCartItemLessThan(LocalDateTime.now().minusDays(4));
         List<Long> cartIds = carts.stream()
                 .map(Cart::getId)
                 .toList();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.admin.order.exception.CsvParsingException;
 import pl.webapp.shop.admin.order.model.AdminOrder;
 import pl.webapp.shop.admin.order.service.AdminOrderExportService;
 import pl.webapp.shop.common.model.OrderStatus;
@@ -83,7 +84,7 @@ class AdminOrderExportController {
             printer.flush();
             return new ByteArrayInputStream(outputStream.toByteArray());
         } catch (IOException e) {
-            throw new RuntimeException("CSV parsing error: " + e.getMessage());
+            throw new CsvParsingException(e.getMessage());
         }
     }
 }

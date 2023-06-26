@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.webapp.shop.common.controller.exception.FileContentProbingException;
 import pl.webapp.shop.common.service.ProductImageService;
 
 import java.io.IOException;
@@ -22,11 +23,13 @@ class ProductImageController {
     private final ProductImageService productImageService;
 
     @GetMapping("/{filename}")
-    ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
-        Resource file = productImageService.serveFile(filename);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Path.of(filename)))
-                .body(file);
+    ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        try {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(Path.of(filename)))
+                    .body(productImageService.serveFile(filename));
+        } catch (IOException e) {
+            throw new FileContentProbingException(e.getMessage());
+        }
     }
 }

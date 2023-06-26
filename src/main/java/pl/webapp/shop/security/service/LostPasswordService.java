@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
 import pl.webapp.shop.common.mail.MailClientService;
 import pl.webapp.shop.security.dto.EmailDto;
 import pl.webapp.shop.security.dto.ResetPasswordDto;
+import pl.webapp.shop.security.exception.EmailNotFoundException;
+import pl.webapp.shop.security.exception.ExpiredLinkException;
+import pl.webapp.shop.security.exception.LinkNotFoundException;
 import pl.webapp.shop.security.model.User;
 import pl.webapp.shop.security.repository.UserRepository;
 
@@ -29,8 +33,7 @@ public class LostPasswordService {
     @Transactional
     public void sendLostPasswordLink(EmailDto emailDto) {
         String email = emailDto.email();
-        User user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new IllegalArgumentException("Podany adres e-mail nie istnieje"));
+        User user = userRepository.findByUsername(email).orElseThrow(EmailNotFoundException::new);
         String hash = generateHashForLostPassword(user);
         user.setHash(hash);
         user.setHashDateTime(LocalDateTime.now());
@@ -41,16 +44,15 @@ public class LostPasswordService {
     @Transactional
     public void changePassword(ResetPasswordDto resetPasswordDto) {
         if (!Objects.equals(resetPasswordDto.password(), resetPasswordDto.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
-        User user = userRepository.findByHash(resetPasswordDto.hash())
-                .orElseThrow(() -> new IllegalArgumentException("Link do zmiany hasła jest nieprawidłowy"));
+        User user = userRepository.findByHash(resetPasswordDto.hash()).orElseThrow(LinkNotFoundException::new);
         if (user.getHashDateTime().plusMinutes(10).isAfter(LocalDateTime.now())) {
             user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(resetPasswordDto.password()));
             user.setHash(null);
             user.setHashDateTime(null);
         } else {
-            throw new IllegalArgumentException("Link do zmiany hasła stracił ważność");
+            throw new ExpiredLinkException();
         }
     }
 

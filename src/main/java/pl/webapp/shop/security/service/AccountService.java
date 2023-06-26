@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
 import pl.webapp.shop.security.dto.NewPasswordDto;
 import pl.webapp.shop.security.model.User;
 import pl.webapp.shop.security.repository.UserRepository;
@@ -19,7 +20,7 @@ public class AccountService {
     @Transactional
     public void changePassword(NewPasswordDto newPasswordDto, String uuid) {
         if (!Objects.equals(newPasswordDto.password(), newPasswordDto.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
         User user = userRepository.findByUuid(uuid).orElseThrow();
         user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode(newPasswordDto.password()));

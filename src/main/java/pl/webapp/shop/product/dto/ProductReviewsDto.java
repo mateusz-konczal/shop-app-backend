@@ -1,6 +1,7 @@
-package pl.webapp.shop.product.service.dto;
+package pl.webapp.shop.product.dto;
 
 import lombok.Builder;
+import pl.webapp.shop.common.dto.ReviewReadDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,6 +14,7 @@ public record ProductReviewsDto(
         String description,
         String fullDescription,
         BigDecimal price,
+        BigDecimal salePrice,
         String currency,
         String image,
         String slug,

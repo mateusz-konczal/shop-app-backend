@@ -3,6 +3,7 @@ package pl.webapp.shop.category.controller;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +25,16 @@ class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    List<Category> getCategories() {
+    @Cacheable("categories")
+    public List<Category> getCategories() {
         return categoryService.getCategories();
     }
 
     @GetMapping("/{slug}/products")
-    CategoryProductsDto getCategoryWithProducts(@PathVariable
-                                                @Pattern(regexp = "[a-z0-9\\-]+")
-                                                @Length(max = 255) String slug, Pageable pageable) {
+    @Cacheable("categoryWithProducts")
+    public CategoryProductsDto getCategoryWithProducts(@PathVariable
+                                                       @Pattern(regexp = "[a-z0-9\\-]+")
+                                                       @Length(max = 255) String slug, Pageable pageable) {
         return categoryService.getCategoryWithProducts(slug, pageable);
     }
 }

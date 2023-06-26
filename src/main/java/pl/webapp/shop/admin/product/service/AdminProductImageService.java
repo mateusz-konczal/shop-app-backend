@@ -3,6 +3,7 @@ package pl.webapp.shop.admin.product.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.webapp.shop.admin.common.utils.SlugifyUtils;
+import pl.webapp.shop.admin.product.exception.FileNotSavedException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ public class AdminProductImageService {
         try (OutputStream outputStream = Files.newOutputStream(filepath)) {
             inputStream.transferTo(outputStream);
         } catch (IOException e) {
-            throw new RuntimeException("The file cannot be saved: ", e);
+            throw new FileNotSavedException(e.getMessage());
         }
 
         return newFilename;

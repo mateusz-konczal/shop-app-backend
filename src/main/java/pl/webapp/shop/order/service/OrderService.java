@@ -72,7 +72,7 @@ public class OrderService {
     }
 
     public List<OrderReadDto> getOrdersForCustomer(String userUuid) {
-        return mapToOrderReadDtoList(orderRepository.findByUserUuidOrderByIdDesc(userUuid));
+        return mapToOrderReadDtoList(orderRepository.findAllByUserUuidOrderByIdDesc(userUuid));
     }
 
     public Order getOrderByOrderHash(String orderHash) {

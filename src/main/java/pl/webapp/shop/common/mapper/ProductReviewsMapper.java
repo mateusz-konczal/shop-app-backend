@@ -1,9 +1,9 @@
-package pl.webapp.shop.product.service.mapper;
+package pl.webapp.shop.common.mapper;
 
+import pl.webapp.shop.common.dto.ReviewReadDto;
 import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.common.model.Review;
-import pl.webapp.shop.product.service.dto.ProductReviewsDto;
-import pl.webapp.shop.product.service.dto.ReviewReadDto;
+import pl.webapp.shop.product.dto.ProductReviewsDto;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ public class ProductReviewsMapper {
                 .description(product.getDescription())
                 .fullDescription(product.getFullDescription())
                 .price(product.getPrice())
+                .salePrice(product.getSalePrice())
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())
@@ -28,7 +29,7 @@ public class ProductReviewsMapper {
                 .build();
     }
 
-    private static ReviewReadDto mapToReviewReadDto(Review review) {
+    public static ReviewReadDto mapToReviewReadDto(Review review) {
         return ReviewReadDto.builder()
                 .id(review.getId())
                 .productId(review.getProductId())

@@ -9,11 +9,11 @@ import pl.webapp.shop.common.model.Product;
 import pl.webapp.shop.common.model.Review;
 import pl.webapp.shop.common.repository.ProductRepository;
 import pl.webapp.shop.common.repository.ReviewRepository;
-import pl.webapp.shop.product.service.dto.ProductReviewsDto;
+import pl.webapp.shop.product.dto.ProductReviewsDto;
 
 import java.util.List;
 
-import static pl.webapp.shop.product.service.mapper.ProductReviewsMapper.mapToProductReviewsDto;
+import static pl.webapp.shop.common.mapper.ProductReviewsMapper.mapToProductReviewsDto;
 
 @Service
 @RequiredArgsConstructor

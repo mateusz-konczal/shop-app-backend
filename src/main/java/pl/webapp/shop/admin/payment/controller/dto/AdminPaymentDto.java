@@ -14,5 +14,7 @@ public record AdminPaymentDto(
 
         boolean defaultPayment,
 
+        boolean enabled,
+
         String note) {
 }

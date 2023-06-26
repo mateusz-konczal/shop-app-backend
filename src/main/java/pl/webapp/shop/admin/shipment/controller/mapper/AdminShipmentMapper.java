@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.shipment.controller.mapper;
 
-import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 import pl.webapp.shop.admin.common.model.AdminShipment;
+import pl.webapp.shop.admin.shipment.controller.dto.AdminShipmentDto;
 
 public class AdminShipmentMapper {
 
@@ -15,6 +15,7 @@ public class AdminShipmentMapper {
                 .price(adminShipmentDto.price())
                 .type(adminShipmentDto.type())
                 .defaultShipment(adminShipmentDto.defaultShipment())
+                .enabled(adminShipmentDto.enabled())
                 .build();
     }
 }

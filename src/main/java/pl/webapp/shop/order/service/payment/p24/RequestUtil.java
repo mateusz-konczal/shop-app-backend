@@ -4,6 +4,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import pl.webapp.shop.common.model.ProductCurrency;
 import pl.webapp.shop.order.dto.TransactionNotificationDto;
 import pl.webapp.shop.order.model.Order;
+import pl.webapp.shop.order.service.payment.p24.exception.InvalidIpAddressException;
+import pl.webapp.shop.order.service.payment.p24.exception.InvalidValidationException;
 
 import java.math.BigDecimal;
 
@@ -46,7 +48,7 @@ class RequestUtil {
 
     static void filterIpAddress(PaymentMethodP24Config p24Config, String serverAddr) {
         if (!p24Config.getServers().contains(serverAddr)) {
-            throw new IllegalArgumentException("Invalid IP address for transaction notification: " + serverAddr);
+            throw new InvalidIpAddressException(serverAddr);
         }
     }
 
@@ -83,7 +85,7 @@ class RequestUtil {
 
     private static void validateField(boolean condition) {
         if (!condition) {
-            throw new RuntimeException("Invalid validation");
+            throw new InvalidValidationException();
         }
     }
 

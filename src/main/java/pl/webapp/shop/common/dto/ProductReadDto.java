@@ -11,6 +11,7 @@ public record ProductReadDto(
         String name,
         String description,
         BigDecimal price,
+        BigDecimal salePrice,
         String currency,
         String image,
         String slug) {

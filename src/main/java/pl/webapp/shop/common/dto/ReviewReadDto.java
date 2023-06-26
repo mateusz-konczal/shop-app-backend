@@ -1,4 +1,4 @@
-package pl.webapp.shop.product.service.dto;
+package pl.webapp.shop.common.dto;
 
 import lombok.Builder;
 

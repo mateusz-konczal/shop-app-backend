@@ -2,6 +2,7 @@ package pl.webapp.shop.admin.shipment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.common.model.AdminShipment;
 import pl.webapp.shop.admin.shipment.repository.AdminShipmentRepository;
 
@@ -27,6 +28,16 @@ public class AdminShipmentService {
 
     public AdminShipment updateShipment(AdminShipment shipment) {
         return shipmentRepository.save(shipment);
+    }
+
+    @Transactional
+    public void enableShipment(Long id) {
+        shipmentRepository.enableShipmentById(id);
+    }
+
+    @Transactional
+    public void disableShipment(Long id) {
+        shipmentRepository.disableShipmentById(id);
     }
 
     public void deleteShipment(Long id) {

@@ -5,17 +5,22 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserDto;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserReadDto;
 import pl.webapp.shop.admin.user.controller.dto.AdminUserRolesDto;
+import pl.webapp.shop.admin.user.exception.CustomerUsernameException;
 import pl.webapp.shop.admin.user.service.AdminUserService;
+import pl.webapp.shop.common.exception.NotIdenticalPasswordsException;
+import pl.webapp.shop.common.exception.UsernameAlreadyExistsException;
 import pl.webapp.shop.security.model.UserRole;
 
 import java.util.HashMap;
@@ -38,26 +43,29 @@ class AdminUserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void createUser(@RequestBody @Valid AdminUserDto adminUserDto) {
         if (!Objects.equals(adminUserDto.password(), adminUserDto.repeatedPassword())) {
-            throw new IllegalArgumentException("Hasła nie są identyczne");
+            throw new NotIdenticalPasswordsException();
         }
         if (!EmailValidator.getInstance().isValid(adminUserDto.username()) && adminUserDto.userRole() == UserRole.ROLE_CUSTOMER) {
-            throw new IllegalArgumentException("Nazwą użytkownika konta klienta musi być poprawny adres e-mail");
+            throw new CustomerUsernameException();
         }
         if (userService.isUserExist(adminUserDto.username())) {
-            throw new IllegalArgumentException("Podana nazwa użytkownika już istnieje");
+            throw new UsernameAlreadyExistsException();
         }
 
         userService.createUser(mapToAdminUser(adminUserDto));
     }
 
     @PutMapping("/{id}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void enableUser(@PathVariable Long id) {
         userService.enableUser(id);
     }
 
     @PutMapping("/{id}/disable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void disableUser(@PathVariable Long id) {
         userService.disableUser(id);
     }

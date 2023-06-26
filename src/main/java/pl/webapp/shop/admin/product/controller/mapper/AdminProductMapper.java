@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.product.controller.mapper;
 
-import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 import pl.webapp.shop.admin.common.model.AdminProduct;
+import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 
 import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 
@@ -18,6 +18,7 @@ public class AdminProductMapper {
                 .description(adminProductDto.description())
                 .fullDescription(adminProductDto.fullDescription())
                 .price(adminProductDto.price())
+                .salePrice(adminProductDto.salePrice())
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
                 .slug(slugifySlug(adminProductDto.slug()))

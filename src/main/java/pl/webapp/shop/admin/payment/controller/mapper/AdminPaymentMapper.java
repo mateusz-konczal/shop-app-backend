@@ -1,7 +1,7 @@
 package pl.webapp.shop.admin.payment.controller.mapper;
 
-import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 import pl.webapp.shop.admin.common.model.AdminPayment;
+import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 
 public class AdminPaymentMapper {
 
@@ -14,6 +14,7 @@ public class AdminPaymentMapper {
                 .name(adminPaymentDto.name())
                 .type(adminPaymentDto.type())
                 .defaultPayment(adminPaymentDto.defaultPayment())
+                .enabled(adminPaymentDto.enabled())
                 .note(adminPaymentDto.note())
                 .build();
     }
