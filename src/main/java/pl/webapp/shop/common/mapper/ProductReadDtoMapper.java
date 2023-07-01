@@ -6,7 +6,7 @@ import pl.webapp.shop.common.model.Product;
 
 import java.util.List;
 
-public class ProductReadDtoMapper {
+public final class ProductReadDtoMapper {
 
     private ProductReadDtoMapper() {
     }

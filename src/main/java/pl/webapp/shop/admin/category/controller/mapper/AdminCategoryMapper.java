@@ -5,7 +5,7 @@ import pl.webapp.shop.admin.category.model.AdminCategory;
 
 import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 
-public class AdminCategoryMapper {
+public final class AdminCategoryMapper {
 
     private AdminCategoryMapper() {
     }

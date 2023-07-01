@@ -5,7 +5,7 @@ import pl.webapp.shop.order.model.Order;
 
 import java.util.List;
 
-public class OrderReadDtoMapper {
+public final class OrderReadDtoMapper {
 
     private OrderReadDtoMapper() {
     }

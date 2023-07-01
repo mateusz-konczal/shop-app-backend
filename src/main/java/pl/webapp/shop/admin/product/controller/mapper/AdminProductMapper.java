@@ -5,7 +5,7 @@ import pl.webapp.shop.admin.product.controller.dto.AdminProductDto;
 
 import static pl.webapp.shop.admin.common.utils.SlugifyUtils.slugifySlug;
 
-public class AdminProductMapper {
+public final class AdminProductMapper {
 
     private AdminProductMapper() {
     }

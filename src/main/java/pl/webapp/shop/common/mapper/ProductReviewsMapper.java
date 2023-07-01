@@ -7,7 +7,7 @@ import pl.webapp.shop.product.dto.ProductReviewsDto;
 
 import java.util.List;
 
-public class ProductReviewsMapper {
+public final class ProductReviewsMapper {
 
     private ProductReviewsMapper() {
     }

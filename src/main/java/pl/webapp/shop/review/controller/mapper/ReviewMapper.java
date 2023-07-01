@@ -5,7 +5,7 @@ import org.jsoup.safety.Safelist;
 import pl.webapp.shop.common.model.Review;
 import pl.webapp.shop.review.controller.dto.ReviewDto;
 
-public class ReviewMapper {
+public final class ReviewMapper {
 
     private ReviewMapper() {
     }

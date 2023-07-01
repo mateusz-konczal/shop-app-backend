@@ -127,8 +127,8 @@ public class OrderService {
         orderLogRepository.save(OrderLog.builder()
                 .orderId(order.getId())
                 .created(LocalDateTime.now())
-                .note("Opłacono zamówienie przez Przelewy24 (tytuł płatności: " + notificationDto.statement() +
-                        "), zmieniono status z " + oldStatus.getValue() + " na " + order.getOrderStatus().getValue())
+                .note("Opłacono zamówienie przez Przelewy24 (tytuł płatności: " + notificationDto.statement()
+                        + "), zmieniono status z " + oldStatus.getValue() + " na " + order.getOrderStatus().getValue())
                 .build());
     }
 }

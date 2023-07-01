@@ -16,6 +16,8 @@ class SwaggerConfig {
 
     private static final String SECURITY_SCHEME_NAME = "JWT Token";
     private static final String API_TITLE = "Shop API";
+    private static final int BEGIN_INDEX = 5;
+    private static final int END_INDEX = 7;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -33,6 +35,6 @@ class SwaggerConfig {
     }
 
     private String extractApiVersion(String contextPath) {
-        return contextPath.substring(5, 7);
+        return contextPath.substring(BEGIN_INDEX, END_INDEX);
     }
 }

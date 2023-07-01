@@ -9,7 +9,7 @@ import pl.webapp.shop.order.service.payment.p24.exception.InvalidValidationExcep
 
 import java.math.BigDecimal;
 
-class RequestUtil {
+final class RequestUtil {
 
     private RequestUtil() {
     }
@@ -90,38 +90,38 @@ class RequestUtil {
     }
 
     private static String createRegisterSign(PaymentMethodP24Config p24Config, Order order) {
-        String json = "{\"sessionId\":\"" + createSessionId(order) +
-                "\",\"merchantId\":" + p24Config.getMerchantId() +
-                ",\"amount\":" + createAmount(order) +
-                ",\"currency\":\"" + ProductCurrency.PLN.name() +
-                "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
+        String json = "{\"sessionId\":\"" + createSessionId(order)
+                + "\",\"merchantId\":" + p24Config.getMerchantId()
+                + ",\"amount\":" + createAmount(order)
+                + ",\"currency\":\"" + ProductCurrency.PLN.name()
+                + "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
 
         return DigestUtils.sha384Hex(json);
     }
 
     private static String createReceivedSign(PaymentMethodP24Config p24Config, Order order,
                                              TransactionNotificationDto notificationDto) {
-        String json = "{\"merchantId\":" + p24Config.getMerchantId() +
-                ",\"posId\":" + p24Config.getPosId() +
-                ",\"sessionId\":\"" + createSessionId(order) +
-                "\",\"amount\":" + createAmount(order) +
-                ",\"originAmount\":" + createAmount(order) +
-                ",\"currency\":\"" + ProductCurrency.PLN.name() +
-                "\",\"orderId\":" + notificationDto.orderId() +
-                ",\"methodId\":" + notificationDto.methodId() +
-                ",\"statement\":\"" + notificationDto.statement() +
-                "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
+        String json = "{\"merchantId\":" + p24Config.getMerchantId()
+                + ",\"posId\":" + p24Config.getPosId()
+                + ",\"sessionId\":\"" + createSessionId(order)
+                + "\",\"amount\":" + createAmount(order)
+                + ",\"originAmount\":" + createAmount(order)
+                + ",\"currency\":\"" + ProductCurrency.PLN.name()
+                + "\",\"orderId\":" + notificationDto.orderId()
+                + ",\"methodId\":" + notificationDto.methodId()
+                + ",\"statement\":\"" + notificationDto.statement()
+                + "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
 
         return DigestUtils.sha384Hex(json);
     }
 
     private static String createVerifySign(PaymentMethodP24Config p24Config, Order order,
                                            TransactionNotificationDto notificationDto) {
-        String json = "{\"sessionId\":\"" + createSessionId(order) +
-                "\",\"orderId\":" + notificationDto.orderId() +
-                ",\"amount\":" + createAmount(order) +
-                ",\"currency\":\"" + ProductCurrency.PLN.name() +
-                "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
+        String json = "{\"sessionId\":\"" + createSessionId(order)
+                + "\",\"orderId\":" + notificationDto.orderId()
+                + ",\"amount\":" + createAmount(order)
+                + ",\"currency\":\"" + ProductCurrency.PLN.name()
+                + "\",\"crc\":\"" + (p24Config.isTestMode() ? p24Config.getTestCrc() : p24Config.getCrc()) + "\"}";
 
         return DigestUtils.sha384Hex(json);
     }

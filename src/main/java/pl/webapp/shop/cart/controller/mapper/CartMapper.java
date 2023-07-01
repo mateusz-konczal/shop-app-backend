@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class CartMapper {
+public final class CartMapper {
 
     private CartMapper() {
     }

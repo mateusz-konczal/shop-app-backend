@@ -3,7 +3,7 @@ package pl.webapp.shop.admin.common.utils;
 import com.github.slugify.Slugify;
 import org.apache.commons.io.FilenameUtils;
 
-public class SlugifyUtils {
+public final class SlugifyUtils {
 
     private SlugifyUtils() {
     }
