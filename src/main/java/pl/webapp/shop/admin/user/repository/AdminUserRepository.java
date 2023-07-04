@@ -17,11 +17,11 @@ public interface AdminUserRepository extends JpaRepository<AdminUser, Long> {
 
     void deleteByUuid(String uuid);
 
-    @Query("UPDATE AdminUser u SET u.enabled=TRUE WHERE u.id=:id")
+    @Query("UPDATE AdminUser u SET u.enabled = TRUE WHERE u.id = :id")
     @Modifying
     void enableUserById(Long id);
 
-    @Query("UPDATE AdminUser u SET u.enabled=FALSE WHERE u.id=:id")
+    @Query("UPDATE AdminUser u SET u.enabled = FALSE WHERE u.id = :id")
     @Modifying
     void disableUserById(Long id);
 }

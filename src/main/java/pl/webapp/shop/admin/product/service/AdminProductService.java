@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.common.repository.AdminProductRepository;
+import pl.webapp.shop.admin.common.repository.AdminReviewRepository;
 import pl.webapp.shop.admin.common.service.AdminProductCachingService;
 
 @Service
@@ -14,6 +15,7 @@ import pl.webapp.shop.admin.common.service.AdminProductCachingService;
 public class AdminProductService {
 
     private final AdminProductRepository productRepository;
+    private final AdminReviewRepository reviewRepository;
     private final AdminProductCachingService productCachingService;
 
     public Page<AdminProduct> getProducts(Pageable pageable) {
@@ -36,10 +38,15 @@ public class AdminProductService {
 
     @Transactional
     public void deleteProduct(Long id) {
+        clearCacheBeforeDeletingProduct(id);
+        reviewRepository.deleteAllByProductId(id);
+        productRepository.deleteById(id);
+    }
+
+    private void clearCacheBeforeDeletingProduct(Long id) {
         AdminProduct product = productRepository.findById(id).orElseThrow();
         clearProductCache(product);
         productCachingService.clearProductDetailsCache(product);
-        productRepository.deleteById(id);
     }
 
     private void clearProductCache(AdminProduct product) {
