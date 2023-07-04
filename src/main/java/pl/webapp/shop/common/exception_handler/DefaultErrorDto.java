@@ -1,4 +1,4 @@
-package pl.webapp.shop.common.exception_handling;
+package pl.webapp.shop.common.exception_handler;
 
 import lombok.Builder;
 
