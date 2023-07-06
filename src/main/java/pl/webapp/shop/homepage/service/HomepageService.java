@@ -14,6 +14,6 @@ public class HomepageService {
     private final ProductRepository productRepository;
 
     public List<Product> getSaleProducts() {
-        return productRepository.findTop10BySalePriceIsNotNull();
+        return productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue();
     }
 }

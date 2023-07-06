@@ -27,6 +27,7 @@ public final class ProductReadDtoMapper {
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())
+                .enabled(product.isEnabled())
                 .build();
     }
 }

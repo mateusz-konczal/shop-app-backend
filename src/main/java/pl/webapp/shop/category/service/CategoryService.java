@@ -31,7 +31,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryProductsDto getCategoryWithProducts(String slug, Pageable pageable) {
         Category category = categoryRepository.findBySlug(slug).orElseThrow();
-        Page<Product> products = productRepository.findAllByCategoryId(category.getId(), pageable);
+        Page<Product> products = productRepository.findAllByCategoryIdAndEnabledIsTrue(category.getId(), pageable);
         List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
 
         return new CategoryProductsDto(category, new PageImpl<>(productReadDtoList, pageable, products.getTotalElements()));

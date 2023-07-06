@@ -60,6 +60,18 @@ class AdminProductController {
         return productService.updateProduct(mapToAdminProduct(adminProductDto, id));
     }
 
+    @PutMapping("/{id}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void enableProduct(@PathVariable Long id) {
+        productService.enableProduct(id);
+    }
+
+    @PutMapping("/{id}/disable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void disableProduct(@PathVariable Long id) {
+        productService.disableProduct(id);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteProduct(@PathVariable Long id) {

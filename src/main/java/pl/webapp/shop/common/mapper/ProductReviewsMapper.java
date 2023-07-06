@@ -23,6 +23,7 @@ public final class ProductReviewsMapper {
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())
+                .enabled(product.isEnabled())
                 .reviews(reviews.stream()
                         .map(ProductReviewsMapper::mapToReviewReadDto)
                         .toList())

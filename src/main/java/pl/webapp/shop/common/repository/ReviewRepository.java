@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findAllByProductIdAndModeratedOrderByIdDesc(Long id, boolean moderated);
+    List<Review> findAllByProductIdAndModeratedIsTrueOrderByIdDesc(Long id);
 }

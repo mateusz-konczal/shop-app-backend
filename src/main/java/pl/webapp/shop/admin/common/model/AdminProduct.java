@@ -36,4 +36,5 @@ public class AdminProduct {
     private ProductCurrency currency;
     private String image;
     private String slug;
+    private boolean enabled;
 }

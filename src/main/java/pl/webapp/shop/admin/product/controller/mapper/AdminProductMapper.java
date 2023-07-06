@@ -22,6 +22,7 @@ public final class AdminProductMapper {
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
                 .slug(slugifySlug(adminProductDto.slug()))
+                .enabled(adminProductDto.enabled())
                 .build();
     }
 }

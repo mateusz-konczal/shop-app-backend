@@ -27,34 +27,42 @@ public class AdminProductService {
     }
 
     public AdminProduct createProduct(AdminProduct product) {
-        clearProductCache(product);
+        clearCacheContainingProducts();
         return productRepository.save(product);
     }
 
     public AdminProduct updateProduct(AdminProduct product) {
-        clearProductCache(productRepository.findById(product.getId()).orElseThrow());
+        clearCacheContainingProducts();
         return productRepository.save(product);
     }
 
     @Transactional
+    public void enableProduct(Long id) {
+        clearProductCache(id);
+        productRepository.enableProductById(id);
+    }
+
+    @Transactional
+    public void disableProduct(Long id) {
+        clearProductCache(id);
+        productRepository.disableProductById(id);
+    }
+
+    @Transactional
     public void deleteProduct(Long id) {
-        clearCacheBeforeDeletingProduct(id);
+        clearProductCache(id);
         reviewRepository.deleteAllByProductId(id);
         productRepository.deleteById(id);
     }
 
-    private void clearCacheBeforeDeletingProduct(Long id) {
-        AdminProduct product = productRepository.findById(id).orElseThrow();
-        clearProductCache(product);
-        productCachingService.clearProductDetailsCache(product);
+    private void clearProductCache(Long id) {
+        clearCacheContainingProducts();
+        productCachingService.clearProductDetailsCache(productRepository.findById(id).orElseThrow());
     }
 
-    private void clearProductCache(AdminProduct product) {
+    private void clearCacheContainingProducts() {
         productCachingService.clearCacheOfCategoryWithProducts();
         productCachingService.clearProductsCache();
-
-        if (product.getSalePrice() != null) {
-            productCachingService.clearHomepageCache();
-        }
+        productCachingService.clearHomepageCache();
     }
 }
