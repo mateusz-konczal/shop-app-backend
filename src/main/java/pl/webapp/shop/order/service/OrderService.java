@@ -58,12 +58,12 @@ public class OrderService {
 
     @Transactional
     public OrderSummaryDto placeOrder(OrderDto orderDto, String userUuid) {
-        Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
+        Cart cart = cartRepository.findByUuid(orderDto.cartUuid()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
         Order order = orderRepository.save(createOrder(orderDto, cart, shipment, payment, userUuid));
         saveOrderRows(order.getId(), cart, shipment);
-        deleteOrderCart(orderDto.cartId());
+        deleteOrderCart(cart.getId());
         log.info("Order has been placed");
         sendConfirmationMail(order, senderAddress);
         String redirectUrl = initPaymentIfNeeded(order);

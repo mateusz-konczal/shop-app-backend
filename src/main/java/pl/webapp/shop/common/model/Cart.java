@@ -29,6 +29,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String uuid;
     private LocalDateTime created;
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cartId")

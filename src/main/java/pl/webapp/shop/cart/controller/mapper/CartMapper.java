@@ -19,7 +19,7 @@ public final class CartMapper {
 
     public static CartSummaryDto mapToCartSummaryDto(Cart cart) {
         return CartSummaryDto.builder()
-                .id(cart.getId())
+                .uuid(cart.getUuid())
                 .items(mapToListCartItemSummaryDto(cart.getItems()))
                 .summary(mapToSummaryDto(cart.getItems()))
                 .build();

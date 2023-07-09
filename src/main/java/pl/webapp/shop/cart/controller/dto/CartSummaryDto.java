@@ -7,7 +7,7 @@ import java.util.List;
 @Builder
 public record CartSummaryDto(
 
-        Long id,
+        String uuid,
         List<CartItemSummaryDto> items,
         SummaryDto summary) {
 }
