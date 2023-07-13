@@ -13,39 +13,34 @@ logging:
         security: INFO
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/webapp?useUnicode=true&serverTimeZone=UTC
-    username: user1
-    password: password1
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE}?useUnicode=true&serverTimeZone=UTC
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driverClassName: com.mysql.cj.jdbc.Driver
   cache:
     jcache:
       config: classpath:ehcache.xml
   liquibase:
     change-log: classpath:liquibase-changelog.xml
-  jpa:
-    show-sql: true
   data:
     web:
       pageable:
         default-page-size: 25
         max-page-size: 100
   mail:
-    host: example.com
-    username: username
-    password: password
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
-        transport:
-          protocol: smtp
         smtp:
-          port: 25
           auth: true
           starttls:
             enable: true
-            required: true
 springdoc:
   api-docs:
-    enabled: false
+    enabled: ${API_DOCS_ENABLED:true}
     path: /api-docs
 management:
   endpoints:
@@ -56,29 +51,29 @@ management:
     health:
       show-details: when_authorized
 app:
-  uploadDir: ./data/productImages/
+  uploadDir: ${UPLOAD_DIR}
   cart:
     cleanup:
       expression: "0 0 3 * * *"
   mail:
     sender:
-      address: shop
-      isFakeMailService: true
+      address: ${MAIL_SENDER_ADDRESS}
+      isFakeMailService: ${MAIL_FAKE_SERVICE_ENABLED:true}
   payment:
     p24:
-      testMode: true
-      merchantId: 0
-      posId: 0
+      testMode: ${P24_TEST_MODE:true}
+      merchantId: ${P24_MERCHANT_ID}
+      posId: ${P24_POS_ID}
       url: https://secure.przelewy24.pl
       testUrl: https://sandbox.przelewy24.pl
       apiUrl: https://secure.przelewy24.pl/api/v1
       testApiUrl: https://sandbox.przelewy24.pl/api/v1
-      urlReturn: https://17fd-46-238-248-11.ngrok-free.app
-      urlStatus: https://7df2-46-238-248-11.ngrok-free.app
-      crc: crc
-      testCrc: testCrc
-      secretId: secretId
-      testSecretId: testSecretId
+      urlReturn: ${P24_URL_RETURN}
+      urlStatus: ${P24_URL_STATUS}
+      crc: ${P24_CRC}
+      testCrc: ${P24_TEST_CRC}
+      secretId: ${P24_SECRET_ID}
+      testSecretId: ${P24_TEST_SECRET_ID}
       servers[0]: 91.216.191.181
       servers[1]: 91.216.191.182
       servers[2]: 91.216.191.183
@@ -86,7 +81,7 @@ app:
       servers[4]: 91.216.191.185
       servers[5]: 5.252.202.255
       servers[6]: 5.252.202.254
-  serviceAddress: http://localhost:4200
+  serviceAddress: ${FRONTEND_ADDRESS:http://localhost:4200}
 jwt:
-  expirationTime: 2592000000
-  secret: secret
+  expirationTime: ${JWT_EXPIRATION_TIME}
+  secret: ${JWT_SECRET}
