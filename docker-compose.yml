@@ -1,0 +1,86 @@
+version: "3.8"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.32
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - shop
+    volumes:
+      - mysql:/var/lib/mysql/data
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+      - "MYSQL_USER=${MYSQL_USERNAME}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8001:80"
+    networks:
+      - shop
+    links:
+      - mysql:db
+
+  backend:
+    container_name: backend
+    build: .
+    image: shop-backend:v1
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8000:8080"
+    networks:
+      - shop
+    volumes:
+      - upload_dir:${UPLOAD_DIR}
+    environment:
+      - "MYSQL_HOST=${MYSQL_HOST}"
+      - "MYSQL_POST=${MYSQL_PORT}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+      - "MYSQL_USERNAME=${MYSQL_USERNAME}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:9.9.1-community
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "8002:9000"
+    networks:
+      - shop
+    volumes:
+      - sonarqube:/opt/sonarqube/data
+      - sonarqube:/opt/sonarqube/logs
+      - sonarqube:/opt/sonarqube/extensions
+
+  frontend:
+    container_name: frontend
+    image: shop-frontend:v1
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - shop
+
+networks:
+  shop:
+    driver: bridge
+
+volumes:
+  mysql: { }
+  upload_dir: { }
+  sonarqube: { }
