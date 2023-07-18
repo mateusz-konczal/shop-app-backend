@@ -1,4 +1,5 @@
 version: "3.8"
+name: shop
 
 services:
   mysql:
@@ -6,11 +7,11 @@ services:
     image: mysql:8.0.32
     restart: always
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     networks:
-      - shop
+      - shop-net
     volumes:
-      - mysql:/var/lib/mysql/data
+      - mysql:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
@@ -26,7 +27,7 @@ services:
     ports:
       - "8001:80"
     networks:
-      - shop
+      - shop-net
     links:
       - mysql:db
 
@@ -40,7 +41,7 @@ services:
     ports:
       - "8000:8080"
     networks:
-      - shop
+      - shop-net
     volumes:
       - upload_dir:${UPLOAD_DIR}
     environment:
@@ -49,6 +50,25 @@ services:
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
       - "MYSQL_USERNAME=${MYSQL_USERNAME}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "MAIL_HOST=${MAIL_HOST}"
+      - "MAIL_PORT=${MAIL_PORT}"
+      - "MAIL_USERNAME=${MAIL_USERNAME}"
+      - "MAIL_PASSWORD=${MAIL_PASSWORD}"
+      - "API_DOCS_ENABLED=${API_DOCS_ENABLED}"
+      - "MAIL_SENDER_ADDRESS=${MAIL_SENDER_ADDRESS}"
+      - "MAIL_FAKE_SERVICE_ENABLED=${MAIL_FAKE_SERVICE_ENABLED}"
+      - "P24_TEST_MODE=${P24_TEST_MODE}"
+      - "P24_MERCHANT_ID=${P24_MERCHANT_ID}"
+      - "P24_POS_ID=${P24_POS_ID}"
+      - "P24_CRC=${P24_CRC}"
+      - "P24_TEST_CRC=${P24_TEST_CRC}"
+      - "P24_SECRET_ID=${P24_SECRET_ID}"
+      - "P24_TEST_SECRET_ID=${P24_TEST_SECRET_ID}"
+      - "P24_URL_RETURN=${P24_URL_RETURN}"
+      - "P24_URL_STATUS=${P24_URL_STATUS}"
+      - "FRONTEND_ADDRESS=${FRONTEND_ADDRESS}"
+      - "JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}"
+      - "JWT_SECRET=${JWT_SECRET}"
 
   sonarqube:
     container_name: sonarqube
@@ -59,7 +79,7 @@ services:
     ports:
       - "8002:9000"
     networks:
-      - shop
+      - shop-net
     volumes:
       - sonarqube:/opt/sonarqube/data
       - sonarqube:/opt/sonarqube/logs
@@ -74,10 +94,10 @@ services:
     ports:
       - "80:80"
     networks:
-      - shop
+      - shop-net
 
 networks:
-  shop:
+  shop-net:
     driver: bridge
 
 volumes:
