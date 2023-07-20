@@ -71,21 +71,6 @@ services:
       - "JWT_SECRET=${JWT_SECRET}"
       - "UPLOAD_DIR=${UPLOAD_DIR}"
 
-  sonarqube:
-    container_name: sonarqube
-    image: sonarqube:9.9.1-community
-    restart: always
-    depends_on:
-      - backend
-    ports:
-      - "8002:9000"
-    networks:
-      - shop_net
-    volumes:
-      - sonarqube:/opt/sonarqube/data
-      - sonarqube:/opt/sonarqube/logs
-      - sonarqube:/opt/sonarqube/extensions
-
   frontend:
     container_name: frontend
     image: shop-frontend:v1
@@ -104,4 +89,3 @@ networks:
 volumes:
   mysql: { }
   upload_dir: { }
-  sonarqube: { }
