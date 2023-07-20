@@ -9,7 +9,7 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
-      - shop-net
+      - shop_net
     volumes:
       - mysql:/var/lib/mysql
     environment:
@@ -27,7 +27,7 @@ services:
     ports:
       - "8001:80"
     networks:
-      - shop-net
+      - shop_net
     links:
       - mysql:db
 
@@ -41,7 +41,7 @@ services:
     ports:
       - "8000:8080"
     networks:
-      - shop-net
+      - shop_net
     volumes:
       - upload_dir:${UPLOAD_DIR}
     environment:
@@ -69,6 +69,7 @@ services:
       - "FRONTEND_ADDRESS=${FRONTEND_ADDRESS}"
       - "JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}"
       - "JWT_SECRET=${JWT_SECRET}"
+      - "UPLOAD_DIR=${UPLOAD_DIR}"
 
   sonarqube:
     container_name: sonarqube
@@ -79,7 +80,7 @@ services:
     ports:
       - "8002:9000"
     networks:
-      - shop-net
+      - shop_net
     volumes:
       - sonarqube:/opt/sonarqube/data
       - sonarqube:/opt/sonarqube/logs
@@ -94,10 +95,10 @@ services:
     ports:
       - "80:80"
     networks:
-      - shop-net
+      - shop_net
 
 networks:
-  shop-net:
+  shop_net:
     driver: bridge
 
 volumes:
