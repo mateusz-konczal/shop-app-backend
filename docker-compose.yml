@@ -7,7 +7,7 @@ services:
     image: mysql:8.0.32
     restart: always
     ports:
-      - "${MYSQL_PORT}:3306"
+      - "3307:3306"
     networks:
       - shop_net
     volumes:
@@ -17,6 +17,7 @@ services:
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
       - "MYSQL_USER=${MYSQL_USERNAME}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "TZ=${TIMEZONE}"
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -30,6 +31,8 @@ services:
       - shop_net
     links:
       - mysql:db
+    environment:
+      - "TZ=${TIMEZONE}"
 
   backend:
     container_name: backend
@@ -46,7 +49,7 @@ services:
       - upload_dir:${UPLOAD_DIR}
     environment:
       - "MYSQL_HOST=${MYSQL_HOST}"
-      - "MYSQL_POST=${MYSQL_PORT}"
+      - "MYSQL_PORT=${MYSQL_PORT}"
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
       - "MYSQL_USERNAME=${MYSQL_USERNAME}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
@@ -70,6 +73,7 @@ services:
       - "JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}"
       - "JWT_SECRET=${JWT_SECRET}"
       - "UPLOAD_DIR=${UPLOAD_DIR}"
+      - "TZ=${TIMEZONE}"
 
   frontend:
     container_name: frontend
@@ -81,6 +85,8 @@ services:
       - "80:80"
     networks:
       - shop_net
+    environment:
+      - "TZ=${TIMEZONE}"
 
 networks:
   shop_net:
