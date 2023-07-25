@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.webapp.shop.admin.common.model.AdminProduct;
 import pl.webapp.shop.admin.common.repository.AdminProductRepository;
+import pl.webapp.shop.admin.common.repository.AdminReviewRepository;
 import pl.webapp.shop.admin.common.service.AdminProductCachingService;
 import pl.webapp.shop.admin.review.model.AdminReview;
-import pl.webapp.shop.admin.review.repository.AdminReviewRepository;
 
 @Service
 @RequiredArgsConstructor

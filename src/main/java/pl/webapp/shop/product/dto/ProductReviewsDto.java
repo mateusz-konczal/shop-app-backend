@@ -18,5 +18,6 @@ public record ProductReviewsDto(
         String currency,
         String image,
         String slug,
+        boolean enabled,
         List<ReviewReadDto> reviews) {
 }

@@ -23,8 +23,8 @@ class CartItemController {
         cartItemService.deleteCartItem(id);
     }
 
-    @GetMapping("/count/{cartId}")
-    Long countItemsInCart(@PathVariable Long cartId) {
-        return cartItemService.countItemsInCart(cartId);
+    @GetMapping("/count/{cartUuid}")
+    Long countItemsInCart(@PathVariable String cartUuid) {
+        return cartItemService.countItemsInCart(cartUuid);
     }
 }

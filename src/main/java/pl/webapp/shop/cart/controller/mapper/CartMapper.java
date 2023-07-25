@@ -12,14 +12,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class CartMapper {
+public final class CartMapper {
 
     private CartMapper() {
     }
 
     public static CartSummaryDto mapToCartSummaryDto(Cart cart) {
         return CartSummaryDto.builder()
-                .id(cart.getId())
+                .uuid(cart.getUuid())
                 .items(mapToListCartItemSummaryDto(cart.getItems()))
                 .summary(mapToSummaryDto(cart.getItems()))
                 .build();

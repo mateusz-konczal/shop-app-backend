@@ -12,9 +12,11 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    Page<Product> findAllByEnabledIsTrue(Pageable pageable);
+
     Optional<Product> findBySlug(String slug);
 
-    Page<Product> findAllByCategoryId(Long categoryId, Pageable pageable);
+    Page<Product> findAllByCategoryIdAndEnabledIsTrue(Long categoryId, Pageable pageable);
 
-    List<Product> findTop10BySalePriceIsNotNull();
+    List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrue();
 }

@@ -17,7 +17,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class OrderMapper {
+public final class OrderMapper {
+
+    public static final int ALPHANUMERIC_STRING_LENGTH = 12;
 
     private OrderMapper() {
     }
@@ -69,7 +71,7 @@ public class OrderMapper {
                 .phone(orderDto.phone())
                 .payment(payment)
                 .userUuid(userUuid)
-                .orderHash(RandomStringUtils.randomAlphanumeric(12))
+                .orderHash(RandomStringUtils.randomAlphanumeric(ALPHANUMERIC_STRING_LENGTH))
                 .build();
     }
 

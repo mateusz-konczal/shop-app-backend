@@ -23,13 +23,13 @@ public class ProductService {
     private final ReviewRepository reviewRepository;
 
     public Page<Product> getProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        return productRepository.findAllByEnabledIsTrue(pageable);
     }
 
     @Transactional(readOnly = true)
     public ProductReviewsDto getProduct(String slug) {
         Product product = productRepository.findBySlug(slug).orElseThrow();
-        List<Review> reviews = reviewRepository.findAllByProductIdAndModeratedOrderByIdDesc(product.getId(), true);
+        List<Review> reviews = reviewRepository.findAllByProductIdAndModeratedIsTrueOrderByIdDesc(product.getId());
 
         return mapToProductReviewsDto(product, reviews);
     }

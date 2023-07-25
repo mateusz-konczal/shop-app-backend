@@ -3,7 +3,7 @@ package pl.webapp.shop.admin.payment.controller.mapper;
 import pl.webapp.shop.admin.common.model.AdminPayment;
 import pl.webapp.shop.admin.payment.controller.dto.AdminPaymentDto;
 
-public class AdminPaymentMapper {
+public final class AdminPaymentMapper {
 
     private AdminPaymentMapper() {
     }

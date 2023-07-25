@@ -14,5 +14,6 @@ public record ProductReadDto(
         BigDecimal salePrice,
         String currency,
         String image,
-        String slug) {
+        String slug,
+        boolean enabled) {
 }

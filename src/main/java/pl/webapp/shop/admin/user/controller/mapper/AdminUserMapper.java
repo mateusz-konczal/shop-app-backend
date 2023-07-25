@@ -10,7 +10,7 @@ import pl.webapp.shop.admin.user.model.AdminUser;
 import java.util.List;
 import java.util.UUID;
 
-public class AdminUserMapper {
+public final class AdminUserMapper {
 
     private AdminUserMapper() {
     }

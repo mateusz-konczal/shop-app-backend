@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Don't check for magic numbers in dto -->
+    <suppress checks="MagicNumber" files=".*Dto\.java"/>
+    <!-- Don't check for magic numbers in controllers -->
+    <suppress checks="MagicNumber" files=".*Controller\.java"/>
+    <!-- Don't check for magic numbers in services -->
+    <suppress checks="MagicNumber" files=".*Service\.java"/>
+
+    <!-- Don't hide a startup class constructor -->
+    <suppress checks="HideUtilityClassConstructor" files="ShopApplication.java"/>
+</suppressions>

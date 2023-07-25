@@ -46,7 +46,7 @@ public record OrderDto(
         String phone,
 
         @NotNull
-        Long cartId,
+        String cartUuid,
 
         @NotNull
         Long shipmentId,

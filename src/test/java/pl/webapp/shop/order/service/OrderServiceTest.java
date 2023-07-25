@@ -37,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
@@ -46,6 +47,7 @@ import static org.mockito.Mockito.verify;
 class OrderServiceTest {
 
     private static final Long CART_ID = 7L;
+    private static final String CART_UUID = "09f51c0c-c6f7-4cb2-b0f1-560355415035";
     private static final Long SHIPMENT_ID = 1L;
     private static final String SHIPMENT_NAME = "Test shipment";
     private static final Long PAYMENT_ID = 2L;
@@ -73,7 +75,7 @@ class OrderServiceTest {
         // GIVEN
         OrderDto orderDto = getOrderDto();
         String userUuid = UUID.randomUUID().toString();
-        given(cartRepository.findById(anyLong())).willReturn(Optional.of(getCart()));
+        given(cartRepository.findByUuid(anyString())).willReturn(Optional.of(getCart()));
         given(shipmentRepository.findById(anyLong())).willReturn(Optional.of(getShipment()));
         given(paymentRepository.findById(anyLong())).willReturn(Optional.of(getPayment()));
         given(orderRepository.save(any(Order.class))).willAnswer(invocation -> invocation.getArguments()[0]);
@@ -109,7 +111,7 @@ class OrderServiceTest {
                 .city("city")
                 .email("email@email.pl")
                 .phone("phone")
-                .cartId(CART_ID)
+                .cartUuid(CART_UUID)
                 .paymentId(PAYMENT_ID)
                 .shipmentId(SHIPMENT_ID)
                 .build();
@@ -118,6 +120,7 @@ class OrderServiceTest {
     private Cart getCart() {
         return Cart.builder()
                 .id(CART_ID)
+                .uuid(CART_UUID)
                 .created(LocalDateTime.now())
                 .items(getItems())
                 .build();

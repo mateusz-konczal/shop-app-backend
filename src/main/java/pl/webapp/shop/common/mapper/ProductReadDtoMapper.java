@@ -6,7 +6,7 @@ import pl.webapp.shop.common.model.Product;
 
 import java.util.List;
 
-public class ProductReadDtoMapper {
+public final class ProductReadDtoMapper {
 
     private ProductReadDtoMapper() {
     }
@@ -27,6 +27,7 @@ public class ProductReadDtoMapper {
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())
+                .enabled(product.isEnabled())
                 .build();
     }
 }

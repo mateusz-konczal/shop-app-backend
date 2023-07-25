@@ -6,7 +6,7 @@ import pl.webapp.shop.admin.order.service.dto.AdminOrderStatsValue;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AdminOrderStatsMapper {
+public final class AdminOrderStatsMapper {
 
     private AdminOrderStatsMapper() {
     }

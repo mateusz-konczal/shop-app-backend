@@ -36,5 +36,7 @@ public record AdminProductDto(
 
         @NotBlank
         @Length(min = 4)
-        String slug) {
+        String slug,
+
+        boolean enabled) {
 }

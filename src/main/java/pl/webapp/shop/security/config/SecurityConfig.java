@@ -28,6 +28,7 @@ class SecurityConfig {
                                     ShopUserDetailsService shopUserDetailsService) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/admin/**").hasRole(UserRole.ROLE_ADMIN.getRole())
+                .requestMatchers("/actuator/**").hasRole(UserRole.ROLE_ADMIN.getRole())
                 .requestMatchers(HttpMethod.GET, "/orders").authenticated()
                 .requestMatchers(HttpMethod.POST, "/reviews").authenticated()
                 .requestMatchers(HttpMethod.POST, "/newPassword").authenticated()

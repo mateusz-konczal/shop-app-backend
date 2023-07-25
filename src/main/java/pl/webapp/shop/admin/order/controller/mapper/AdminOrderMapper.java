@@ -7,7 +7,7 @@ import pl.webapp.shop.admin.order.model.AdminOrder;
 
 import java.util.List;
 
-public class AdminOrderMapper {
+public final class AdminOrderMapper {
 
     private AdminOrderMapper() {
     }

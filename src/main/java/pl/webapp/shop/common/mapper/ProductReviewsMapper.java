@@ -7,7 +7,7 @@ import pl.webapp.shop.product.dto.ProductReviewsDto;
 
 import java.util.List;
 
-public class ProductReviewsMapper {
+public final class ProductReviewsMapper {
 
     private ProductReviewsMapper() {
     }
@@ -23,6 +23,7 @@ public class ProductReviewsMapper {
                 .currency(product.getCurrency())
                 .image(product.getImage())
                 .slug(product.getSlug())
+                .enabled(product.isEnabled())
                 .reviews(reviews.stream()
                         .map(ProductReviewsMapper::mapToReviewReadDto)
                         .toList())

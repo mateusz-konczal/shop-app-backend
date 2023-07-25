@@ -32,6 +32,7 @@ public class Product {
     private String currency;
     private String image;
     private String slug;
+    private boolean enabled;
 
     public BigDecimal getEndPrice() {
         return salePrice != null ? salePrice : price;

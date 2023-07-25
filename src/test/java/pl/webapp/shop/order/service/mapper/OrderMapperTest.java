@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OrderMapperTest {
 
     private static final Long CART_ID = 11L;
+    private static final String CART_UUID = "ff80bcce-37e6-4fd8-8243-ab8db4616f54";
     private static final Long SHIPMENT_ID = 3L;
     private static final Long PAYMENT_ID = 4L;
 
@@ -56,7 +57,7 @@ class OrderMapperTest {
                 .city("Peoria")
                 .email("philip.trevino@email.pl")
                 .phone("457 751 026")
-                .cartId(CART_ID)
+                .cartUuid(CART_UUID)
                 .paymentId(PAYMENT_ID)
                 .shipmentId(SHIPMENT_ID)
                 .build();
@@ -65,6 +66,7 @@ class OrderMapperTest {
     private Cart getCart() {
         return Cart.builder()
                 .id(CART_ID)
+                .uuid(CART_UUID)
                 .created(LocalDateTime.now())
                 .items(getItems())
                 .build();
