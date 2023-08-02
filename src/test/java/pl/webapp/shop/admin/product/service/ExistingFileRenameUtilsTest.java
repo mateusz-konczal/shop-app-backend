@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ExistingFileRenameUtilsTest {
 
     @Test
-    void shouldNotRenameFile(@TempDir Path tempDir) {
+    void should_not_rename_file(@TempDir Path tempDir) {
         // WHEN
         String newName = ExistingFileRenameUtils.renameIfExists(tempDir, "test.png");
         // THEN
@@ -22,7 +22,7 @@ class ExistingFileRenameUtilsTest {
     }
 
     @Test
-    void shouldRenameIfFileAlreadyExists(@TempDir Path tempDir) throws IOException {
+    void should_rename_when_file_already_exists(@TempDir Path tempDir) throws IOException {
         // GIVEN
         Files.createFile(tempDir.resolve("test.png"));
         // WHEN
@@ -32,7 +32,7 @@ class ExistingFileRenameUtilsTest {
     }
 
     @Test
-    void shouldRenameIfMultipleFilesAlreadyExist(@TempDir Path tempDir) throws IOException {
+    void should_rename_when_multiple_files_already_exist(@TempDir Path tempDir) throws IOException {
         // GIVEN
         Files.createFile(tempDir.resolve("test.png"));
         Files.createFile(tempDir.resolve("test-1.png"));
@@ -45,7 +45,7 @@ class ExistingFileRenameUtilsTest {
     }
 
     @Test
-    void shouldIncrementLastNumberIfFilenameContainsSeveralNumbers(@TempDir Path tempDir) throws IOException {
+    void should_increment_last_number_when_filename_contains_several_numbers(@TempDir Path tempDir) throws IOException {
         // GIVEN
         Files.createFile(tempDir.resolve("test-test-3-1.jpg"));
         // WHEN
@@ -56,12 +56,13 @@ class ExistingFileRenameUtilsTest {
 
     @ParameterizedTest
     @CsvSource({
-            "@TempDir Path tempDir, test-test-3-1-test.jpg, test-test-3-1-test.jpg",
-            "@TempDir Path tempDir, test-test-3-1-2test.jpg, test-test-3-1-2test.jpg",
-            "@TempDir Path tempDir, test-test-3-1-te2st.jpg, test-test-3-1-te2st.jpg",
-            "@TempDir Path tempDir, test-test-3-1-test2.jpg, test-test-3-1-test2.jpg"
+            "test-test-3-1-test.jpg, test-test-3-1-test.jpg",
+            "test-test-3-1-2test.jpg, test-test-3-1-2test.jpg",
+            "test-test-3-1-te2st.jpg, test-test-3-1-te2st.jpg",
+            "test-test-3-1-test2.jpg, test-test-3-1-test2.jpg"
     })
-    void shouldNotIncrementNumberIfFilenameDoesNotEndWithNumber(Path tempDir, String inputFilename, String outputFilename) {
+    void should_not_increment_number_when_filename_does_not_end_with_number(String inputFilename, String outputFilename,
+                                                                            @TempDir Path tempDir) {
         // WHEN
         String newName = ExistingFileRenameUtils.renameIfExists(tempDir, inputFilename);
         // THEN

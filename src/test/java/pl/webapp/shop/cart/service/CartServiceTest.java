@@ -33,7 +33,7 @@ class CartServiceTest {
     private CartService cartService;
 
     @Test
-    void shouldAddProductToCartWhenCartUuidDoesNotExist() {
+    void should_add_product_to_cart_when_cart_uuid_does_not_exist() {
         // GIVEN
         Long productId = 1L;
         Long cartId = 1L;
@@ -50,7 +50,7 @@ class CartServiceTest {
     }
 
     @Test
-    void shouldAddProductToCartWhenCartUuidExists() {
+    void should_add_product_to_cart_when_cart_uuid_exists() {
         // GIVEN
         Long productId = 1L;
         Long cartId = 2L;
@@ -67,7 +67,7 @@ class CartServiceTest {
     }
 
     @Test
-    void shouldUpdateCartWhenProductQuantityIsChanged() {
+    void should_update_cart_when_product_quantity_is_changed() {
         // GIVEN
         String cartUuid = "0f1e5e53-c705-420a-a559-6e9a399a015b";
         List<CartItemDto> itemDtoList = new ArrayList<>();

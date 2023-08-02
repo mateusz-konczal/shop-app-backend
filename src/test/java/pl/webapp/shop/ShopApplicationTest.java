@@ -14,7 +14,7 @@ class ShopApplicationTest {
     private ApplicationContext applicationContext;
 
     @Test
-    void contextLoads() {
+    void context_loads() {
         assertThat(applicationContext).isNotNull();
     }
 }

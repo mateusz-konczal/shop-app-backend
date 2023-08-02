@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LoginControllerTest {
+class LoginControllerIntegrationTest {
 
     private static final String SECURED_API_URL = "/admin/secured";
 
@@ -24,7 +24,7 @@ class LoginControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void shouldLoginAndGetContent() throws Exception {
+    void should_login_and_get_content() throws Exception {
         // WHEN & THEN
         MvcResult loginResult = mockMvc.perform(post("/login")
                         .content(getLoginCredentials())
@@ -41,7 +41,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void shouldNotReturnContentWhenNotLoggedIn() throws Exception {
+    void should_not_return_content_when_not_logged_in() throws Exception {
         // WHEN & THEN
         mockMvc.perform(get(SECURED_API_URL))
                 .andDo(print())

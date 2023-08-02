@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CartTest {
 
     @Test
-    void shouldIncrementQuantityWhenProductIsAlreadyInCart() {
+    void should_increment_quantity_when_product_is_already_in_cart() {
         // GIVEN
         Long cartId = 1L;
         Cart cart = Cart.builder()
@@ -31,7 +31,7 @@ class CartTest {
     }
 
     @Test
-    void shouldAddProductToCartWhenProductDoesNotExist() {
+    void should_add_product_to_cart_when_product_does_not_exist() {
         // GIVEN
         Long cartId = 1L;
         Cart cart = Cart.builder()

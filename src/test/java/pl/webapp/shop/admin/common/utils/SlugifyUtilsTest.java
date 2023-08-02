@@ -17,7 +17,7 @@ class SlugifyUtilsTest {
             "Produkt - 1.jpg, produkt-1.jpg",
             "Produkt__1.jpg, produkt-1.jpg"
     })
-    void shouldSlugifyFilename(String in, String out) {
+    void should_slugify_filename(String in, String out) {
         // WHEN
         String filename = SlugifyUtils.slugifyFilename(in);
         // THEN

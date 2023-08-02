@@ -27,7 +27,7 @@ class OrderMapperTest {
     private static final Long PAYMENT_ID = 4L;
 
     @Test
-    void shouldCreateOrder() {
+    void should_create_order() {
         // GIVEN
         OrderDto orderDto = getOrderDto();
         Cart cart = getCart();

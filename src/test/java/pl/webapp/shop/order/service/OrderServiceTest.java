@@ -71,7 +71,7 @@ class OrderServiceTest {
     private OrderService orderService;
 
     @Test
-    void shouldPlaceOrder() {
+    void should_place_order() {
         // GIVEN
         OrderDto orderDto = getOrderDto();
         String userUuid = UUID.randomUUID().toString();
