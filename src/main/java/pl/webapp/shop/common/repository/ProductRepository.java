@@ -19,4 +19,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAllByCategoryIdAndEnabledIsTrue(Long categoryId, Pageable pageable);
 
     List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrue();
+
+    List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderByNameAsc();
+
+    List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderByNameDesc();
+
+    List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderBySalePriceAsc();
+
+    List<Product> findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderBySalePriceDesc();
 }

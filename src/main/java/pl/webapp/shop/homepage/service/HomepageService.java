@@ -13,7 +13,13 @@ public class HomepageService {
 
     private final ProductRepository productRepository;
 
-    public List<Product> getSaleProducts() {
-        return productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue();
+    public List<Product> getSaleProducts(String sort) {
+        return switch (sort) {
+            case "name,asc" -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderByNameAsc();
+            case "name,desc" -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderByNameDesc();
+            case "salePrice,asc" -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderBySalePriceAsc();
+            case "salePrice,desc" -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrueOrderBySalePriceDesc();
+            default -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue();
+        };
     }
 }
