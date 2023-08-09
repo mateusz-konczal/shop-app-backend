@@ -41,9 +41,9 @@ public class CategoryService {
     private Page<Product> getProductPage(Long categoryId, Pageable pageable) {
         String sort = pageable.getSort().toString().toLowerCase();
         return switch (sort) {
-            case "price: asc" -> productRepository.findAllByCategoryIdAndEnabledIsTrueOrderByCoalesceAsc(categoryId,
+            case "price: asc" -> productRepository.findAllByCategoryIdOrderByEndPriceAsc(categoryId,
                     PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
-            case "price: desc" -> productRepository.findAllByCategoryIdAndEnabledIsTrueOrderByCoalesceDesc(categoryId,
+            case "price: desc" -> productRepository.findAllByCategoryIdOrderByEndPriceDesc(categoryId,
                     PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
             default -> productRepository.findAllByCategoryIdAndEnabledIsTrue(categoryId, pageable);
         };

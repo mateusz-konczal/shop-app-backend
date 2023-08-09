@@ -26,9 +26,9 @@ public class ProductService {
     public Page<Product> getProducts(Pageable pageable) {
         String sort = pageable.getSort().toString().toLowerCase();
         return switch (sort) {
-            case "price: asc" -> productRepository.findAllByEnabledIsTrueOrderByCoalesceAsc(PageRequest.of(
+            case "price: asc" -> productRepository.findAllOrderByEndPriceAsc(PageRequest.of(
                     pageable.getPageNumber(), pageable.getPageSize()));
-            case "price: desc" -> productRepository.findAllByEnabledIsTrueOrderByCoalesceDesc(PageRequest.of(
+            case "price: desc" -> productRepository.findAllOrderByEndPriceDesc(PageRequest.of(
                     pageable.getPageNumber(), pageable.getPageSize()));
             default -> productRepository.findAllByEnabledIsTrue(pageable);
         };
