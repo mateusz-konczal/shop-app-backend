@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.webapp.shop.common.dto.ProductReadDto;
 import pl.webapp.shop.common.model.Product;
@@ -33,6 +34,14 @@ class ProductController {
     @Cacheable("products")
     public Page<ProductReadDto> getProducts(Pageable pageable) {
         Page<Product> products = productService.getProducts(pageable);
+        List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
+
+        return new PageImpl<>(productReadDtoList, pageable, products.getTotalElements());
+    }
+
+    @GetMapping("/by")
+    Page<ProductReadDto> getProductsByPhrase(@RequestParam(required = false) String phrase, Pageable pageable) {
+        Page<Product> products = productService.getProductsByPhrase(phrase, pageable);
         List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
 
         return new PageImpl<>(productReadDtoList, pageable, products.getTotalElements());
