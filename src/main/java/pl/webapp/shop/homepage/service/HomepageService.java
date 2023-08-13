@@ -24,7 +24,7 @@ public class HomepageService {
                     productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue(Sort.by("salePrice").ascending());
             case "salePrice,desc" ->
                     productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue(Sort.by("salePrice").descending());
-            default -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue();
+            default -> productRepository.findTop10BySalePriceIsNotNullAndEnabledIsTrue(Sort.unsorted());
         };
     }
 }

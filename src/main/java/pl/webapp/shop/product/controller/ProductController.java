@@ -32,16 +32,8 @@ class ProductController {
 
     @GetMapping
     @Cacheable("products")
-    public Page<ProductReadDto> getProducts(Pageable pageable) {
-        Page<Product> products = productService.getProducts(pageable);
-        List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
-
-        return new PageImpl<>(productReadDtoList, pageable, products.getTotalElements());
-    }
-
-    @GetMapping("/by")
-    Page<ProductReadDto> getProductsByPhrase(@RequestParam(required = false) String phrase, Pageable pageable) {
-        Page<Product> products = productService.getProductsByPhrase(phrase, pageable);
+    public Page<ProductReadDto> getProducts(@RequestParam(required = false) String phrase, Pageable pageable) {
+        Page<Product> products = productService.getProducts(phrase, pageable);
         List<ProductReadDto> productReadDtoList = mapToProductReadDtoList(products);
 
         return new PageImpl<>(productReadDtoList, pageable, products.getTotalElements());
