@@ -12,6 +12,7 @@ import pl.webapp.shop.common.repository.ProductRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -50,7 +51,7 @@ public class CartService {
     }
 
     private Cart getInitializedCart(String uuid) {
-        if (uuid == null) {
+        if (uuid == null || Objects.equals(uuid, "")) {
             return saveNewCart();
         }
 
