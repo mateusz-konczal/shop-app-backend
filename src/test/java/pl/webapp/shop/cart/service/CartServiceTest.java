@@ -42,7 +42,7 @@ class CartServiceTest {
         given(cartRepository.save(any(Cart.class))).willReturn(Cart.builder().id(cartId).uuid(cartUuid).build());
         given(productRepository.findById(anyLong())).willReturn(Optional.of(Product.builder().id(productId).build()));
         // WHEN
-        Cart result = cartService.addProductToCart(null, cartItemDto);
+        Cart result = cartService.addProductToCart("", cartItemDto);
         // THEN
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(cartId);
